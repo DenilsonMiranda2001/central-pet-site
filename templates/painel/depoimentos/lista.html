@@ -1,0 +1,60 @@
+{% extends "painel/base.html" %}
+
+{% block content %}
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
+  <p style="color:#6B7280;font-size:0.8rem;">{{ depoimentos.count }} depoimento{{ depoimentos.count|pluralize:"s" }} cadastrado{{ depoimentos.count|pluralize:"s" }}</p>
+  <a href="{% url 'panel:depoimento_novo' %}" class="btn-gold">➕ Novo Depoimento</a>
+</div>
+
+<div class="panel-card" style="overflow:hidden;">
+  {% if depoimentos %}
+  <div style="overflow-x:auto;">
+    <table class="panel-table">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Pet</th>
+          <th>Nota</th>
+          <th>Comentário</th>
+          <th>Ordem</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dep in depoimentos %}
+        <tr>
+          <td><span style="font-weight:600;color:#F0F0F0;">{{ dep.customer_name }}</span></td>
+          <td><span style="color:#9CA3AF;font-size:0.85rem;">{{ dep.pet_name|default:"—" }}</span></td>
+          <td>
+            <span style="color:#F5A623;letter-spacing:0.05em;">
+              {% for i in "12345" %}{% if forloop.counter <= dep.rating %}★{% else %}☆{% endif %}{% endfor %}
+            </span>
+          </td>
+          <td><span style="color:#9CA3AF;font-size:0.82rem;">{{ dep.comment|truncatechars:55 }}</span></td>
+          <td><span style="color:#9CA3AF;font-size:0.85rem;">{{ dep.order }}</span></td>
+          <td>
+            {% if dep.is_active %}<span class="badge-ativo">Ativo</span>
+            {% else %}<span class="badge-inativo">Inativo</span>{% endif %}
+          </td>
+          <td>
+            <div style="display:flex;gap:0.4rem;">
+              <a href="{% url 'panel:depoimento_editar' dep.pk %}" class="btn-edit">✏️ Editar</a>
+              <a href="{% url 'panel:depoimento_excluir' dep.pk %}" class="btn-danger">🗑️</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div style="padding:3rem;text-align:center;">
+    <div style="font-size:3rem;margin-bottom:0.75rem;">💬</div>
+    <p style="color:#6B7280;margin-bottom:1rem;">Nenhum depoimento cadastrado ainda.</p>
+    <a href="{% url 'panel:depoimento_novo' %}" class="btn-gold">➕ Adicionar depoimento</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "central-pet",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["C:\\Users\\irisr\\OneDrive\\Área de Trabalho\\central_pet_site\\manage.py", "runserver", "8002"],
+      "port": 8002
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{% extends "painel/base.html" %}
+
+{% block content %}
+
+<!-- Header -->
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
+  <div>
+    <p style="color:#6B7280;font-size:0.8rem;">Total: {{ produtos.count }} produto{{ produtos.count|pluralize:"s" }}</p>
+  </div>
+  <a href="{% url 'panel:produto_novo' %}" class="btn-gold">
+    ➕ Novo Produto
+  </a>
+</div>
+
+<!-- Filtros -->
+<form method="get" class="panel-card" style="padding:1rem;margin-bottom:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;align-items:flex-end;">
+  <div style="flex:1;min-width:200px;">
+    <label class="field-label">Buscar por nome</label>
+    <input type="text" name="q" value="{{ q }}" class="panel-input" placeholder="Digite o nome do produto..."/>
+  </div>
+  <div style="min-width:180px;">
+    <label class="field-label">Filtrar por categoria</label>
+    <select name="categoria" class="panel-input">
+      <option value="">Todas as categorias</option>
+      {% for cat in categorias %}
+      <option value="{{ cat.slug }}" {% if cat_ativa == cat.slug %}selected{% endif %}>
+        {{ cat.icon }} {{ cat.name }}
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+  <button type="submit" class="btn-gold">🔍 Filtrar</button>
+  {% if q or cat_ativa %}
+  <a href="{% url 'panel:produto_lista' %}" class="btn-outline">✕ Limpar</a>
+  {% endif %}
+</form>
+
+<!-- Tabela -->
+<div class="panel-card" style="overflow:hidden;">
+  {% if produtos %}
+  <div style="overflow-x:auto;">
+    <table class="panel-table">
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Categoria</th>
+          <th>Preço</th>
+          <th>Destaque</th>
+          <th>Estoque</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for produto in produtos %}
+        <tr>
+          <td>
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              {% if produto.image %}
+              <img src="{{ produto.image.url }}" alt="{{ produto.name }}" class="img-preview" style="width:44px;height:44px;"/>
+              {% else %}
+              <div style="width:44px;height:44px;border-radius:10px;background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.15);display:flex;align-items:center;justify-content:center;font-size:1.25rem;">
+                {{ produto.category.icon|default:"🐾" }}
+              </div>
+              {% endif %}
+              <div>
+                <p style="font-weight:600;color:#F0F0F0;font-size:0.875rem;">{{ produto.name }}</p>
+                {% if produto.short_description %}
+                <p style="color:#6B7280;font-size:0.75rem;margin-top:0.1rem;">{{ produto.short_description|truncatechars:45 }}</p>
+                {% endif %}
+              </div>
+            </div>
+          </td>
+          <td>
+            {% if produto.category %}
+            <span style="font-size:0.8rem;color:#9CA3AF;">{{ produto.category.icon }} {{ produto.category.name }}</span>
+            {% else %}
+            <span style="color:#4B5563;font-size:0.8rem;">—</span>
+            {% endif %}
+          </td>
+          <td>
+            <span style="font-weight:700;color:#F5A623;font-size:0.9rem;">R$ {{ produto.price }}</span>
+            {% if produto.original_price %}
+            <br><span style="font-size:0.72rem;color:#6B7280;text-decoration:line-through;">R$ {{ produto.original_price }}</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if produto.is_featured %}
+            <span class="badge-destaque">⭐ Sim</span>
+            {% else %}
+            <span style="color:#4B5563;font-size:0.8rem;">Não</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if produto.is_available %}
+            <span class="badge-ativo">Disponível</span>
+            {% else %}
+            <span class="badge-inativo">Esgotado</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if produto.is_active %}
+            <span class="badge-ativo">Ativo</span>
+            {% else %}
+            <span class="badge-inativo">Inativo</span>
+            {% endif %}
+          </td>
+          <td>
+            <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+              <a href="{% url 'panel:produto_editar' produto.pk %}" class="btn-edit">✏️ Editar</a>
+              <a href="{% url 'panel:produto_excluir' produto.pk %}" class="btn-danger">🗑️</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div style="padding:3rem;text-align:center;">
+    <div style="font-size:3rem;margin-bottom:0.75rem;">📦</div>
+    <p style="color:#6B7280;margin-bottom:1rem;">
+      {% if q or cat_ativa %}Nenhum produto encontrado com esse filtro.{% else %}Nenhum produto cadastrado ainda.{% endif %}
+    </p>
+    <a href="{% url 'panel:produto_novo' %}" class="btn-gold">➕ Cadastrar primeiro produto</a>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

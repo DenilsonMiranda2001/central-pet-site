@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="pt-28 pb-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+    <!-- Hero Disk Ração -->
+    <div class="disk-racao-section mb-16 fade-up">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div>
+          <p class="section-label">Entrega expressa</p>
+          <h1 class="section-title mb-4">
+            Disk Ração <br/>
+            <span style="color:#F5A623;">Entrega no mesmo dia! 🛵</span>
+          </h1>
+          <p class="text-base leading-relaxed mb-6" style="color:#9CA3AF;">
+            Ficou sem ração? Sem problema! A Central Pet entrega direto na sua porta com agilidade e sem cobrar taxa de entrega. Peça agora mesmo pelo WhatsApp!
+          </p>
+          <div class="grid grid-cols-2 gap-3 mb-8">
+            <div class="flex items-center gap-2 p-3 rounded-xl" style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);">
+              <span style="color:#10B981;font-size:1.3rem;">✓</span>
+              <span class="text-sm font-semibold" style="color:#D1D5DB;">Mesmo dia</span>
+            </div>
+            <div class="flex items-center gap-2 p-3 rounded-xl" style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);">
+              <span style="color:#10B981;font-size:1.3rem;">✓</span>
+              <span class="text-sm font-semibold" style="color:#D1D5DB;">Sem taxa</span>
+            </div>
+            <div class="flex items-center gap-2 p-3 rounded-xl" style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);">
+              <span style="color:#10B981;font-size:1.3rem;">✓</span>
+              <span class="text-sm font-semibold" style="color:#D1D5DB;">Via WhatsApp</span>
+            </div>
+            <div class="flex items-center gap-2 p-3 rounded-xl" style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);">
+              <span style="color:#10B981;font-size:1.3rem;">✓</span>
+              <span class="text-sm font-semibold" style="color:#D1D5DB;">Brasília - DF</span>
+            </div>
+          </div>
+          <a href="https://wa.me/{{ whatsapp_number }}?text={{ "Olá, gostaria de pedir ração pelo Disk Ração da Central Pet. Pode me ajudar?"|urlencode }}"
+             target="_blank" rel="noopener"
+             data-interaction-type="disk_racao"
+             class="btn-gold text-base py-3.5 px-8">
+            🛵 Pedir agora pelo WhatsApp
+          </a>
+        </div>
+        <div class="hidden md:flex flex-col items-center justify-center gap-4">
+          <span style="font-size:9rem;line-height:1;">🛵</span>
+          <div class="flex gap-4">
+            <div class="glass-card rounded-2xl px-5 py-4 text-center">
+              <p class="text-2xl font-black" style="color:#F5A623;">R$ 0</p>
+              <p class="text-xs" style="color:#6B7280;">Taxa de entrega</p>
+            </div>
+            <div class="glass-card rounded-2xl px-5 py-4 text-center">
+              <p class="text-2xl font-black" style="color:#10B981;">~1h</p>
+              <p class="text-xs" style="color:#6B7280;">Tempo de entrega</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Como Funciona -->
+    <div class="mb-16 fade-up">
+      <div class="text-center mb-10">
+        <p class="section-label">Simples assim</p>
+        <h2 class="section-title">Como <span style="color:#F5A623;">Funciona</span></h2>
+        <div class="section-divider mx-auto"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card rounded-2xl p-6 text-center">
+          <div class="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-black"
+               style="background:rgba(245,166,35,0.15);color:#F5A623;border:1px solid rgba(245,166,35,0.3);">1</div>
+          <h3 class="font-bold mb-2" style="color:#F0F0F0;">Escolha a ração</h3>
+          <p class="text-sm" style="color:#6B7280;">Veja nosso catálogo ou diga a marca que precisa</p>
+        </div>
+        <div class="glass-card rounded-2xl p-6 text-center">
+          <div class="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-black"
+               style="background:rgba(245,166,35,0.15);color:#F5A623;border:1px solid rgba(245,166,35,0.3);">2</div>
+          <h3 class="font-bold mb-2" style="color:#F0F0F0;">Peça pelo WhatsApp</h3>
+          <p class="text-sm" style="color:#6B7280;">Envie sua mensagem e confirmamos o pedido</p>
+        </div>
+        <div class="glass-card rounded-2xl p-6 text-center">
+          <div class="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-black"
+               style="background:rgba(245,166,35,0.15);color:#F5A623;border:1px solid rgba(245,166,35,0.3);">3</div>
+          <h3 class="font-bold mb-2" style="color:#F0F0F0;">Receba em casa</h3>
+          <p class="text-sm" style="color:#6B7280;">Entrega rápida sem taxa diretamente na sua porta</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rações em Estoque -->
+    {% if racoes %}
+    <div class="fade-up">
+      <div class="text-center mb-10">
+        <p class="section-label">Disponíveis para entrega</p>
+        <h2 class="section-title">Rações em <span style="color:#F5A623;">Estoque</span></h2>
+        <div class="section-divider mx-auto"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {% for product in racoes %}
+        <div class="product-card">
+          <a href="{{ product.get_absolute_url }}">
+            <div class="product-img-wrapper">
+              {% if product.image %}
+              <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img" loading="lazy" />
+              {% else %}
+              <div class="product-img-placeholder">🍖</div>
+              {% endif %}
+            </div>
+          </a>
+          <div class="p-4">
+            <h3 class="font-bold text-sm mb-1" style="color:#F0F0F0;">{{ product.name }}</h3>
+            <span class="product-price block mb-3">R$ {{ product.price }}</span>
+            <a href="https://wa.me/{{ whatsapp_number }}?text={{ product.whatsapp_message|urlencode }}"
+               target="_blank" rel="noopener"
+               data-interaction-type="produto_whatsapp"
+               data-product-id="{{ product.id }}"
+               data-product-name="{{ product.name }}"
+               class="btn-gold w-full justify-center text-xs py-2">
+              🛵 Pedir entrega
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="text-center mt-8">
+        <a href="{% url 'products:list' %}?categoria=racoes" class="btn-outline-gold">
+          Ver todas as rações →
+        </a>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="pt-28 pb-20">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+    <span style="font-size:4rem;display:block;margin-bottom:1rem;">🐾</span>
+    <p class="section-label">Página não encontrada</p>
+    <h1 class="section-title mb-4">Ops, esse caminho não existe.</h1>
+    <p class="mb-8 leading-relaxed" style="color:#9CA3AF;">
+      A página pode ter mudado de endereço ou não estar mais disponível.
+    </p>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a href="{% url 'home' %}" class="btn-gold">Voltar ao início</a>
+      <a href="{% url 'products:list' %}" class="btn-outline-gold">Ver produtos</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

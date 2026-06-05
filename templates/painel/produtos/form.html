@@ -1,0 +1,136 @@
+{% extends "painel/base.html" %}
+
+{% block content %}
+<div style="max-width:760px;">
+
+  <!-- Breadcrumb -->
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;font-size:0.8rem;color:#6B7280;">
+    <a href="{% url 'panel:produto_lista' %}" style="color:#6B7280;text-decoration:none;" onmouseover="this.style.color='#F5A623'" onmouseout="this.style.color='#6B7280'">Produtos</a>
+    <span>›</span>
+    <span style="color:#F0F0F0;">{% if acao == 'criar' %}Novo produto{% else %}{{ objeto.name }}{% endif %}</span>
+  </div>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="panel-card" style="padding:1.75rem;margin-bottom:1rem;">
+      <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">
+        📦 Informações do produto
+      </h2>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <!-- Nome -->
+        <div style="grid-column:1/-1;">
+          <label class="field-label">{{ form.name.label }} *</label>
+          {{ form.name }}
+          {% if form.name.errors %}<p class="field-error">{{ form.name.errors.0 }}</p>{% endif %}
+        </div>
+
+        <!-- Categoria -->
+        <div>
+          <label class="field-label">{{ form.category.label }} *</label>
+          {{ form.category }}
+          {% if form.category.errors %}<p class="field-error">{{ form.category.errors.0 }}</p>{% endif %}
+        </div>
+
+        <!-- Ordem -->
+        <div>
+          <label class="field-label">{{ form.order.label }}</label>
+          {{ form.order }}
+          <p class="field-help">{{ form.order.help_text }}</p>
+        </div>
+
+        <!-- Descrição curta -->
+        <div style="grid-column:1/-1;">
+          <label class="field-label">{{ form.short_description.label }}</label>
+          {{ form.short_description }}
+          <p class="field-help">{{ form.short_description.help_text }}</p>
+          {% if form.short_description.errors %}<p class="field-error">{{ form.short_description.errors.0 }}</p>{% endif %}
+        </div>
+
+        <!-- Descrição completa -->
+        <div style="grid-column:1/-1;">
+          <label class="field-label">{{ form.description.label }}</label>
+          {{ form.description }}
+          {% if form.description.errors %}<p class="field-error">{{ form.description.errors.0 }}</p>{% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-card" style="padding:1.75rem;margin-bottom:1rem;">
+      <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">
+        💰 Preço
+      </h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div>
+          <label class="field-label">{{ form.price.label }} *</label>
+          {{ form.price }}
+          {% if form.price.errors %}<p class="field-error">{{ form.price.errors.0 }}</p>{% endif %}
+        </div>
+        <div>
+          <label class="field-label">{{ form.original_price.label }}</label>
+          {{ form.original_price }}
+          <p class="field-help">{{ form.original_price.help_text }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-card" style="padding:1.75rem;margin-bottom:1rem;">
+      <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">
+        🖼️ Imagem
+      </h2>
+      {% if objeto.image %}
+      <div style="margin-bottom:1rem;display:flex;align-items:center;gap:1rem;">
+        <img src="{{ objeto.image.url }}" alt="Imagem atual" style="width:80px;height:80px;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,0.08);">
+        <div>
+          <p style="font-size:0.8rem;color:#9CA3AF;">Imagem atual</p>
+          <p style="font-size:0.75rem;color:#6B7280;">Selecione uma nova para substituir</p>
+        </div>
+      </div>
+      {% endif %}
+      {{ form.image }}
+      <p class="field-help" style="margin-top:0.5rem;">Formatos aceitos: JPG, PNG, WEBP. Recomendado: proporção quadrada (1:1).</p>
+    </div>
+
+    <div class="panel-card" style="padding:1.75rem;margin-bottom:1.5rem;">
+      <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">
+        ⚙️ Configurações
+      </h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="toggle-wrap">
+          {{ form.is_featured }}
+          <label class="toggle-label" for="{{ form.is_featured.id_for_label }}">
+            ⭐ {{ form.is_featured.label }}
+            <span style="font-size:0.75rem;color:#6B7280;display:block;margin-top:0.1rem;">Aparece na seção de destaque na página inicial</span>
+          </label>
+        </div>
+        <div class="toggle-wrap">
+          {{ form.is_available }}
+          <label class="toggle-label" for="{{ form.is_available.id_for_label }}">
+            📦 {{ form.is_available.label }}
+            <span style="font-size:0.75rem;color:#6B7280;display:block;margin-top:0.1rem;">Botão de comprar aparece somente quando disponível</span>
+          </label>
+        </div>
+        <div class="toggle-wrap">
+          {{ form.is_active }}
+          <label class="toggle-label" for="{{ form.is_active.id_for_label }}">
+            🌐 {{ form.is_active.label }}
+            <span style="font-size:0.75rem;color:#6B7280;display:block;margin-top:0.1rem;">Desmarque para ocultar o produto sem excluí-lo</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ações -->
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+      <button type="submit" class="btn-gold" style="padding:0.75rem 1.75rem;font-size:0.95rem;">
+        {% if acao == 'criar' %}➕ Criar produto{% else %}💾 Salvar alterações{% endif %}
+      </button>
+      <a href="{% url 'panel:produto_lista' %}" class="btn-outline" style="padding:0.75rem 1.5rem;">
+        ← Cancelar
+      </a>
+    </div>
+
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "painel/base.html" %}
+
+{% block content %}
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
+  <p style="color:#6B7280;font-size:0.8rem;">{{ servicos.count }} serviço{{ servicos.count|pluralize:"s" }} cadastrado{{ servicos.count|pluralize:"s" }}</p>
+  <a href="{% url 'panel:servico_novo' %}" class="btn-gold">➕ Novo Serviço</a>
+</div>
+
+<div class="panel-card" style="overflow:hidden;">
+  {% if servicos %}
+  <div style="overflow-x:auto;">
+    <table class="panel-table">
+      <thead>
+        <tr>
+          <th>Serviço</th>
+          <th>Preço a partir de</th>
+          <th>Destaque</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sv in servicos %}
+        <tr>
+          <td>
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <span style="font-size:1.75rem;">{{ sv.icon|default:"🐾" }}</span>
+              <div>
+                <p style="font-weight:600;color:#F0F0F0;font-size:0.875rem;">{{ sv.name }}</p>
+                {% if sv.short_description %}
+                <p style="color:#6B7280;font-size:0.75rem;margin-top:0.1rem;">{{ sv.short_description|truncatechars:50 }}</p>
+                {% endif %}
+              </div>
+            </div>
+          </td>
+          <td>
+            {% if sv.price_from %}
+            <span style="font-weight:700;color:#F5A623;">R$ {{ sv.price_from }}</span>
+            {% else %}
+            <span style="color:#4B5563;font-size:0.8rem;">Sob consulta</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if sv.is_featured %}<span class="badge-destaque">⭐ Sim</span>
+            {% else %}<span style="color:#4B5563;font-size:0.8rem;">Não</span>{% endif %}
+          </td>
+          <td>
+            {% if sv.is_active %}<span class="badge-ativo">Ativo</span>
+            {% else %}<span class="badge-inativo">Inativo</span>{% endif %}
+          </td>
+          <td>
+            <div style="display:flex;gap:0.4rem;">
+              <a href="{% url 'panel:servico_editar' sv.pk %}" class="btn-edit">✏️ Editar</a>
+              <a href="{% url 'panel:servico_excluir' sv.pk %}" class="btn-danger">🗑️</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div style="padding:3rem;text-align:center;">
+    <div style="font-size:3rem;margin-bottom:0.75rem;">✂️</div>
+    <p style="color:#6B7280;margin-bottom:1rem;">Nenhum serviço cadastrado ainda.</p>
+    <a href="{% url 'panel:servico_novo' %}" class="btn-gold">➕ Criar serviço</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

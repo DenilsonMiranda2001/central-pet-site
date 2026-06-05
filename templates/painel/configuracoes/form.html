@@ -1,0 +1,116 @@
+{% extends "painel/base.html" %}
+
+{% block content %}
+<div style="max-width:760px;">
+
+  <form method="post">
+    {% csrf_token %}
+
+    <!-- Identidade -->
+    <div class="panel-card" style="padding:1.75rem;margin-bottom:1rem;">
+      <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">
+        🏪 Identidade da loja
+      </h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div>
+          <label class="field-label">{{ form.store_name.label }}</label>
+          {{ form.store_name }}
+        </div>
+        <div>
+          <label class="field-label">{{ form.slogan.label }}</label>
+          {{ form.slogan }}
+        </div>
+        <div>
+          <label class="field-label">{{ form.delivery_text.label }}</label>
+          {{ form.delivery_text }}
+          <p class="field-help">Texto de destaque exibido no site (ex: "Entrega rápida e sem taxa").</p>
+        </div>
+        <div>
+          <label class="field-label">{{ form.about_text.label }}</label>
+          {{ form.about_text }}
+          <p class="field-help">Aparece na página "Sobre a loja".</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contato -->
+    <div class="panel-card" style="padding:1.75rem;margin-bottom:1rem;">
+      <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">
+        📞 Contato
+      </h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div>
+          <label class="field-label">{{ form.whatsapp_number.label }}</label>
+          {{ form.whatsapp_number }}
+          <p class="field-help">{{ form.whatsapp_number.help_text }}</p>
+          {% if form.whatsapp_number.errors %}<p class="field-error">{{ form.whatsapp_number.errors.0 }}</p>{% endif %}
+        </div>
+        <div>
+          <label class="field-label">{{ form.phone_number.label }}</label>
+          {{ form.phone_number }}
+        </div>
+        <div>
+          <label class="field-label">{{ form.email.label }}</label>
+          {{ form.email }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Redes sociais -->
+    <div class="panel-card" style="padding:1.75rem;margin-bottom:1rem;">
+      <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">
+        📲 Redes sociais
+      </h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div>
+          <label class="field-label">{{ form.instagram_url.label }}</label>
+          {{ form.instagram_url }}
+          <p class="field-help">Somente o nome de usuário, sem @.</p>
+        </div>
+        <div>
+          <label class="field-label">{{ form.facebook_url.label }}</label>
+          {{ form.facebook_url }}
+        </div>
+        <div>
+          <label class="field-label">{{ form.tiktok_url.label }}</label>
+          {{ form.tiktok_url }}
+          <p class="field-help">Somente o nome de usuário, sem @.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Endereço -->
+    <div class="panel-card" style="padding:1.75rem;margin-bottom:1.5rem;">
+      <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">
+        📍 Localização e horário
+      </h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div>
+          <label class="field-label">{{ form.address.label }}</label>
+          {{ form.address }}
+        </div>
+        <div>
+          <label class="field-label">{{ form.maps_url.label }}</label>
+          {{ form.maps_url }}
+          <p class="field-help">{{ form.maps_url.help_text }}</p>
+          {% if form.maps_url.errors %}<p class="field-error">{{ form.maps_url.errors.0 }}</p>{% endif %}
+        </div>
+        <div>
+          <label class="field-label">{{ form.opening_hours.label }}</label>
+          {{ form.opening_hours }}
+          <p class="field-help">Use uma linha para cada período. Ex: "Seg à Sáb: 8h às 19h".</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+      <button type="submit" class="btn-gold" style="padding:0.75rem 1.75rem;font-size:0.95rem;">
+        💾 Salvar configurações
+      </button>
+      <a href="{% url 'home' %}" target="_blank" rel="noopener" class="btn-green" style="padding:0.75rem 1.5rem;font-size:0.875rem;">
+        🌐 Ver site
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}

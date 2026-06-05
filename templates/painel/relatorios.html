@@ -1,0 +1,101 @@
+{% extends "painel/base.html" %}
+
+{% block content %}
+
+<div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+  <div>
+    <p style="font-size:0.8rem;color:#6B7280;margin-bottom:0.25rem;">{{ period_label }}</p>
+    <h2 style="font-size:1.35rem;font-weight:900;color:#F0F0F0;">Relatórios de interações</h2>
+  </div>
+  <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+    <a href="{% url 'panel:relatorios' %}?periodo=hoje" class="{% if periodo == 'hoje' %}btn-gold{% else %}btn-outline{% endif %}">Hoje</a>
+    <a href="{% url 'panel:relatorios' %}?periodo=7" class="{% if periodo == '7' %}btn-gold{% else %}btn-outline{% endif %}">7 dias</a>
+    <a href="{% url 'panel:relatorios' %}?periodo=30" class="{% if periodo == '30' %}btn-gold{% else %}btn-outline{% endif %}">30 dias</a>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;margin-bottom:2rem;">
+  <div class="stat-card"><div class="stat-value">{{ total_interacoes }}</div><div class="stat-label">Total de interações</div></div>
+  <div class="stat-card"><div class="stat-value" style="color:#25D366;">{{ cliques_whatsapp }}</div><div class="stat-label">Cliques WhatsApp</div></div>
+  <div class="stat-card"><div class="stat-value" style="color:#E4405F;">{{ cliques_instagram }}</div><div class="stat-label">Cliques Instagram</div></div>
+  <div class="stat-card"><div class="stat-value" style="color:#F5A623;">{{ agendamentos_enviados }}</div><div class="stat-label">Agendamentos enviados</div></div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1rem;">
+  <div class="panel-card" style="padding:1.25rem;min-height:320px;">
+    <h3 style="font-size:0.875rem;font-weight:700;color:#F0F0F0;margin-bottom:1rem;">Distribuição por tipo</h3>
+    <canvas id="interactionChart" height="120"></canvas>
+  </div>
+
+  <div class="panel-card" style="padding:1.25rem;">
+    <h3 style="font-size:0.875rem;font-weight:700;color:#F0F0F0;margin-bottom:1rem;">✂️ Serviços mais procurados</h3>
+    <div style="display:flex;flex-direction:column;gap:0.65rem;">
+      {% for item in servicos_mais_procurados %}
+      <div style="display:flex;justify-content:space-between;gap:1rem;font-size:0.84rem;color:#D1D5DB;">
+        <span>{{ item.nome_servico_snapshot }}</span>
+        <strong style="color:#F5A623;">{{ item.total }}</strong>
+      </div>
+      {% empty %}
+      <p style="font-size:0.84rem;color:#6B7280;">Sem dados no período.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="panel-card" style="padding:1.25rem;">
+  <h3 style="font-size:0.875rem;font-weight:700;color:#F0F0F0;margin-bottom:1rem;">🏆 Produtos mais clicados</h3>
+  <div style="overflow-x:auto;">
+    <table class="panel-table">
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Categoria</th>
+          <th>Cliques</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in produtos_mais_clicados %}
+        <tr>
+          <td>{{ item.nome_produto_snapshot }}</td>
+          <td>{{ item.categoria_produto_snapshot|default:"—" }}</td>
+          <td><strong style="color:#F5A623;">{{ item.total }}</strong></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3" style="color:#6B7280;">Sem dados no período.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{{ tipo_labels|json_script:"tipo-labels" }}
+{{ tipo_values|json_script:"tipo-values" }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const labels = JSON.parse(document.getElementById('tipo-labels').textContent);
+const values = JSON.parse(document.getElementById('tipo-values').textContent);
+const ctx = document.getElementById('interactionChart');
+if (ctx) {
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        backgroundColor: ['#F5A623', '#25D366', '#FFD166', '#8B5CF6', '#10B981', '#E4405F'],
+        borderRadius: 8,
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#9CA3AF' }, grid: { color: 'rgba(255,255,255,0.04)' } },
+        y: { beginAtZero: true, ticks: { color: '#9CA3AF', precision: 0 }, grid: { color: 'rgba(255,255,255,0.04)' } }
+      }
+    }
+  });
+}
+</script>
+
+{% endblock %}

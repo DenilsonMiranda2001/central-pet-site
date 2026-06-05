@@ -1,0 +1,12 @@
+{% extends "painel/base.html" %}
+
+{% block content %}
+<div class="panel-card" style="max-width:560px;padding:2rem;">
+  <div style="font-size:2.5rem;margin-bottom:1rem;">🔒</div>
+  <h2 style="font-size:1.4rem;font-weight:800;color:#F0F0F0;margin-bottom:0.6rem;">Acesso bloqueado</h2>
+  <p style="color:#9CA3AF;margin-bottom:1.5rem;line-height:1.6;">
+    Este painel é restrito a usuários autorizados da Central Pet.
+  </p>
+  <a href="{% url 'panel:logout' %}" class="btn-outline">Sair e entrar com outro usuário</a>
+</div>
+{% endblock %}

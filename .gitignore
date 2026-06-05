@@ -1,0 +1,14 @@
+.env
+*.pyc
+__pycache__/
+staticfiles/
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# Banco local de desenvolvimento. Não apague o arquivo local automaticamente.
+db.sqlite3
+
+# Uploads locais. Em produção, migrar para storage externo.
+media/

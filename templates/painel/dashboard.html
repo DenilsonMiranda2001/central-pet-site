@@ -1,0 +1,78 @@
+{% extends "painel/base.html" %}
+
+{% block content %}
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem;">
+  <div class="stat-card"><div style="font-size:1.5rem;margin-bottom:0.5rem;">📦</div><div class="stat-value">{{ total_produtos }}</div><div class="stat-label">Total de produtos</div></div>
+  <div class="stat-card"><div style="font-size:1.5rem;margin-bottom:0.5rem;">🛍️</div><div class="stat-value">{{ produtos_ativos }}</div><div class="stat-label">Produtos ativos</div></div>
+  <div class="stat-card"><div style="font-size:1.5rem;margin-bottom:0.5rem;">⭐</div><div class="stat-value" style="color:#FFD166;">{{ produtos_destaque }}</div><div class="stat-label">Produtos em destaque</div></div>
+  <div class="stat-card"><div style="font-size:1.5rem;margin-bottom:0.5rem;">✂️</div><div class="stat-value" style="color:#10B981;">{{ servicos_ativos }}</div><div class="stat-label">Serviços ativos</div></div>
+  <div class="stat-card"><div style="font-size:1.5rem;margin-bottom:0.5rem;">🖼️</div><div class="stat-value" style="color:#F59E0B;">{{ banners_ativos }}</div><div class="stat-label">Banners ativos</div></div>
+  <div class="stat-card"><div style="font-size:1.5rem;margin-bottom:0.5rem;">💬</div><div class="stat-value" style="color:#8B5CF6;">{{ depoimentos_ativos }}</div><div class="stat-label">Depoimentos ativos</div></div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem;">
+  <div class="stat-card"><div class="stat-value" style="color:#25D366;">{{ whatsapp_hoje }}</div><div class="stat-label">Cliques WhatsApp hoje</div></div>
+  <div class="stat-card"><div class="stat-value" style="color:#25D366;">{{ whatsapp_mes }}</div><div class="stat-label">Cliques WhatsApp mês</div></div>
+  <div class="stat-card"><div class="stat-value" style="color:#F5A623;">{{ agendamentos_abertos }}</div><div class="stat-label">Aberturas de agendamento</div></div>
+  <div class="stat-card"><div class="stat-value" style="color:#10B981;">{{ agendamentos_enviados }}</div><div class="stat-label">Agendamentos enviados</div></div>
+  <div class="stat-card"><div class="stat-value" style="color:#E4405F;">{{ cliques_instagram }}</div><div class="stat-label">Cliques Instagram</div></div>
+</div>
+
+<div class="panel-card" style="padding:1.5rem;margin-bottom:2rem;">
+  <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">Atalhos rápidos</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0.75rem;">
+    <a href="{% url 'panel:produto_novo' %}" class="quick-action"><span class="quick-action-icon">➕</span>Novo produto</a>
+    <a href="{% url 'panel:servico_novo' %}" class="quick-action"><span class="quick-action-icon">✂️</span>Novo serviço</a>
+    <a href="{% url 'panel:banner_novo' %}" class="quick-action"><span class="quick-action-icon">🖼️</span>Novo banner</a>
+    <a href="{% url 'panel:relatorios' %}" class="quick-action"><span class="quick-action-icon">📈</span>Ver relatórios</a>
+    <a href="{% url 'panel:configuracoes' %}" class="quick-action"><span class="quick-action-icon">⚙️</span>Configurações</a>
+    <a href="{% url 'home' %}" target="_blank" rel="noopener" class="quick-action"><span class="quick-action-icon">🌐</span>Ver o site</a>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;">
+  <div class="panel-card" style="padding:1.25rem;">
+    <h3 style="font-size:0.875rem;font-weight:700;color:#F0F0F0;margin-bottom:1rem;">🏆 Top produtos do mês</h3>
+    <div style="display:flex;flex-direction:column;gap:0.65rem;">
+      {% for item in top_produtos %}
+      <div style="display:flex;justify-content:space-between;gap:1rem;font-size:0.84rem;color:#D1D5DB;">
+        <span>{{ item.nome_produto_snapshot }}{% if item.categoria_produto_snapshot %}<small style="display:block;color:#6B7280;">{{ item.categoria_produto_snapshot }}</small>{% endif %}</span>
+        <strong style="color:#F5A623;">{{ item.total }}</strong>
+      </div>
+      {% empty %}
+      <p style="font-size:0.84rem;color:#6B7280;">Ainda sem cliques em produtos neste mês.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="panel-card" style="padding:1.25rem;">
+    <h3 style="font-size:0.875rem;font-weight:700;color:#F0F0F0;margin-bottom:1rem;">✂️ Serviços mais procurados</h3>
+    <div style="display:flex;flex-direction:column;gap:0.65rem;">
+      {% for item in top_servicos %}
+      <div style="display:flex;justify-content:space-between;gap:1rem;font-size:0.84rem;color:#D1D5DB;">
+        <span>{{ item.nome_servico_snapshot }}</span>
+        <strong style="color:#F5A623;">{{ item.total }}</strong>
+      </div>
+      {% empty %}
+      <p style="font-size:0.84rem;color:#6B7280;">Ainda sem agendamentos neste mês.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="panel-card" style="padding:1.25rem;">
+    <h3 style="font-size:0.875rem;font-weight:700;color:#F0F0F0;margin-bottom:1rem;">🕘 Últimas interações</h3>
+    <div style="display:flex;flex-direction:column;gap:0.65rem;">
+      {% for log in ultimas_interacoes %}
+      <div style="font-size:0.82rem;color:#D1D5DB;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:0.55rem;">
+        <strong style="color:#F5A623;">{{ log.get_tipo_display }}</strong>
+        <span style="display:block;color:#6B7280;">{{ log.created_at|date:"d/m/Y H:i" }}</span>
+      </div>
+      {% empty %}
+      <p style="font-size:0.84rem;color:#6B7280;">Nenhuma interação registrada ainda.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

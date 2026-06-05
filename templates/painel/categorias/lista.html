@@ -1,0 +1,50 @@
+{% extends "painel/base.html" %}
+
+{% block content %}
+
+<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
+  <p style="color:#6B7280;font-size:0.8rem;">{{ categorias.count }} categoria{{ categorias.count|pluralize:"s" }} cadastrada{{ categorias.count|pluralize:"s" }}</p>
+  <a href="{% url 'panel:categoria_nova' %}" class="btn-gold">➕ Nova Categoria</a>
+</div>
+
+<div class="panel-card" style="overflow:hidden;">
+  {% if categorias %}
+  <table class="panel-table">
+    <thead>
+      <tr>
+        <th>Ícone</th>
+        <th>Nome</th>
+        <th>Ordem</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cat in categorias %}
+      <tr>
+        <td><span style="font-size:1.5rem;">{{ cat.icon|default:"🏷️" }}</span></td>
+        <td><span style="font-weight:600;color:#F0F0F0;">{{ cat.name }}</span></td>
+        <td><span style="color:#9CA3AF;font-size:0.85rem;">{{ cat.order }}</span></td>
+        <td>
+          {% if cat.is_active %}<span class="badge-ativo">Ativa</span>
+          {% else %}<span class="badge-inativo">Inativa</span>{% endif %}
+        </td>
+        <td>
+          <div style="display:flex;gap:0.4rem;">
+            <a href="{% url 'panel:categoria_editar' cat.pk %}" class="btn-edit">✏️ Editar</a>
+            <a href="{% url 'panel:categoria_excluir' cat.pk %}" class="btn-danger">🗑️</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div style="padding:3rem;text-align:center;">
+    <div style="font-size:3rem;margin-bottom:0.75rem;">🏷️</div>
+    <p style="color:#6B7280;margin-bottom:1rem;">Nenhuma categoria cadastrada ainda.</p>
+    <a href="{% url 'panel:categoria_nova' %}" class="btn-gold">➕ Criar categoria</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

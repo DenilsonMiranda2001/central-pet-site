@@ -1,0 +1,93 @@
+{% extends "painel/base.html" %}
+
+{% block content %}
+<div style="max-width:760px;">
+
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;font-size:0.8rem;color:#6B7280;">
+    <a href="{% url 'panel:servico_lista' %}" style="color:#6B7280;text-decoration:none;" onmouseover="this.style.color='#F5A623'" onmouseout="this.style.color='#6B7280'">Serviços</a>
+    <span>›</span>
+    <span style="color:#F0F0F0;">{% if acao == 'criar' %}Novo serviço{% else %}{{ objeto.name }}{% endif %}</span>
+  </div>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="panel-card" style="padding:1.75rem;margin-bottom:1rem;">
+      <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">
+        ✂️ Informações do serviço
+      </h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div>
+          <label class="field-label">{{ form.name.label }} *</label>
+          {{ form.name }}
+          {% if form.name.errors %}<p class="field-error">{{ form.name.errors.0 }}</p>{% endif %}
+        </div>
+        <div>
+          <label class="field-label">{{ form.icon.label }}</label>
+          {{ form.icon }}
+          <p class="field-help">Ex: ✂️ 🚗 💧 🛵</p>
+        </div>
+        <div style="grid-column:1/-1;">
+          <label class="field-label">{{ form.short_description.label }}</label>
+          {{ form.short_description }}
+        </div>
+        <div style="grid-column:1/-1;">
+          <label class="field-label">{{ form.description.label }}</label>
+          {{ form.description }}
+        </div>
+        <div>
+          <label class="field-label">{{ form.price_from.label }}</label>
+          {{ form.price_from }}
+          <p class="field-help">{{ form.price_from.help_text }}</p>
+        </div>
+        <div>
+          <label class="field-label">{{ form.order.label }}</label>
+          {{ form.order }}
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-card" style="padding:1.75rem;margin-bottom:1rem;">
+      <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">
+        🖼️ Imagem
+      </h2>
+      {% if objeto.image %}
+      <div style="margin-bottom:1rem;display:flex;align-items:center;gap:1rem;">
+        <img src="{{ objeto.image.url }}" alt="Imagem atual" style="width:80px;height:80px;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,0.08);">
+        <p style="font-size:0.8rem;color:#9CA3AF;">Imagem atual — selecione uma nova para substituir</p>
+      </div>
+      {% endif %}
+      {{ form.image }}
+    </div>
+
+    <div class="panel-card" style="padding:1.75rem;margin-bottom:1.5rem;">
+      <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">
+        ⚙️ Configurações
+      </h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div class="toggle-wrap">
+          {{ form.is_featured }}
+          <label class="toggle-label" for="{{ form.is_featured.id_for_label }}">
+            ⭐ {{ form.is_featured.label }}
+            <span style="font-size:0.75rem;color:#6B7280;display:block;margin-top:0.1rem;">Aparece nos destaques da página inicial</span>
+          </label>
+        </div>
+        <div class="toggle-wrap">
+          {{ form.is_active }}
+          <label class="toggle-label" for="{{ form.is_active.id_for_label }}">
+            🌐 {{ form.is_active.label }}
+            <span style="font-size:0.75rem;color:#6B7280;display:block;margin-top:0.1rem;">Desmarque para ocultar sem excluir</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+      <button type="submit" class="btn-gold" style="padding:0.75rem 1.75rem;font-size:0.95rem;">
+        {% if acao == 'criar' %}➕ Criar serviço{% else %}💾 Salvar alterações{% endif %}
+      </button>
+      <a href="{% url 'panel:servico_lista' %}" class="btn-outline" style="padding:0.75rem 1.5rem;">← Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

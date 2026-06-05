@@ -1,0 +1,54 @@
+{% extends "painel/base.html" %}
+
+{% block content %}
+<div style="max-width:520px;">
+
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;font-size:0.8rem;color:#6B7280;">
+    <a href="{% url 'panel:categoria_lista' %}" style="color:#6B7280;text-decoration:none;" onmouseover="this.style.color='#F5A623'" onmouseout="this.style.color='#6B7280'">Categorias</a>
+    <span>›</span>
+    <span style="color:#F0F0F0;">{% if acao == 'criar' %}Nova categoria{% else %}{{ objeto.name }}{% endif %}</span>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="panel-card" style="padding:1.75rem;margin-bottom:1rem;">
+      <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">
+        🏷️ Dados da categoria
+      </h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div>
+          <label class="field-label">{{ form.name.label }} *</label>
+          {{ form.name }}
+          {% if form.name.errors %}<p class="field-error">{{ form.name.errors.0 }}</p>{% endif %}
+        </div>
+        <div>
+          <label class="field-label">{{ form.icon.label }}</label>
+          {{ form.icon }}
+          <p class="field-help">Cole um emoji que represente essa categoria. Ex: 🍖 🦴 💊 🎾</p>
+          {% if form.icon.errors %}<p class="field-error">{{ form.icon.errors.0 }}</p>{% endif %}
+        </div>
+        <div>
+          <label class="field-label">{{ form.order.label }}</label>
+          {{ form.order }}
+          <p class="field-help">Número menor aparece primeiro no menu e nas listagens.</p>
+        </div>
+        <div class="toggle-wrap" style="margin-top:0.25rem;">
+          {{ form.is_active }}
+          <label class="toggle-label" for="{{ form.is_active.id_for_label }}">
+            🌐 {{ form.is_active.label }}
+            <span style="font-size:0.75rem;color:#6B7280;display:block;margin-top:0.1rem;">Categorias inativas não aparecem no menu do site</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:0.75rem;">
+      <button type="submit" class="btn-gold" style="padding:0.75rem 1.75rem;">
+        {% if acao == 'criar' %}➕ Criar categoria{% else %}💾 Salvar{% endif %}
+      </button>
+      <a href="{% url 'panel:categoria_lista' %}" class="btn-outline" style="padding:0.75rem 1.5rem;">← Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

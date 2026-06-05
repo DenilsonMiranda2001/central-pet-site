@@ -1,0 +1,68 @@
+[
+  {
+    "model": "core.storeconfig",
+    "pk": 1,
+    "fields": {
+      "store_name": "Central Pet",
+      "slogan": "Tudo para seu melhor amigo!",
+      "whatsapp_number": "5561991083675",
+      "phone_number": "(61) 3201-0015",
+      "instagram_url": "centralpetoficial",
+      "facebook_url": "",
+      "tiktok_url": "",
+      "email": "contato@centralpet.com.br",
+      "address": "QNM 34 Conjunto H Lote 01\nCeilândia Sul — Brasília/DF",
+      "maps_url": "",
+      "opening_hours": "Seg à Sáb: 8h às 19h\nDomingos: 9h às 13h",
+      "delivery_text": "Entrega rápida e sem taxa para você",
+      "about_text": "Na Central Pet, seu animal encontra tudo que precisa com o cuidado que merece. Oferecemos serviços completos de Banho & Tosa, Táxi Dog, além de uma linha premium de rações e medicamentos para manter a saúde e o bem-estar do seu companheiro em dia. Sem complicação: nossa entrega é rápida, sem taxa e com o exclusivo Disk Ração para pedidos práticos e ágeis diretamente no seu WhatsApp.",
+      "hero_title": "Cuidado que seu pet sente, amor que fica.",
+      "hero_subtitle": "Banho & Tosa, Táxi Dog, Rações, Medicamentos e muito mais! Entrega rápida e sem taxa para você."
+    }
+  },
+  {"model":"products.category","pk":1,"fields":{"name":"Rações","slug":"racoes","icon":"🍖","is_active":true,"order":1}},
+  {"model":"products.category","pk":2,"fields":{"name":"Medicamentos","slug":"medicamentos","icon":"💊","is_active":true,"order":2}},
+  {"model":"products.category","pk":3,"fields":{"name":"Petiscos","slug":"petiscos","icon":"🦴","is_active":true,"order":3}},
+  {"model":"products.category","pk":4,"fields":{"name":"Brinquedos","slug":"brinquedos","icon":"🎾","is_active":true,"order":4}},
+  {"model":"products.category","pk":5,"fields":{"name":"Higiene","slug":"higiene","icon":"🛁","is_active":true,"order":5}},
+  {"model":"products.category","pk":6,"fields":{"name":"Acessórios","slug":"acessorios","icon":"🎀","is_active":true,"order":6}},
+  {
+    "model": "products.product", "pk": 1,
+    "fields": {"name":"Ração Royal Canin Adult Cães 15kg","slug":"racao-royal-canin-adult-caes-15kg","short_description":"Nutrição completa para cães adultos de todas as raças","description":"Royal Canin Adult é formulada para atender às necessidades nutricionais de cães adultos. Rica em proteínas de alta qualidade e com blend exclusivo de antioxidantes.","category":1,"price":"189.90","original_price":"219.90","image":"","is_featured":true,"is_available":true,"is_active":true,"order":1,"created_at":"2024-01-01T00:00:00Z","updated_at":"2024-01-01T00:00:00Z"}
+  },
+  {
+    "model": "products.product", "pk": 2,
+    "fields": {"name":"Ração Hills Science Diet Gatos 7,5kg","slug":"racao-hills-science-diet-gatos-75kg","short_description":"Nutrição científica para gatos adultos saudáveis","description":"Hill's Science Diet para gatos adultos é formulada com ingredientes de alta qualidade para garantir saúde e vitalidade ao seu felino.","category":1,"price":"149.90","original_price":null,"image":"","is_featured":true,"is_available":true,"is_active":true,"order":2,"created_at":"2024-01-01T00:00:00Z","updated_at":"2024-01-01T00:00:00Z"}
+  },
+  {
+    "model": "products.product", "pk": 3,
+    "fields": {"name":"Antipulgas Bravecto Cães 10-20kg","slug":"antipulgas-bravecto-caes-10-20kg","short_description":"Proteção de 3 meses contra pulgas e carrapatos","description":"Bravecto é o antipulgas oral que protege seu cão por até 3 meses com uma única dose. Ação rápida contra pulgas e carrapatos.","category":2,"price":"139.00","original_price":"159.00","image":"","is_featured":true,"is_available":true,"is_active":true,"order":1,"created_at":"2024-01-01T00:00:00Z","updated_at":"2024-01-01T00:00:00Z"}
+  },
+  {
+    "model": "products.product", "pk": 4,
+    "fields": {"name":"Petisco Zuke's Mini Naturals Frango 170g","slug":"petisco-zukes-mini-naturals-frango-170g","short_description":"Petisco natural sem corantes artificiais","description":"Petiscos naturais Zuke's Mini Naturals são feitos com ingredientes reais. Sem conservantes artificiais, perfeitos para adestramento.","category":3,"price":"39.90","original_price":null,"image":"","is_featured":true,"is_available":true,"is_active":true,"order":1,"created_at":"2024-01-01T00:00:00Z","updated_at":"2024-01-01T00:00:00Z"}
+  },
+  {
+    "model": "products.product", "pk": 5,
+    "fields": {"name":"Brinquedo Kong Classic Vermelho M","slug":"brinquedo-kong-classic-vermelho-m","short_description":"O brinquedo mais recomendado por veterinários","description":"Kong Classic é o brinquedo interativo definitivo para cães. Pode ser recheado com petiscos para entretenimento prolongado.","category":4,"price":"79.90","original_price":"94.90","image":"","is_featured":true,"is_available":true,"is_active":true,"order":1,"created_at":"2024-01-01T00:00:00Z","updated_at":"2024-01-01T00:00:00Z"}
+  },
+  {
+    "model": "products.product", "pk": 6,
+    "fields": {"name":"Shampoo Sanol Dog Neutro 500ml","slug":"shampoo-sanol-dog-neutro-500ml","short_description":"Fórmula suave para pele sensível","description":"Shampoo Sanol Dog Neutro com pH balanceado, ideal para uso frequente. Deixa o pelo macio e brilhoso sem irritar a pele.","category":5,"price":"24.90","original_price":null,"image":"","is_featured":false,"is_available":true,"is_active":true,"order":1,"created_at":"2024-01-01T00:00:00Z","updated_at":"2024-01-01T00:00:00Z"}
+  },
+  {
+    "model": "products.product", "pk": 7,
+    "fields": {"name":"Coleira Reforçada Nylon Premium G","slug":"coleira-reforcada-nylon-premium-g","short_description":"Resistente e confortável para cães grandes","description":"Coleira de nylon reforçado com fivela metálica e acabamento premium. Disponível em várias cores.","category":6,"price":"49.90","original_price":"59.90","image":"","is_featured":true,"is_available":true,"is_active":true,"order":1,"created_at":"2024-01-01T00:00:00Z","updated_at":"2024-01-01T00:00:00Z"}
+  },
+  {
+    "model": "products.product", "pk": 8,
+    "fields": {"name":"Ração Pedigree Adulto Frango 15kg","slug":"racao-pedigree-adulto-frango-15kg","short_description":"Nutrição completa com sabor que seu cão adora","description":"Pedigree Adulto com frango, cereais e vegetais. Contém 21 nutrientes essenciais para a saúde completa do seu cão.","category":1,"price":"109.90","original_price":"129.90","image":"","is_featured":true,"is_available":true,"is_active":true,"order":3,"created_at":"2024-01-01T00:00:00Z","updated_at":"2024-01-01T00:00:00Z"}
+  },
+  {"model":"services.service","pk":1,"fields":{"name":"Banho & Tosa","slug":"banho-e-tosa","description":"Banho completo com secagem, escovação, limpeza de ouvidos, corte de unhas e perfume. Tosa higiênica ou artística conforme a raça. Todos os produtos são premium e hipoalergênicos.","short_description":"Banho completo com secagem, escovação e perfume. Tosa higiênica ou artística.","image":"","price_from":"45.00","icon":"✂️","whatsapp_message":"Olá, gostaria de agendar *Banho & Tosa* para meu pet. Pode me informar disponibilidade?","is_active":true,"is_featured":true,"order":1}},
+  {"model":"services.service","pk":2,"fields":{"name":"Táxi Dog","slug":"taxi-dog","description":"Transporte seguro e confortável do seu pet até nossa pet shop e de volta para casa. Motoristas treinados, veículo climatizado e caixas de transporte certificadas.","short_description":"Busca e entrega do seu pet em casa com segurança e conforto.","image":"","price_from":"30.00","icon":"🚗","whatsapp_message":"Olá, gostaria de solicitar o *Táxi Dog* para meu pet. Qual a disponibilidade?","is_active":true,"is_featured":true,"order":2}},
+  {"model":"services.service","pk":3,"fields":{"name":"Hidratação","slug":"hidratacao","description":"Tratamento intensivo de hidratação para o pelo do seu pet. Usamos produtos premium que restauram o brilho, maciez e saúde do pelo, evitando ressecamento e quebra.","short_description":"Tratamento premium que restaura o brilho e a saúde do pelo.","image":"","price_from":"35.00","icon":"💧","whatsapp_message":"Olá, gostaria de agendar a *Hidratação* para o pelo do meu pet.","is_active":true,"is_featured":true,"order":3}},
+  {"model":"services.service","pk":4,"fields":{"name":"Disk Ração","slug":"disk-racao","description":"Ficou sem ração? A Central Pet entrega no mesmo dia, sem taxa de entrega, direto na sua porta. Temos as melhores marcas em estoque. Peça pelo WhatsApp em minutos!","short_description":"Entrega de ração no mesmo dia, sem taxa, direto na sua porta.","image":"","price_from":null,"icon":"🛵","whatsapp_message":"Olá, gostaria de pedir ração pelo *Disk Ração* da Central Pet. Pode me ajudar?","is_active":true,"is_featured":true,"order":4}},
+  {"model":"core.testimonial","pk":1,"fields":{"customer_name":"Ana Paula S.","pet_name":"Golden","comment":"Minha Golden ama o banho e tosa aqui! Sempre sai cheirosa e linda. Atendimento impecável!","rating":5,"is_active":true,"order":1,"created_at":"2024-01-01T00:00:00Z"}},
+  {"model":"core.testimonial","pk":2,"fields":{"customer_name":"Carlos M.","pet_name":"","comment":"O Disk Ração salvou minha vida! Pedi pelo WhatsApp e em menos de 1 hora chegou em casa. Sem taxa de entrega!","rating":5,"is_active":true,"order":2,"created_at":"2024-01-01T00:00:00Z"}},
+  {"model":"core.testimonial","pk":3,"fields":{"customer_name":"Fernanda L.","pet_name":"Poodle","comment":"Uso o Táxi Dog toda semana. Motorista super atencioso, meu Poodle chega tranquilo. Recomendo muito!","rating":5,"is_active":true,"order":3,"created_at":"2024-01-01T00:00:00Z"}}
+]

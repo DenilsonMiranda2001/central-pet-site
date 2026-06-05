@@ -1,0 +1,434 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- ── HERO ── -->
+<section class="hero-section bg-hero{% if banner and banner.image %} has-banner-image{% endif %}">
+  {% if banner and banner.image %}
+  <div class="hero-banner-backdrop" style="background-image:url('{{ banner.image.url }}');"></div>
+  {% endif %}
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+      <!-- Left Content -->
+      <div>
+        <!-- Badge Live -->
+        <div class="flex items-center gap-2 mb-6">
+          <span class="badge-hero"><span class="dot"></span> Loja aberta agora</span>
+          <span class="badge-hero">🚀 Entrega rápida</span>
+        </div>
+
+        <!-- Title -->
+        <h1 class="hero-title mb-5">
+          {% if banner and banner.title %}
+            {{ banner.title }}
+          {% else %}
+            Cuidado que seu pet sente,<br/>
+            <span class="highlight">amor que fica.</span>
+          {% endif %}
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-base sm:text-lg mb-8 leading-relaxed" style="color:#9CA3AF;max-width:520px;">
+          {% if banner and banner.subtitle %}{{ banner.subtitle }}{% else %}{{ config.hero_subtitle }}{% endif %}
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap gap-3 mb-10">
+          <a href="https://wa.me/{{ whatsapp_number }}"
+             target="_blank" rel="noopener"
+             data-interaction-type="whatsapp_geral"
+             class="btn-whatsapp">
+            <svg class="w-5 h-5 fill-white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Falar no WhatsApp
+          </a>
+          <button type="button" class="btn-outline-gold" data-schedule-service="Banho + Tosa">
+            ✂️ Agendar Banho e Tosa
+          </button>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="flex flex-wrap gap-3">
+          <div class="badge-hero">🚚 Entrega grátis</div>
+          <div class="badge-hero">✅ Produtos originais</div>
+          <div class="badge-hero">⭐ Atendimento premium</div>
+        </div>
+      </div>
+
+      <!-- Right — Visual Card -->
+      <div class="hidden lg:flex justify-center">
+        <div class="relative">
+          {% if banner and banner.image %}
+          <div class="hero-image-card">
+            <img src="{{ banner.image.url }}" alt="{{ banner.title|default:'Banner Central Pet' }}" loading="eager" />
+            <div class="hero-image-caption">
+              <strong>{{ store.store_name }}</strong>
+              <span>{{ banner.subtitle|default:store.slogan }}</span>
+            </div>
+          </div>
+          {% else %}
+          <!-- Main Visual Card -->
+          <div class="glass-card rounded-3xl p-8 w-80" style="border-color:rgba(245,166,35,0.2);">
+            <div class="text-center mb-6">
+              <span style="font-size:5rem;">🐾</span>
+              <h3 class="text-xl font-bold mt-2" style="color:#F5A623;">Central Pet</h3>
+              <p class="text-sm" style="color:#6B7280;">Seu pet em boas mãos</p>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 p-3 rounded-xl" style="background:rgba(37,211,102,0.08);border:1px solid rgba(37,211,102,0.15);">
+                <span>✂️</span>
+                <div>
+                  <p class="text-sm font-semibold" style="color:#10B981;">Banho & Tosa</p>
+                  <p class="text-xs" style="color:#6B7280;">A partir de R$ 45</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 p-3 rounded-xl" style="background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.15);">
+                <span>🚗</span>
+                <div>
+                  <p class="text-sm font-semibold" style="color:#F5A623;">Táxi Dog</p>
+                  <p class="text-xs" style="color:#6B7280;">A partir de R$ 30</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 p-3 rounded-xl" style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);">
+                <span>🛵</span>
+                <div>
+                  <p class="text-sm font-semibold" style="color:#8B5CF6;">Disk Ração</p>
+                  <p class="text-xs" style="color:#6B7280;">Entrega grátis hoje</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Floating badges -->
+          <div class="absolute -top-4 -right-4 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+            🔥 Mais pedido
+          </div>
+          <div class="absolute -bottom-4 -left-4 glass-card rounded-xl px-3 py-2 text-xs" style="border-color:rgba(37,211,102,0.3);">
+            ✅ <span style="color:#10B981;font-weight:600;">+500 clientes felizes</span>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<section class="py-12" style="border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="stat-card fade-up">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Clientes atendidos</div>
+      </div>
+      <div class="stat-card fade-up fade-up-delay-1">
+        <div class="stat-number">5★</div>
+        <div class="stat-label">Avaliação média</div>
+      </div>
+      <div class="stat-card fade-up fade-up-delay-2">
+        <div class="stat-number">0</div>
+        <div class="stat-label" style="color:#10B981;">Taxa de entrega</div>
+      </div>
+      <div class="stat-card fade-up fade-up-delay-3">
+        <div class="stat-number">1h</div>
+        <div class="stat-label">Entrega Disk Ração</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVIÇOS ── -->
+{% if services %}
+<section class="py-20 bg-section-alt">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-14 fade-up">
+      <p class="section-label">O que oferecemos</p>
+      <h2 class="section-title">Serviços <span style="color:#F5A623;">Premium</span></h2>
+      <div class="section-divider mx-auto"></div>
+      <p class="text-sm mt-3" style="color:#6B7280;max-width:420px;margin-left:auto;margin-right:auto;">
+        Do banho ao delivery de ração — tudo pensado para o conforto do seu pet e a praticidade do tutor.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for service in services %}
+      <div class="service-card fade-up fade-up-delay-{{ forloop.counter }}">
+        <span class="service-icon">{{ service.icon|default:"🐾" }}</span>
+        <h3 class="text-lg font-bold mb-2" style="color:#F0F0F0;">{{ service.name }}</h3>
+        <p class="text-sm mb-3 leading-relaxed" style="color:#6B7280;">{{ service.short_description }}</p>
+        {% if service.price_from %}
+        <div class="service-price-tag">A partir de R$ {{ service.price_from }}</div>
+        {% endif %}
+        <button type="button"
+                data-schedule-service="{{ service.name }}"
+                data-service-id="{{ service.id }}"
+                class="btn-whatsapp w-full justify-center mt-3 text-sm py-2">
+          💬 Agendar
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-10">
+      <a href="{% url 'services:list' %}" class="btn-outline-gold">Ver todos os serviços →</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ── DISK RAÇÃO ── -->
+<section class="py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="disk-racao-section fade-up">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div>
+          <p class="section-label">Entrega rápida</p>
+          <h2 class="section-title mb-3">
+            Ficou sem ração? <br/>
+            <span style="color:#F5A623;">A gente entrega! 🛵</span>
+          </h2>
+          <div class="section-divider"></div>
+          <p class="mt-4 mb-6 leading-relaxed" style="color:#9CA3AF;">
+            Peça pelo WhatsApp e receba no conforto da sua casa. Rápido, fácil e sem burocracia.
+          </p>
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0" style="background:rgba(16,185,129,0.15);color:#10B981;">✓</span>
+              <span class="text-sm" style="color:#D1D5DB;">Entrega no <strong style="color:#F0F0F0;">mesmo dia</strong></span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0" style="background:rgba(16,185,129,0.15);color:#10B981;">✓</span>
+              <span class="text-sm" style="color:#D1D5DB;"><strong style="color:#F0F0F0;">Sem taxa</strong> de entrega</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0" style="background:rgba(16,185,129,0.15);color:#10B981;">✓</span>
+              <span class="text-sm" style="color:#D1D5DB;">Pedido em <strong style="color:#F0F0F0;">menos de 1 minuto</strong> pelo WhatsApp</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm flex-shrink-0" style="background:rgba(16,185,129,0.15);color:#10B981;">✓</span>
+              <span class="text-sm" style="color:#D1D5DB;">Cobertura em <strong style="color:#F0F0F0;">Brasília - DF</strong></span>
+            </li>
+          </ul>
+          <a href="https://wa.me/{{ whatsapp_number }}?text={{ "Olá, gostaria de pedir ração pelo Disk Ração da Central Pet."|urlencode }}"
+             target="_blank" rel="noopener"
+             data-interaction-type="disk_racao"
+             class="btn-gold text-base">
+            🛵 Pedir pelo Disk Ração
+          </a>
+        </div>
+        <div class="hidden md:flex justify-center">
+          <div class="text-center">
+            <span style="font-size:9rem;display:block;line-height:1;">🛵</span>
+            <div class="glass-card rounded-2xl px-6 py-4 mt-4" style="border-color:rgba(245,166,35,0.2);">
+              <p class="text-2xl font-black" style="color:#F5A623;">R$ 0,00</p>
+              <p class="text-sm" style="color:#6B7280;">Taxa de entrega</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRODUTOS EM DESTAQUE ── -->
+{% if featured_products %}
+<section class="py-20 bg-section-alt">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-12 fade-up">
+      <div>
+        <p class="section-label">Seleção especial</p>
+        <h2 class="section-title">Produtos em <span style="color:#F5A623;">Destaque</span></h2>
+        <div class="section-divider"></div>
+      </div>
+      <a href="{% url 'products:list' %}" class="btn-outline-gold mt-4 sm:mt-0 text-sm">
+        Ver todos →
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for product in featured_products %}
+      <div class="product-card fade-up fade-up-delay-{{ forloop.counter }}">
+        {% if product.has_discount %}
+        <span class="badge-discount">-{{ product.discount_percent }}%</span>
+        {% endif %}
+        {% if product.is_featured %}
+        <span class="badge-destaque">⭐ Destaque</span>
+        {% endif %}
+
+        <a href="{{ product.get_absolute_url }}">
+          <div class="product-img-wrapper">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img" loading="lazy" />
+            {% else %}
+            <div class="product-img-placeholder">
+              {{ product.category.icon|default:"🐾" }}
+            </div>
+            {% endif %}
+          </div>
+        </a>
+
+        <div class="p-4">
+          {% if product.category %}
+          <span class="text-xs font-semibold px-2 py-0.5 rounded-full mb-2 inline-block"
+                style="background:rgba(245,166,35,0.1);color:#F5A623;">
+            {{ product.category.icon }} {{ product.category.name }}
+          </span>
+          {% endif %}
+
+          <a href="{{ product.get_absolute_url }}">
+            <h3 class="font-bold text-sm leading-snug mb-1 hover:text-yellow-400 transition-colors" style="color:#F0F0F0;">
+              {{ product.name }}
+            </h3>
+          </a>
+          {% if product.short_description %}
+          <p class="text-xs leading-relaxed mb-3" style="color:#6B7280;">{{ product.short_description|truncatechars:60 }}</p>
+          {% endif %}
+
+          <div class="flex items-end gap-2 mb-3">
+            <span class="product-price">R$ {{ product.price }}</span>
+            {% if product.original_price %}
+            <span class="product-price-original">R$ {{ product.original_price }}</span>
+            {% endif %}
+          </div>
+
+          {% if product.is_available %}
+          <a href="https://wa.me/{{ whatsapp_number }}?text={{ product.whatsapp_message|urlencode }}"
+             target="_blank" rel="noopener"
+             data-interaction-type="produto_whatsapp"
+             data-product-id="{{ product.id }}"
+             data-product-name="{{ product.name }}"
+             class="btn-whatsapp w-full justify-center text-xs py-2">
+            💬 Comprar pelo WhatsApp
+          </a>
+          {% else %}
+          <span class="tag-indisponivel w-full justify-center">⚠️ Indisponível</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ── CATEGORIAS ── -->
+{% if categories %}
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-10 fade-up">
+      <p class="section-label">Explore</p>
+      <h2 class="section-title">Navegue por <span style="color:#F5A623;">Categoria</span></h2>
+    </div>
+    <div class="flex flex-wrap justify-center gap-3 fade-up">
+      {% for cat in categories %}
+      <a href="{{ cat.get_absolute_url }}" class="category-pill">
+        <span>{{ cat.icon }}</span> {{ cat.name }}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ── BANHO E TOSA FORM ── -->
+<section class="py-20 bg-section-alt">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <!-- Info -->
+      <div class="fade-up">
+        <p class="section-label">Agende agora</p>
+        <h2 class="section-title mb-3">
+          Banho & Tosa <br/>
+          <span style="color:#F5A623;">com Qualidade Premium</span>
+        </h2>
+        <div class="section-divider"></div>
+        <p class="mt-4 mb-6 leading-relaxed" style="color:#9CA3AF;">
+          Profissionais especializados, produtos hipoalergênicos e muito carinho para deixar seu pet lindo e cheiroso.
+        </p>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="glass-card rounded-xl p-4">
+            <span class="text-2xl block mb-2">✂️</span>
+            <p class="text-sm font-semibold" style="color:#F0F0F0;">Tosa artística</p>
+            <p class="text-xs" style="color:#6B7280;">Todas as raças</p>
+          </div>
+          <div class="glass-card rounded-xl p-4">
+            <span class="text-2xl block mb-2">🛁</span>
+            <p class="text-sm font-semibold" style="color:#F0F0F0;">Banho completo</p>
+            <p class="text-xs" style="color:#6B7280;">Shampoo premium</p>
+          </div>
+          <div class="glass-card rounded-xl p-4">
+            <span class="text-2xl block mb-2">💧</span>
+            <p class="text-sm font-semibold" style="color:#F0F0F0;">Hidratação</p>
+            <p class="text-xs" style="color:#6B7280;">Pelo macio e brilhoso</p>
+          </div>
+          <div class="glass-card rounded-xl p-4">
+            <span class="text-2xl block mb-2">🚗</span>
+            <p class="text-sm font-semibold" style="color:#F0F0F0;">Táxi Dog</p>
+            <p class="text-xs" style="color:#6B7280;">Buscamos em casa</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="fade-up fade-up-delay-2">
+        <div class="glass-card rounded-3xl p-8" style="border-color:rgba(245,166,35,0.15);">
+          <h3 class="text-xl font-bold mb-6" style="color:#F0F0F0;">
+            📋 Solicitar Agendamento
+          </h3>
+          <button type="button" class="btn-whatsapp w-full justify-center py-3 text-base mt-2" data-schedule-service="Banho + Tosa">
+            💬 Abrir formulário de agendamento
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DEPOIMENTOS ── -->
+{% if testimonials %}
+<section class="py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12 fade-up">
+      <p class="section-label">O que dizem</p>
+      <h2 class="section-title">Clientes <span style="color:#F5A623;">Felizes</span> 🐾</h2>
+      <div class="section-divider mx-auto"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {% for t in testimonials %}
+      <div class="testimonial-card fade-up fade-up-delay-{{ forloop.counter }}">
+        <div class="stars mb-3">
+          {% for i in "12345" %}{% if forloop.counter <= t.rating %}★{% else %}☆{% endif %}{% endfor %}
+        </div>
+        <p class="text-sm leading-relaxed mb-4" style="color:#D1D5DB;">{{ t.comment }}</p>
+        <p class="text-sm font-bold" style="color:#F5A623;">— {{ t.customer_name }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ── CTA FINAL ── -->
+<section class="py-20 bg-section-alt">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center fade-up">
+    <span style="font-size:4rem;display:block;margin-bottom:1rem;">🐾</span>
+    <h2 class="section-title mb-4">
+      Seu pet merece o <span style="color:#F5A623;">melhor!</span>
+    </h2>
+    <p class="mb-8 leading-relaxed" style="color:#9CA3AF;">
+      Fale com a gente agora pelo WhatsApp e deixe seu pet nas melhores mãos.
+    </p>
+    <div class="flex flex-wrap gap-4 justify-center">
+      <a href="https://wa.me/{{ whatsapp_number }}"
+         target="_blank" rel="noopener"
+         data-interaction-type="whatsapp_geral"
+         class="btn-whatsapp text-base px-8 py-3">
+        💬 Falar agora no WhatsApp
+      </a>
+      <a href="{% url 'products:list' %}" class="btn-outline-gold text-base px-8 py-3">
+        Ver produtos
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

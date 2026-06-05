@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="pt-28 pb-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+    <!-- Header -->
+    <div class="mb-10 fade-up">
+      <div class="breadcrumb-item mb-4">
+        <a href="{% url 'home' %}">Início</a>
+        <span class="breadcrumb-sep">/</span>
+        <span>Produtos{% if categoria_ativa %} / {{ categoria_ativa.name }}{% endif %}</span>
+      </div>
+      <p class="section-label">Catálogo</p>
+      <h1 class="section-title">
+        {% if categoria_ativa %}{{ categoria_ativa.icon }} {{ categoria_ativa.name }}
+        {% else %}Todos os <span style="color:#F5A623;">Produtos</span>{% endif %}
+      </h1>
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- Filtros + Busca -->
+    <div class="flex flex-col lg:flex-row gap-4 mb-10 fade-up">
+      <!-- Categorias -->
+      <div class="flex flex-wrap gap-2 flex-1">
+        <a href="{% url 'products:list' %}"
+           class="category-pill {% if not categoria_ativa and not search %}active{% endif %}">
+          🐾 Todos
+        </a>
+        {% for cat in categories %}
+        <a href="{{ cat.get_absolute_url }}"
+           class="category-pill {% if categoria_ativa.slug == cat.slug %}active{% endif %}">
+          {{ cat.icon }} {{ cat.name }}
+        </a>
+        {% endfor %}
+      </div>
+      <!-- Busca -->
+      <form method="get" action="{% url 'products:list' %}" class="flex gap-2 shrink-0">
+        <input type="text" name="q" value="{{ search }}"
+               placeholder="Buscar produto..."
+               class="form-field w-56 text-sm py-2" />
+        <button type="submit" class="btn-gold py-2 px-4 text-sm rounded-xl">🔍</button>
+      </form>
+    </div>
+
+    <!-- Grid de Produtos -->
+    {% if products %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for product in products %}
+      <div class="product-card fade-up">
+        {% if product.has_discount %}
+        <span class="badge-discount">-{{ product.discount_percent }}%</span>
+        {% endif %}
+        {% if product.is_featured %}
+        <span class="badge-destaque">⭐ Destaque</span>
+        {% endif %}
+
+        <a href="{{ product.get_absolute_url }}">
+          <div class="product-img-wrapper">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img" loading="lazy" />
+            {% else %}
+            <div class="product-img-placeholder">{{ product.category.icon|default:"🐾" }}</div>
+            {% endif %}
+          </div>
+        </a>
+
+        <div class="p-4">
+          {% if product.category %}
+          <span class="text-xs font-semibold px-2 py-0.5 rounded-full mb-2 inline-block"
+                style="background:rgba(245,166,35,0.1);color:#F5A623;">
+            {{ product.category.icon }} {{ product.category.name }}
+          </span>
+          {% endif %}
+
+          <a href="{{ product.get_absolute_url }}">
+            <h3 class="font-bold text-sm leading-snug mb-1 hover:text-yellow-400 transition-colors" style="color:#F0F0F0;">
+              {{ product.name }}
+            </h3>
+          </a>
+          {% if product.short_description %}
+          <p class="text-xs leading-relaxed mb-3" style="color:#6B7280;">{{ product.short_description|truncatechars:65 }}</p>
+          {% endif %}
+
+          <div class="flex items-end gap-2 mb-3">
+            <span class="product-price">R$ {{ product.price }}</span>
+            {% if product.original_price %}
+            <span class="product-price-original">R$ {{ product.original_price }}</span>
+            {% endif %}
+          </div>
+
+          {% if product.is_available %}
+          <a href="https://wa.me/{{ whatsapp_number }}?text={{ product.whatsapp_message|urlencode }}"
+             target="_blank" rel="noopener"
+             data-interaction-type="produto_whatsapp"
+             data-product-id="{{ product.id }}"
+             data-product-name="{{ product.name }}"
+             class="btn-whatsapp w-full justify-center text-xs py-2">
+            💬 Comprar pelo WhatsApp
+          </a>
+          {% else %}
+          <span class="tag-indisponivel w-full justify-center">⚠️ Indisponível</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="text-center py-20 fade-up">
+      <span style="font-size:4rem;display:block;margin-bottom:1rem;">🔍</span>
+      <h3 class="text-xl font-bold mb-2" style="color:#F0F0F0;">Nenhum produto encontrado</h3>
+      <p class="mb-6" style="color:#6B7280;">Tente outra categoria ou busca.</p>
+      <a href="{% url 'products:list' %}" class="btn-outline-gold">Ver todos os produtos</a>
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}

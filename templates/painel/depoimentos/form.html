@@ -1,0 +1,64 @@
+{% extends "painel/base.html" %}
+
+{% block content %}
+<div style="max-width:560px;">
+
+  <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;font-size:0.8rem;color:#6B7280;">
+    <a href="{% url 'panel:depoimento_lista' %}" style="color:#6B7280;text-decoration:none;" onmouseover="this.style.color='#F5A623'" onmouseout="this.style.color='#6B7280'">Depoimentos</a>
+    <span>›</span>
+    <span style="color:#F0F0F0;">{% if acao == 'criar' %}Novo depoimento{% else %}{{ objeto.customer_name }}{% endif %}</span>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="panel-card" style="padding:1.75rem;margin-bottom:1rem;">
+      <h2 style="font-size:0.85rem;font-weight:700;color:#9CA3AF;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.25rem;">
+        💬 Dados do depoimento
+      </h2>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div>
+            <label class="field-label">{{ form.customer_name.label }} *</label>
+            {{ form.customer_name }}
+            {% if form.customer_name.errors %}<p class="field-error">{{ form.customer_name.errors.0 }}</p>{% endif %}
+          </div>
+          <div>
+            <label class="field-label">{{ form.pet_name.label }}</label>
+            {{ form.pet_name }}
+          </div>
+        </div>
+        <div>
+          <label class="field-label">{{ form.rating.label }} *</label>
+          {{ form.rating }}
+          {% if form.rating.errors %}<p class="field-error">{{ form.rating.errors.0 }}</p>{% endif %}
+        </div>
+        <div>
+          <label class="field-label">{{ form.comment.label }} *</label>
+          {{ form.comment }}
+          {% if form.comment.errors %}<p class="field-error">{{ form.comment.errors.0 }}</p>{% endif %}
+        </div>
+        <div>
+          <label class="field-label">{{ form.order.label }}</label>
+          {{ form.order }}
+          <p class="field-help">Número menor aparece primeiro na seção de depoimentos.</p>
+        </div>
+        <div class="toggle-wrap">
+          {{ form.is_active }}
+          <label class="toggle-label" for="{{ form.is_active.id_for_label }}">
+            🌐 {{ form.is_active.label }}
+            <span style="font-size:0.75rem;color:#6B7280;display:block;margin-top:0.1rem;">Desmarque para ocultar sem excluir</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+      <button type="submit" class="btn-gold" style="padding:0.75rem 1.75rem;font-size:0.95rem;">
+        {% if acao == 'criar' %}➕ Adicionar depoimento{% else %}💾 Salvar alterações{% endif %}
+      </button>
+      <a href="{% url 'panel:depoimento_lista' %}" class="btn-outline" style="padding:0.75rem 1.5rem;">← Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
