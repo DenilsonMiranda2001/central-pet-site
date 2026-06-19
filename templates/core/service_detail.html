@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="service-detail-page">
+  <div class="home-shell">
+    <div class="breadcrumb-item mb-5">
+      <a href="{% url 'home' %}">Início</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="{% url 'services:list' %}">Serviços</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>{{ eyebrow }}</span>
+    </div>
+
+    <div class="service-detail-hero service-detail-{{ slug }}">
+      <div class="service-detail-copy">
+        <span class="service-detail-badge">{{ icon }} {{ eyebrow }}</span>
+        <h1>{{ title }}</h1>
+        <p>{{ description }}</p>
+        <div class="service-detail-actions">
+          <a href="https://wa.me/{{ whatsapp_number }}?text={{ whatsapp_text|urlencode }}"
+             target="_blank" rel="noopener"
+             data-interaction-type="whatsapp_geral"
+             class="btn-whatsapp">
+            {{ cta }}
+          </a>
+          <a href="{% url 'services:list' %}" class="btn-outline-gold">Ver todos os serviços</a>
+        </div>
+      </div>
+      <div class="service-detail-photo" aria-hidden="true"></div>
+    </div>
+
+    <div class="service-detail-grid">
+      {% for item in highlights %}
+      <div class="service-feature-card">
+        <span>{{ icon }}</span>
+        <strong>{{ item }}</strong>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="service-detail-cta">
+      <div>
+        <h2>Fale com a In Dog</h2>
+        <p>Atendimento no Lago Sul / Altiplano Leste, em Brasília, com cuidado e orientação para cada necessidade do seu pet.</p>
+      </div>
+      <a href="https://wa.me/{{ whatsapp_number }}?text={{ whatsapp_text|urlencode }}"
+         target="_blank" rel="noopener"
+         data-interaction-type="whatsapp_geral"
+         class="btn-whatsapp">
+        Falar no WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

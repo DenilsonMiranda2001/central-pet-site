@@ -31,20 +31,22 @@ def home(request):
         "categories": categories,
         "banners": banners,
         "banner": banner,
-        "page_title": f"{config.store_name} — {config.slogan}",
+        "page_title": "In Dog — Banho e Tosa Brasília",
         "meta_description": (
-            "Pet shop em Brasília com Banho & Tosa, Táxi Dog, rações premium, medicamentos "
-            "e Disk Ração com entrega grátis. Fale pelo WhatsApp!"
+            "In Dog é um pet shop no Lago Sul / Altiplano Leste, Brasília, com Banho e Tosa Premium, "
+            "Consultório Veterinário, Boutique Pet, Medicamentos e Produtos Pet."
         ),
     })
 
 
 def sobre(request):
     config = StoreConfig.get_config()
+    product_count = Product.objects.filter(is_active=True).count()
     return render(request, "core/sobre.html", {
         "config": config,
-        "page_title": f"Sobre a {config.store_name} — Quem Somos",
-        "meta_description": f"Conheça a {config.store_name}, pet shop em Brasília com atendimento premium, Banho & Tosa, Disk Ração e entrega grátis.",
+        "product_count": product_count,
+        "page_title": "Sobre a In Dog — Quem Somos",
+        "meta_description": "Conheça a In Dog, pet shop em Brasília com Banho e Tosa Premium, Consultório Veterinário, Boutique Pet, medicamentos e produtos para pets.",
     })
 
 
@@ -52,8 +54,78 @@ def contato(request):
     config = StoreConfig.get_config()
     return render(request, "core/contato.html", {
         "config": config,
-        "page_title": f"Contato — {config.store_name}",
-        "meta_description": "Entre em contato com a Central Pet pelo WhatsApp, telefone ou visite nossa loja em Brasília.",
+        "page_title": "Contato — In Dog",
+        "meta_description": "Entre em contato com a In Dog pelo WhatsApp ou visite nossa loja no Lago Sul — Brasília/DF.",
+    })
+
+
+def banho_e_tosa(request):
+    return render(request, "core/service_detail.html", {
+        "page_title": "Banho e Tosa Premium em Brasília | In Dog",
+        "meta_description": "Banho e tosa premium em Brasília com cuidado, carinho, produtos de qualidade e atenção ao bem-estar do pet.",
+        "slug": "banho-e-tosa",
+        "eyebrow": "Banho e Tosa",
+        "icon": "✂️",
+        "title": "Banho e Tosa Premium em Brasília",
+        "description": "Serviço completo de banho e tosa com cuidado, carinho, produtos de qualidade e atenção ao bem-estar do pet.",
+        "highlights": [
+            "Banho completo",
+            "Tosa higiênica",
+            "Tosa personalizada",
+            "Escovação",
+            "Limpeza de ouvidos",
+            "Corte de unhas",
+            "Produtos premium",
+            "Atendimento cuidadoso",
+        ],
+        "cta": "Agendar Banho e Tosa no WhatsApp",
+        "whatsapp_text": "Olá, gostaria de agendar Banho e Tosa Premium na In Dog.",
+    })
+
+
+def veterinario(request):
+    return render(request, "core/service_detail.html", {
+        "page_title": "Consultório Veterinário no Lago Sul | In Dog",
+        "meta_description": "Consultório veterinário no Lago Sul com foco em prevenção, saúde e bem-estar dos pets.",
+        "slug": "veterinario",
+        "eyebrow": "Veterinário",
+        "icon": "🩺",
+        "title": "Consultório Veterinário no Lago Sul",
+        "description": "Atendimento veterinário com foco em prevenção, saúde e bem-estar dos pets.",
+        "highlights": [
+            "Consultas veterinárias",
+            "Vacinação",
+            "Check-up preventivo",
+            "Vermifugação",
+            "Controle de pulgas e carrapatos",
+            "Orientação nutricional",
+            "Acompanhamento clínico",
+        ],
+        "cta": "Agendar Consulta pelo WhatsApp",
+        "whatsapp_text": "Olá, gostaria de agendar uma consulta veterinária na In Dog.",
+    })
+
+
+def boutique_pet(request):
+    return render(request, "core/service_detail.html", {
+        "page_title": "Boutique Pet em Brasília | In Dog",
+        "meta_description": "Boutique pet em Brasília com produtos selecionados para pets, acessórios, roupinhas, camas e itens de higiene.",
+        "slug": "boutique-pet",
+        "eyebrow": "Boutique Pet",
+        "icon": "🛍️",
+        "title": "Boutique Pet em Brasília",
+        "description": "Produtos selecionados para pets com qualidade, estilo e cuidado.",
+        "highlights": [
+            "Acessórios",
+            "Roupinhas",
+            "Camas",
+            "Guias e coleiras",
+            "Brinquedos",
+            "Itens de higiene",
+            "Produtos selecionados",
+        ],
+        "cta": "Ver produtos ou falar no WhatsApp",
+        "whatsapp_text": "Olá, gostaria de conhecer os produtos da Boutique Pet da In Dog.",
     })
 
 
@@ -65,8 +137,8 @@ def disk_racao(request):
     return render(request, "core/disk_racao.html", {
         "config": config,
         "racoes": racoes,
-        "page_title": "Disk Ração — Entrega Grátis | Central Pet",
-        "meta_description": "Ficou sem ração? A Central Pet entrega no mesmo dia, sem taxa. Peça pelo WhatsApp agora!",
+        "page_title": "Produtos Pet | In Dog",
+        "meta_description": "Produtos Pet na In Dog, pet shop no Lago Sul / Altiplano Leste em Brasília. Consulte rações, medicamentos, petiscos e acessórios pelo WhatsApp.",
     })
 
 
@@ -143,4 +215,4 @@ def track_interaction(request):
 def sentry_debug(request):
     if not settings.DEBUG:
         raise Http404()
-    raise RuntimeError("Teste de integração Sentry - Central Pet")
+    raise RuntimeError("Teste de integração Sentry - In Dog")

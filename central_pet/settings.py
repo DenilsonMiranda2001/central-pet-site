@@ -128,8 +128,8 @@ if SENTRY_DSN:
     )
 
 # Admin personalizado
-ADMIN_SITE_HEADER = "Central Pet — Painel Administrativo"
-ADMIN_SITE_TITLE = "Central Pet Admin"
+ADMIN_SITE_HEADER = "In Dog — Painel Administrativo"
+ADMIN_SITE_TITLE = "In Dog Admin"
 ADMIN_INDEX_TITLE = "Gerenciamento da Loja"
 
 # Segurança em produção

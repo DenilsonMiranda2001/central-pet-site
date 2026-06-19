@@ -3,23 +3,26 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>{% block title %}{{ page_title|default:"Painel" }}{% endblock %} — Central Pet</title>
+  <title>{% block title %}{{ page_title|default:"Painel" }}{% endblock %} — In Dog</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
       --gold: #F5A623;
       --gold-light: #FFD166;
       --gold-dark: #D4880A;
-      --dark: #0A0A0A;
-      --dark-2: #111118;
-      --dark-card: rgba(255,255,255,0.04);
-      --border: rgba(255,255,255,0.07);
-      --text-muted: #6B7280;
+      --dark: #FFF8EE;
+      --dark-2: #FFFFFF;
+      --dark-card: #FFFFFF;
+      --border: #EADBC8;
+      --text-muted: #7D6A5A;
+      --brown: #2F1D13;
+      --cream: #FFF8EE;
+      --green: #219653;
     }
     * { box-sizing: border-box; }
     body {
       background: var(--dark);
-      color: #F0F0F0;
+      color: var(--brown);
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       min-height: 100vh;
     }
@@ -37,6 +40,7 @@
     .sidebar-logo {
       padding: 1.5rem;
       border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #fffaf3, #ffffff);
     }
     .sidebar-nav { flex: 1; overflow-y: auto; padding: 1rem 0; }
     .nav-section-label {
@@ -48,14 +52,14 @@
     .nav-link {
       display: flex; align-items: center; gap: 0.75rem;
       padding: 0.65rem 1.25rem;
-      color: #9CA3AF;
+      color: #6B5A4A;
       border-left: 3px solid transparent;
       font-size: 0.875rem;
       transition: all 0.15s ease;
       text-decoration: none;
     }
-    .nav-link:hover { color: #F0F0F0; background: rgba(255,255,255,0.04); }
-    .nav-link.active { color: var(--gold); border-left-color: var(--gold); background: rgba(245,166,35,0.06); }
+    .nav-link:hover { color: var(--brown); background: #FFF1DF; }
+    .nav-link.active { color: var(--gold-dark); border-left-color: var(--gold); background: #FFF1DF; }
     .nav-icon { width: 18px; text-align: center; font-size: 1rem; }
     .sidebar-footer {
       padding: 1rem 1.25rem;
@@ -83,7 +87,7 @@
       background: var(--dark-card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 30px rgba(103, 68, 35, 0.07);
     }
     .stat-card {
       background: var(--dark-card);
@@ -99,7 +103,7 @@
     /* ── Buttons ── */
     .btn-gold {
       background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-      color: #000; font-weight: 700;
+      color: #fff; font-weight: 700;
       padding: 0.55rem 1.1rem;
       border-radius: 10px;
       border: none; cursor: pointer;
@@ -111,7 +115,7 @@
     .btn-gold:hover { opacity: 0.9; transform: translateY(-1px); }
     .btn-outline {
       background: transparent;
-      color: #9CA3AF;
+      color: var(--brown);
       border: 1px solid var(--border);
       padding: 0.55rem 1.1rem;
       border-radius: 10px;
@@ -121,7 +125,7 @@
       transition: all 0.15s;
       text-decoration: none;
     }
-    .btn-outline:hover { border-color: rgba(255,255,255,0.2); color: #F0F0F0; }
+    .btn-outline:hover { border-color: #D7AB7A; color: var(--gold-dark); background:#FFF8EE; }
     .btn-danger {
       background: rgba(239,68,68,0.1);
       color: #F87171;
@@ -150,7 +154,7 @@
     .btn-edit:hover { background: rgba(245,166,35,0.14); }
     .btn-green {
       background: rgba(16,185,129,0.1);
-      color: #10B981;
+      color: var(--green);
       border: 1px solid rgba(16,185,129,0.2);
       padding: 0.45rem 0.85rem;
       border-radius: 8px;
@@ -164,26 +168,26 @@
     /* ── Forms ── */
     .panel-input {
       width: 100%;
-      background: rgba(255,255,255,0.04);
+      background: #FFFFFF;
       border: 1px solid var(--border);
       border-radius: 10px;
-      color: #F0F0F0;
+      color: var(--brown);
       padding: 0.65rem 0.85rem;
       font-size: 0.875rem;
       transition: border-color 0.15s;
       outline: none;
     }
     .panel-input:focus { border-color: rgba(245,166,35,0.5); }
-    .panel-input::placeholder { color: #4B5563; }
-    select.panel-input option { background: #1A1A2E; color: #F0F0F0; }
+    .panel-input::placeholder { color: #A38C76; }
+    select.panel-input option { background: #FFFFFF; color: var(--brown); }
     textarea.panel-input { resize: vertical; }
     .field-label {
       display: block;
       font-size: 0.8rem; font-weight: 600;
-      color: #9CA3AF;
+      color: #6B5A4A;
       margin-bottom: 0.4rem;
     }
-    .field-help { font-size: 0.72rem; color: #4B5563; margin-top: 0.3rem; }
+    .field-help { font-size: 0.72rem; color: #7D6A5A; margin-top: 0.3rem; }
     .field-error { font-size: 0.75rem; color: #F87171; margin-top: 0.3rem; }
 
     /* ── Checkbox ── */
@@ -193,7 +197,7 @@
       accent-color: var(--gold);
       cursor: pointer;
     }
-    .toggle-label { font-size: 0.875rem; color: #D1D5DB; cursor: pointer; }
+    .toggle-label { font-size: 0.875rem; color: #4F3828; cursor: pointer; }
 
     /* ── Table ── */
     .panel-table { width: 100%; border-collapse: collapse; }
@@ -207,11 +211,11 @@
     }
     .panel-table td {
       padding: 0.85rem 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid #F1E3D3;
       font-size: 0.875rem;
       vertical-align: middle;
     }
-    .panel-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .panel-table tr:hover td { background: #FFF8EE; }
 
     /* ── Badges ── */
     .badge-ativo { background: rgba(16,185,129,0.12); color: #10B981; border: 1px solid rgba(16,185,129,0.2); font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 20px; }
@@ -221,10 +225,10 @@
     /* ── File upload ── */
     .panel-file-input {
       width: 100%;
-      background: rgba(255,255,255,0.03);
+      background: #FFFFFF;
       border: 2px dashed var(--border);
       border-radius: 10px;
-      color: #9CA3AF;
+      color: #6B5A4A;
       padding: 0.65rem;
       font-size: 0.8rem;
       cursor: pointer;
@@ -237,7 +241,7 @@
     .alert-error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); color: #F87171; border-radius: 12px; padding: 0.85rem 1.1rem; font-size: 0.875rem; display: flex; align-items: center; gap: 0.6rem; }
 
     /* ── Hamburger ── */
-    .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 45; }
+    .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(47,29,19,0.35); z-index: 45; }
     @media (max-width: 768px) {
       .sidebar { transform: translateX(-100%); }
       .sidebar.open { transform: translateX(0); }
@@ -253,13 +257,24 @@
       background: var(--dark-card);
       border: 1px solid var(--border);
       border-radius: 14px;
-      color: #9CA3AF;
+      color: #4F3828;
       font-size: 0.8rem; font-weight: 600;
       text-decoration: none;
       transition: all 0.2s;
       text-align: center;
     }
-    .quick-action:hover { border-color: rgba(245,166,35,0.3); color: var(--gold); background: rgba(245,166,35,0.04); transform: translateY(-2px); }
+    .quick-action:hover { border-color: rgba(245,166,35,0.3); color: var(--gold-dark); background: #FFF1DF; transform: translateY(-2px); }
+    .page-content [style*="#F0F0F0"],
+    .topbar [style*="#F0F0F0"] { color: var(--brown) !important; }
+    .page-content [style*="#9CA3AF"],
+    .topbar [style*="#9CA3AF"] { color: #6B5A4A !important; }
+    .page-content [style*="#6B7280"],
+    .topbar [style*="#6B7280"] { color: #7D6A5A !important; }
+    .page-content [style*="rgba(255,255,255,0.04)"],
+    .page-content [style*="rgba(255,255,255,0.03)"] {
+      background: #FFFFFF !important;
+      border-color: #EADBC8 !important;
+    }
     .quick-action-icon { font-size: 1.75rem; }
   </style>
 </head>
@@ -273,7 +288,7 @@
       <div style="display:flex;align-items:center;gap:0.6rem;">
         <span style="font-size:1.5rem;">🐾</span>
         <div>
-          <div style="font-size:1rem;font-weight:900;color:var(--gold);line-height:1.1;">Central Pet</div>
+          <div style="font-size:1rem;font-weight:900;color:var(--gold);line-height:1.1;">In Dog</div>
           <div style="font-size:0.65rem;color:var(--text-muted);">Painel de Gerenciamento</div>
         </div>
       </div>
@@ -317,7 +332,7 @@
   <div class="sidebar-footer">
     <a href="{% url 'home' %}" target="_blank" rel="noopener"
        style="display:flex;align-items:center;gap:0.5rem;text-decoration:none;color:#6B7280;font-size:0.8rem;margin-bottom:0.75rem;transition:color 0.15s;"
-       onmouseover="this.style.color='#F0F0F0'" onmouseout="this.style.color='#6B7280'">
+       onmouseover="this.style.color='#935018'" onmouseout="this.style.color='#6B7280'">
       <span>🌐</span> Ver site público
     </a>
     <a href="{% url 'panel:logout' %}"
@@ -334,10 +349,10 @@
   <header class="topbar">
     <div style="display:flex;align-items:center;gap:1rem;">
       <button onclick="toggleSidebar()" id="hamburger"
-              style="display:none;background:none;border:none;color:#9CA3AF;font-size:1.25rem;cursor:pointer;padding:0.25rem;">
+              style="display:none;background:none;border:none;color:#6B5A4A;font-size:1.25rem;cursor:pointer;padding:0.25rem;">
         ☰
       </button>
-      <h1 style="font-size:1rem;font-weight:700;color:#F0F0F0;">{{ page_title|default:"Painel" }}</h1>
+      <h1 style="font-size:1rem;font-weight:700;color:#2F1D13;">{{ page_title|default:"Painel" }}</h1>
     </div>
     <div style="display:flex;align-items:center;gap:0.75rem;">
       <span style="font-size:0.8rem;color:var(--text-muted);">👤 {{ request.user.get_full_name|default:request.user.username }}</span>

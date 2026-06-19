@@ -11,8 +11,8 @@ sitemaps = {
     'products': ProductSitemap,
 }
 
-admin.site.site_header = "Central Pet — Painel Administrativo"
-admin.site.site_title = "Central Pet Admin"
+admin.site.site_header = "In Dog — Painel Administrativo"
+admin.site.site_title = "In Dog Admin"
 admin.site.index_title = "Gerenciamento da Loja"
 
 urlpatterns = [

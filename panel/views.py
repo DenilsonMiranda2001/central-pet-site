@@ -112,7 +112,7 @@ def relatorios(request):
         'tipo_labels': [
             'Produtos',
             'WhatsApp geral',
-            'Disk Ração',
+            'Produtos Pet',
             'Agendamentos abertos',
             'Agendamentos enviados',
             'Instagram',

@@ -23,8 +23,8 @@ def product_list(request):
         "categories": categories,
         "categoria_ativa": categoria_ativa,
         "search": search,
-        "page_title": f"Produtos{' — ' + categoria_ativa.name if categoria_ativa else ''} | Central Pet",
-        "meta_description": "Encontre rações, medicamentos, petiscos, brinquedos e acessórios premium para o seu pet na Central Pet.",
+        "page_title": f"{categoria_ativa.name + ' | ' if categoria_ativa else ''}Produtos Pet em Brasília | In Dog",
+        "meta_description": "Produtos pet em Brasília na In Dog, com itens selecionados para cuidado, higiene, saúde e bem-estar dos pets.",
     })
 
 
@@ -37,6 +37,6 @@ def product_detail(request, slug):
     return render(request, "products/detail.html", {
         "product": product,
         "related_products": related,
-        "page_title": f"{product.name} | Central Pet",
-        "meta_description": product.short_description or f"Compre {product.name} na Central Pet. Entrega rápida e sem taxa pelo WhatsApp.",
+        "page_title": f"{product.name} | In Dog",
+        "meta_description": product.short_description or f"Consulte {product.name} na In Dog, pet shop no Lago Sul / Altiplano Leste em Brasília. Fale pelo WhatsApp.",
     })

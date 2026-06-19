@@ -9,7 +9,7 @@
     <!-- Header -->
     <div class="text-center mb-16 fade-up">
       <p class="section-label">Nossa história</p>
-      <h1 class="section-title">Sobre a <span style="color:#F5A623;">Central Pet</span></h1>
+      <h1 class="section-title">Sobre a <span style="color:#F5A623;">In Dog</span></h1>
       <div class="section-divider mx-auto"></div>
     </div>
 
@@ -31,17 +31,17 @@
             <div class="stat-label">Serviços premium</div>
           </div>
           <div class="glass-card rounded-2xl p-5 text-center">
-            <div class="stat-number">0</div>
-            <div class="stat-label" style="color:#10B981;">Taxa de entrega</div>
+            <div class="stat-number">{{ product_count|default:"+" }}</div>
+            <div class="stat-label">Produtos Pet</div>
           </div>
         </div>
       </div>
       <div class="fade-up fade-up-delay-2">
-        <h2 class="text-2xl font-bold mb-5" style="color:#F0F0F0;">
-          Tudo que seu animal precisa, você encontra aqui!
+        <h2 class="text-2xl font-bold mb-5" style="color:#2F1D13;">
+          Pet shop no Lago Sul / Altiplano Leste com cuidado especial para seu pet.
         </h2>
-        <div class="space-y-4 text-base leading-relaxed" style="color:#9CA3AF;">
-          <p>{{ config.about_text }}</p>
+        <div class="space-y-4 text-base leading-relaxed" style="color:#4F3828;">
+          <p>A In Dog é um pet shop no Lago Sul / Altiplano Leste, em Brasília, especializado em banho e tosa premium, consultório veterinário, boutique pet, medicamentos e produtos para pets. Desde 2016, cuidamos do seu melhor amigo com carinho, atenção e profissionalismo.</p>
         </div>
         <div class="flex gap-3 mt-8">
           <a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener" data-interaction-type="whatsapp_geral" class="btn-whatsapp">
@@ -61,19 +61,19 @@
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="service-card fade-up fade-up-delay-1">
-          <span class="service-icon">💎</span>
-          <h3 class="text-lg font-bold mb-2" style="color:#F0F0F0;">Produtos Originais</h3>
-          <p class="text-sm" style="color:#6B7280;">Trabalhamos apenas com marcas reconhecidas e produtos 100% originais para garantir a saúde do seu pet.</p>
+          <span class="service-icon">🩺</span>
+          <h3 class="text-lg font-bold mb-2" style="color:#2F1D13;">Consultório Veterinário</h3>
+          <p class="text-sm" style="color:#6B5A4A;">Atendimento veterinário especializado no Lago Sul — Brasília. Consultas, vacinas e cuidados preventivos para seu pet.</p>
         </div>
         <div class="service-card fade-up fade-up-delay-2">
-          <span class="service-icon">🚚</span>
-          <h3 class="text-lg font-bold mb-2" style="color:#F0F0F0;">Entrega Grátis</h3>
-          <p class="text-sm" style="color:#6B7280;">Zero taxa de entrega. Seu pedido chega rápido e sem custo adicional diretamente na sua porta em Brasília.</p>
+          <span class="service-icon">💎</span>
+          <h3 class="text-lg font-bold mb-2" style="color:#2F1D13;">Produtos Originais</h3>
+          <p class="text-sm" style="color:#6B5A4A;">Boutique Pet com produtos selecionados, medicamentos e acessórios 100% originais das melhores marcas do mercado.</p>
         </div>
         <div class="service-card fade-up fade-up-delay-3">
           <span class="service-icon">❤️</span>
-          <h3 class="text-lg font-bold mb-2" style="color:#F0F0F0;">Atendimento com Amor</h3>
-          <p class="text-sm" style="color:#6B7280;">Cada pet é tratado como único. Nossa equipe é apaixonada por animais e oferece um cuidado verdadeiramente especial.</p>
+          <h3 class="text-lg font-bold mb-2" style="color:#2F1D13;">Atendimento Cuidadoso</h3>
+          <p class="text-sm" style="color:#6B5A4A;">Equipe dedicada ao bem-estar dos animais, com acolhimento e atenção em cada atendimento.</p>
         </div>
       </div>
     </div>
@@ -81,8 +81,8 @@
     <!-- CTA -->
     <div class="glass-card rounded-3xl p-10 text-center fade-up" style="border-color:rgba(245,166,35,0.2);">
       <span style="font-size:3.5rem;display:block;margin-bottom:1rem;">🐾</span>
-      <h2 class="text-2xl font-bold mb-3" style="color:#F0F0F0;">Pronto para cuidar do seu pet?</h2>
-      <p class="mb-6" style="color:#9CA3AF;">Entre em contato agora e deixe seu pet nas melhores mãos.</p>
+      <h2 class="text-2xl font-bold mb-3" style="color:#2F1D13;">Pronto para cuidar do seu pet?</h2>
+      <p class="mb-6" style="color:#6B5A4A;">Entre em contato agora e deixe seu pet nas melhores mãos.</p>
       <a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener" data-interaction-type="whatsapp_geral" class="btn-gold text-base px-8 py-3">
         💬 Falar no WhatsApp agora
       </a>

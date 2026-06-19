@@ -12,3 +12,6 @@ db.sqlite3
 
 # Uploads locais. Em produção, migrar para storage externo.
 media/
+
+# Capturas de tela temporarias de revisao visual
+tmp_visual_checks/

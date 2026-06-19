@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{% block title %}{{ page_title|default:"Central Pet — Tudo para seu melhor amigo!" }}{% endblock %}</title>
-  <meta name="description" content="{% block meta_description %}{{ meta_description|default:"Pet shop premium em Brasília. Banho & Tosa, Táxi Dog, Disk Ração e produtos premium para o seu pet." }}{% endblock %}" />
+  <title>{% block title %}{{ page_title|default:"In Dog — Pet Shop Lago Sul | Brasília" }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ meta_description|default:"In Dog, pet shop no Lago Sul / Altiplano Leste em Brasília. Banho e Tosa Premium, Consultório Veterinário, Boutique Pet, Medicamentos e Produtos Pet." }}{% endblock %}" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="{% block og_title %}{{ page_title|default:"Central Pet" }}{% endblock %}" />
-  <meta property="og:description" content="{% block og_description %}Tudo para seu melhor amigo!{% endblock %}" />
-  <meta property="og:site_name" content="{{ store.store_name }}" />
+  <meta property="og:title" content="{% block og_title %}{{ page_title|default:"In Dog — Pet Shop Lago Sul | Brasília" }}{% endblock %}" />
+  <meta property="og:description" content="{% block og_description %}Pet shop em Brasília com banho e tosa premium, consultório veterinário, boutique pet, medicamentos e produtos para pets.{% endblock %}" />
+  <meta property="og:site_name" content="In Dog" />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   {% if banner and banner.image %}
   <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ banner.image.url }}" />
@@ -39,7 +39,7 @@
   {% block extra_head %}{% endblock %}
 </head>
 
-<body style="background:#0D0D0D;color:#F0F0F0;">
+<body style="background:#FFF8EE;color:#2F1D13;">
 
 <!-- ══════════════════════════════════════
      NAVBAR PREMIUM
@@ -50,14 +50,15 @@
 
       <!-- Logo -->
       <a href="{% url 'home' %}" class="flex flex-col leading-none shrink-0">
-        <span class="logo-text">🐾 {{ store.store_name }}</span>
-        <span class="logo-sub">{{ store.slogan }}</span>
+        <span class="logo-mark">🐶</span>
+        <span class="logo-text">In Dog</span>
+        <span class="logo-sub">Banho e Tosa Brasília</span>
       </a>
 
       <!-- Search (desktop) -->
       <form action="{% url 'products:list' %}" method="get"
             class="nav-search hidden lg:flex shrink-0">
-        <input type="text" name="q" placeholder="Buscar produtos..."
+        <input type="text" name="q" placeholder="Buscar produtos ou serviços..."
                class="nav-search-input" autocomplete="off" />
         <button type="submit" class="nav-search-btn" aria-label="Buscar">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,65 +69,28 @@
       </form>
 
       <!-- Desktop Links -->
-      <div class="hidden md:flex items-center gap-5 ml-auto">
+      <div class="site-nav-links hidden xl:flex items-center gap-5 ml-auto">
 
-        <a href="{% url 'home' %}" class="nav-link">Início</a>
-
-        <!-- Dropdown Produtos -->
-        <div class="nav-dropdown-wrap">
-          <button class="nav-dropdown-btn">
-            Produtos <span class="nav-chevron">▾</span>
-          </button>
-          <div class="nav-dropdown">
-            <a href="{% url 'products:list' %}" class="nav-dropdown-item">
-              <span>🐾</span> Todos os Produtos
-            </a>
-            {% if nav_categories %}
-            <div class="nav-dropdown-divider"></div>
-            {% for cat in nav_categories %}
-            <a href="{{ cat.get_absolute_url }}" class="nav-dropdown-item">
-              <span>{{ cat.icon }}</span> {{ cat.name }}
-            </a>
-            {% endfor %}
-            {% endif %}
-          </div>
-        </div>
-
-        <!-- Dropdown Serviços -->
-        <div class="nav-dropdown-wrap">
-          <button class="nav-dropdown-btn">
-            Serviços <span class="nav-chevron">▾</span>
-          </button>
-          <div class="nav-dropdown">
-            <a href="{% url 'services:list' %}" class="nav-dropdown-item">
-              <span>⭐</span> Todos os Serviços
-            </a>
-            {% if nav_services %}
-            <div class="nav-dropdown-divider"></div>
-            {% for sv in nav_services %}
-            <a href="{% url 'services:list' %}" class="nav-dropdown-item">
-              <span>{{ sv.icon|default:"🐾" }}</span> {{ sv.name }}
-            </a>
-            {% endfor %}
-            {% endif %}
-          </div>
-        </div>
-
-        <a href="{% url 'disk_racao' %}" class="nav-link">Disk Ração</a>
-        <a href="{% url 'sobre' %}" class="nav-link">Sobre</a>
-        <a href="{% url 'contato' %}" class="nav-link">Contato</a>
+        <a href="{% url 'home' %}" class="nav-link">🏠 Início</a>
+        <a href="{% url 'services:list' %}" class="nav-link">🐾 Serviços</a>
+        <a href="{% url 'banho_e_tosa' %}" class="nav-link">✂️ Banho e Tosa</a>
+        <a href="{% url 'veterinario' %}" class="nav-link">🩺 Veterinário</a>
+        <a href="{% url 'boutique_pet' %}" class="nav-link">🛍️ Boutique Pet</a>
+        <a href="{% url 'products:list' %}" class="nav-link">🎁 Produtos</a>
+        <a href="{% url 'products:list' %}?q=medicamentos" class="nav-link">💊 Medicamentos</a>
+        <a href="{% url 'home' %}#sobre-nos" class="nav-link">👥 Sobre nós</a>
+        <a href="{% url 'home' %}#contato" class="nav-link">Contato</a>
       </div>
 
       <!-- Actions -->
       <div class="flex items-center gap-2 ml-2 md:ml-3 shrink-0">
 
-        <!-- Cart decorativo -->
-        <div class="nav-cart hidden sm:flex" title="Catálogo de produtos">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-          </svg>
-          <span class="nav-cart-badge">0</span>
+        <div class="nav-phone hidden lg:flex">
+          <span>📞</span>
+          <div>
+            <small>Fale conosco</small>
+            <strong>(61) 99660-0007</strong>
+          </div>
         </div>
 
         <!-- WhatsApp -->
@@ -140,9 +104,18 @@
           WhatsApp
         </a>
 
+        <!-- Carrinho -->
+        <button id="cart-toggle" class="cart-toggle-btn" aria-label="Ver meu pedido">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span id="cart-count" class="cart-count" style="display:none">0</span>
+        </button>
+
         <!-- Hamburger -->
         <button id="menu-toggle"
-                class="md:hidden p-2 rounded-lg transition-colors"
+                class="xl:hidden p-2 rounded-lg transition-colors"
                 style="color:#6B7280;" aria-label="Menu">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -153,7 +126,7 @@
     </div><!-- /.flex h-[68px] -->
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden pb-4">
+    <div id="mobile-menu" class="hidden xl:hidden pb-4">
       <div class="pt-3 border-t" style="border-color:rgba(255,255,255,0.06);">
         <!-- Search mobile -->
         <form action="{% url 'products:list' %}" method="get"
@@ -170,11 +143,14 @@
         <!-- Links -->
         <div class="grid grid-cols-2 gap-1">
           <a href="{% url 'home' %}" class="mobile-nav-link">🏠 Início</a>
-          <a href="{% url 'products:list' %}" class="mobile-nav-link">📦 Produtos</a>
-          <a href="{% url 'services:list' %}" class="mobile-nav-link">✂️ Serviços</a>
-          <a href="{% url 'disk_racao' %}" class="mobile-nav-link">🛵 Disk Ração</a>
-          <a href="{% url 'sobre' %}" class="mobile-nav-link">💛 Sobre</a>
-          <a href="{% url 'contato' %}" class="mobile-nav-link">📞 Contato</a>
+          <a href="{% url 'services:list' %}" class="mobile-nav-link">🐾 Serviços</a>
+          <a href="{% url 'banho_e_tosa' %}" class="mobile-nav-link">✂️ Banho e Tosa</a>
+          <a href="{% url 'veterinario' %}" class="mobile-nav-link">🩺 Veterinário</a>
+          <a href="{% url 'boutique_pet' %}" class="mobile-nav-link">🛍️ Boutique Pet</a>
+          <a href="{% url 'products:list' %}" class="mobile-nav-link">🎁 Produtos</a>
+          <a href="{% url 'products:list' %}?q=medicamentos" class="mobile-nav-link">💊 Medicamentos</a>
+          <a href="{% url 'home' %}#sobre-nos" class="mobile-nav-link">👥 Sobre nós</a>
+          <a href="{% url 'home' %}#contato" class="mobile-nav-link">✉️ Contato</a>
         </div>
         <a href="https://wa.me/{{ whatsapp_number }}"
            target="_blank" rel="noopener"
@@ -205,17 +181,16 @@
       <!-- Col 1 — Brand -->
       <div class="lg:col-span-2">
         <a href="{% url 'home' %}" class="footer-logo-text mb-1 block">
-          🐾 {{ store.store_name }}
+          🐾 In Dog
         </a>
-        <p class="text-xs mb-3" style="color:#F5A623;letter-spacing:0.06em;">{{ store.slogan }}</p>
+        <p class="text-xs mb-3" style="color:#F5A623;letter-spacing:0.06em;">Banho e Tosa Brasília</p>
         <p class="text-sm leading-relaxed mb-5" style="color:#4B5563;max-width:300px;">
-          Tudo que seu animal precisa você encontra aqui! Cuidado, carinho e qualidade para o seu melhor amigo.
+          A In Dog é um pet shop no Lago Sul / Altiplano Leste, em Brasília, com banho e tosa premium, consultório veterinário, boutique pet, medicamentos e produtos para pets.
         </p>
 
         <!-- Social Icons -->
         <div class="flex items-center gap-2">
-          {% if store.instagram_url %}
-          <a href="https://instagram.com/{{ store.instagram_url }}" target="_blank" rel="noopener"
+          <a href="https://instagram.com/indogpet" target="_blank" rel="noopener"
              class="social-icon" style="background:rgba(228,64,95,0.12);"
              data-interaction-type="instagram"
              aria-label="Instagram">
@@ -223,7 +198,6 @@
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
             </svg>
           </a>
-          {% endif %}
           <a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener"
              class="social-icon" style="background:rgba(37,211,102,0.12);"
              data-interaction-type="whatsapp_geral"
@@ -260,9 +234,9 @@
           <li><a href="{% url 'home' %}" class="footer-link"><span class="footer-arrow">›</span>Início</a></li>
           <li><a href="{% url 'products:list' %}" class="footer-link"><span class="footer-arrow">›</span>Produtos</a></li>
           <li><a href="{% url 'services:list' %}" class="footer-link"><span class="footer-arrow">›</span>Serviços</a></li>
-          <li><a href="{% url 'disk_racao' %}" class="footer-link"><span class="footer-arrow">›</span>Disk Ração</a></li>
-          <li><a href="{% url 'sobre' %}" class="footer-link"><span class="footer-arrow">›</span>Sobre</a></li>
-          <li><a href="{% url 'contato' %}" class="footer-link"><span class="footer-arrow">›</span>Contato</a></li>
+          <li><a href="{% url 'disk_racao' %}" class="footer-link"><span class="footer-arrow">›</span>Produtos Pet</a></li>
+          <li><a href="{% url 'home' %}#sobre-nos" class="footer-link"><span class="footer-arrow">›</span>Sobre</a></li>
+          <li><a href="{% url 'home' %}#contato" class="footer-link"><span class="footer-arrow">›</span>Contato</a></li>
         </ul>
       </div>
 
@@ -270,18 +244,11 @@
       <div>
         <h4 class="footer-col-title">Nossos Serviços</h4>
         <ul class="space-y-1">
-          {% for sv in nav_services %}
-          <li>
-            <a href="{% url 'services:list' %}" class="footer-link">
-              <span class="footer-arrow">›</span>{{ sv.icon }} {{ sv.name }}
-            </a>
-          </li>
-          {% empty %}
-          <li><a href="{% url 'services:list' %}" class="footer-link"><span class="footer-arrow">›</span>✂️ Banho & Tosa</a></li>
-          <li><a href="{% url 'services:list' %}" class="footer-link"><span class="footer-arrow">›</span>🚗 Táxi Dog</a></li>
-          <li><a href="{% url 'services:list' %}" class="footer-link"><span class="footer-arrow">›</span>💧 Hidratação</a></li>
-          <li><a href="{% url 'disk_racao' %}" class="footer-link"><span class="footer-arrow">›</span>🛵 Disk Ração</a></li>
-          {% endfor %}
+          <li><a href="{% url 'banho_e_tosa' %}" class="footer-link"><span class="footer-arrow">›</span>✂️ Banho e Tosa Premium</a></li>
+          <li><a href="{% url 'veterinario' %}" class="footer-link"><span class="footer-arrow">›</span>🩺 Consultório Veterinário</a></li>
+          <li><a href="{% url 'boutique_pet' %}" class="footer-link"><span class="footer-arrow">›</span>🛍️ Boutique Pet</a></li>
+          <li><a href="{% url 'products:list' %}?q=medicamentos" class="footer-link"><span class="footer-arrow">›</span>💊 Medicamentos</a></li>
+          <li><a href="{% url 'products:list' %}" class="footer-link"><span class="footer-arrow">›</span>🐾 Produtos Pet</a></li>
         </ul>
       </div>
 
@@ -301,7 +268,7 @@
               <a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener"
                  data-interaction-type="whatsapp_geral"
                  style="color:#25D366!important;font-weight:600;">
-                (61) 99108-3675
+                (61) 99660-0007
               </a>
             </div>
           </div>
@@ -310,9 +277,9 @@
         <div class="footer-contact-item">
           <div class="footer-contact-icon">📞</div>
           <div>
-            <span class="footer-contact-label">Telefone</span>
+            <span class="footer-contact-label">Atendimento</span>
             <div class="footer-contact-text">
-              <a href="tel:{{ store.phone_number }}">{{ store.phone_number }}</a>
+              Seg a Sex 08h às 17h<br>Sáb 08h às 16h
             </div>
           </div>
         </div>
@@ -320,8 +287,8 @@
         <div class="footer-contact-item">
           <div class="footer-contact-icon">🕐</div>
           <div>
-            <span class="footer-contact-label">Funcionamento</span>
-            <div class="footer-contact-text" style="white-space:pre-line;">{{ store.opening_hours }}</div>
+            <span class="footer-contact-label">Instagram</span>
+            <div class="footer-contact-text">@indogpet</div>
           </div>
         </div>
 
@@ -331,14 +298,14 @@
           <div class="footer-contact-item">
             <div class="footer-contact-icon">📍</div>
             <div>
-              <div class="footer-contact-text" style="white-space:pre-line;">{{ store.address }}</div>
+              <div class="footer-contact-text">Lago Sul / Altiplano Leste - Brasília - DF</div>
               {% if store.maps_url %}
               <a href="{{ store.maps_url }}" target="_blank" rel="noopener"
                  class="footer-map-btn">
                 🗺️ Ver no mapa
               </a>
               {% else %}
-              <a href="https://maps.google.com/?q=Central+Pet+Brasília"
+              <a href="https://maps.google.com/?q=In+Dog+Pet+Shop+Lago+Sul+Brasília"
                  target="_blank" rel="noopener" class="footer-map-btn">
                 🗺️ Ver no mapa
               </a>
@@ -354,7 +321,7 @@
     <!-- Bottom Bar -->
     <div class="footer-bottom">
       <p class="footer-bottom-text">
-        &copy; {% now "Y" %} {{ store.store_name }}. Todos os direitos reservados.
+        &copy; {% now "Y" %} In Dog. Todos os direitos reservados.
       </p>
       <p class="footer-bottom-text">
         Desenvolvido com ❤️ para pets e seus humanos. 🐾
@@ -375,7 +342,91 @@
 </a>
 
 <script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/customer.js' %}"></script>
+<script src="{% static 'js/cart.js' %}"></script>
 {% block extra_js %}{% endblock %}
+
+<!-- ── MINI CARRINHO ────────────────────────────────────────────────────── -->
+<div id="cart-overlay" class="cart-overlay" aria-hidden="true"></div>
+
+<div id="cart-panel" class="cart-panel"
+     data-wa-number="{{ whatsapp_number }}"
+     role="dialog" aria-modal="true" aria-labelledby="cart-panel-title"
+     aria-hidden="true">
+
+  <!-- Cabeçalho -->
+  <div class="cart-panel-header">
+    <div>
+      <h2 id="cart-panel-title" class="cart-panel-title">
+        <svg style="width:18px;height:18px;flex-shrink:0;" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/>
+        </svg>
+        Meu Pedido
+      </h2>
+      <p class="cart-panel-sub">Selecione produtos e envie pelo WhatsApp</p>
+    </div>
+    <button id="cart-close-btn" class="cart-close-btn" aria-label="Fechar pedido">✕</button>
+  </div>
+
+  <!-- Lista de itens (preenchida por JS) -->
+  <div id="cart-items-list" class="cart-items-list"></div>
+
+  <!-- Estado vazio -->
+  <div id="cart-empty" class="cart-empty" style="display:flex;">
+    <span class="cart-empty-icon">🛒</span>
+    <p>Pedido vazio</p>
+    <small>Adicione produtos ao pedido e envie tudo de uma vez pelo WhatsApp</small>
+  </div>
+
+  <!-- Rodapé -->
+  <div id="cart-footer" class="cart-footer" style="display:none;">
+
+    <!-- Dados do cliente (expansível, opcional) -->
+    <details id="cart-customer-details" class="cart-customer-section">
+      <summary class="cart-customer-summary">
+        👤 Seus dados
+        <small class="cart-customer-optional">opcional · aparece na mensagem</small>
+      </summary>
+      <div class="cart-customer-body">
+        <div class="cart-field-row">
+          <input id="cart-tutor" type="text" placeholder="Seu nome" class="cart-field" autocomplete="name" />
+          <input id="cart-whatsapp" type="tel" placeholder="WhatsApp (61) 9…" class="cart-field" autocomplete="tel" />
+        </div>
+        <div class="cart-field-row">
+          <input id="cart-pet" type="text" placeholder="Nome do pet" class="cart-field" />
+          <select id="cart-pet-tipo" class="cart-field">
+            <option value="">Tipo do pet</option>
+            <option value="Cão">🐕 Cão</option>
+            <option value="Gato">🐱 Gato</option>
+            <option value="Outro">🐾 Outro</option>
+          </select>
+        </div>
+        <div class="cart-field-row">
+          <input id="cart-bairro" type="text" placeholder="Bairro" class="cart-field" />
+          <input id="cart-endereco" type="text" placeholder="Endereço" class="cart-field" />
+        </div>
+        <label class="cart-save-label">
+          <input type="checkbox" id="cart-salvar-dados" />
+          <span>Salvar meus dados neste dispositivo</span>
+        </label>
+        <p class="cart-privacy-note">🔒 Seus dados ficam salvos apenas neste dispositivo.</p>
+        <button type="button" id="cart-limpar-dados" class="cart-limpar-dados-btn" style="display:none;">Limpar dados salvos</button>
+      </div>
+    </details>
+
+    <div id="cart-total" class="cart-total" style="display:none;"></div>
+
+    <button id="cart-send-wa" class="cart-send-wa-btn" type="button">
+      <svg style="width:20px;height:20px;fill:#fff;flex-shrink:0;" viewBox="0 0 24 24">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Enviar pedido pelo WhatsApp
+    </button>
+
+    <button id="cart-clear" class="cart-clear-btn" type="button">Limpar pedido</button>
+  </div>
+
+</div>
 
 <!-- ── MODAL DE AGENDAMENTO ─────────────────────────────────────────────── -->
 <div id="modal-agendamento" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" data-whatsapp-number="{{ whatsapp_number }}"
@@ -446,13 +497,13 @@
                   style="width:100%;background:#0F0F1A;border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#F0F0F0;padding:0.65rem 0.85rem;font-size:0.875rem;outline:none;transition:border-color 0.15s;"
                   onfocus="this.style.borderColor='rgba(245,166,35,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'">
             <option value="">Selecione</option>
-            <option value="Banho + Tosa">✂️ Banho + Tosa</option>
+            <option value="Banho e Tosa Premium">✂️ Banho e Tosa Premium</option>
             <option value="Somente Banho">🛁 Somente Banho</option>
             <option value="Somente Tosa">✂️ Somente Tosa</option>
-            <option value="Banho + Hidratação">💧 Banho + Hidratação</option>
-            <option value="Pacote Completo">⭐ Pacote Completo</option>
-            <option value="Táxi Dog">🚗 Táxi Dog</option>
-            <option value="Hidratação">💧 Hidratação</option>
+            <option value="Consultório Veterinário">🩺 Consultório Veterinário</option>
+            <option value="Boutique Pet">🛍️ Boutique Pet</option>
+            <option value="Medicamentos">💊 Medicamentos</option>
+            <option value="Produtos Pet">🐾 Produtos Pet</option>
           </select>
           <p id="ag-servico-erro" style="color:#F87171;font-size:0.72rem;margin-top:0.25rem;display:none;">Campo obrigatório</p>
         </div>
@@ -471,6 +522,42 @@
             <option value="Grande (acima de 20kg)">🐕‍🦺 Grande (acima de 20kg)</option>
           </select>
           <p id="ag-porte-erro" style="color:#F87171;font-size:0.72rem;margin-top:0.25rem;display:none;">Campo obrigatório</p>
+        </div>
+
+        <!-- Tipo do pet -->
+        <div>
+          <label for="ag-tipo" style="display:block;font-size:0.78rem;font-weight:600;color:#9CA3AF;margin-bottom:0.35rem;">
+            Tipo do pet <span style="color:#6B7280;font-weight:400;">(opcional)</span>
+          </label>
+          <select id="ag-tipo"
+                  style="width:100%;background:#0F0F1A;border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#F0F0F0;padding:0.65rem 0.85rem;font-size:0.875rem;outline:none;transition:border-color 0.15s;"
+                  onfocus="this.style.borderColor='rgba(245,166,35,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'">
+            <option value="">Selecione (opcional)</option>
+            <option value="Cão">🐕 Cão</option>
+            <option value="Gato">🐱 Gato</option>
+            <option value="Coelho">🐇 Coelho</option>
+            <option value="Outro">🐾 Outro</option>
+          </select>
+        </div>
+
+        <!-- Bairro -->
+        <div>
+          <label for="ag-bairro" style="display:block;font-size:0.78rem;font-weight:600;color:#9CA3AF;margin-bottom:0.35rem;">
+            Bairro <span style="color:#6B7280;font-weight:400;">(opcional)</span>
+          </label>
+          <input id="ag-bairro" type="text" placeholder="Ex: Lago Sul, Asa Norte"
+                 style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#F0F0F0;padding:0.65rem 0.85rem;font-size:0.875rem;outline:none;transition:border-color 0.15s;"
+                 onfocus="this.style.borderColor='rgba(245,166,35,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'" />
+        </div>
+
+        <!-- Endereço -->
+        <div style="grid-column:1/-1;">
+          <label for="ag-endereco" style="display:block;font-size:0.78rem;font-weight:600;color:#9CA3AF;margin-bottom:0.35rem;">
+            Endereço <span style="color:#6B7280;font-weight:400;">(opcional)</span>
+          </label>
+          <input id="ag-endereco" type="text" autocomplete="street-address" placeholder="Rua, número, complemento"
+                 style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#F0F0F0;padding:0.65rem 0.85rem;font-size:0.875rem;outline:none;transition:border-color 0.15s;"
+                 onfocus="this.style.borderColor='rgba(245,166,35,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'" />
         </div>
 
         <!-- Data -->
@@ -515,6 +602,19 @@
           <textarea id="ag-obs" rows="2" placeholder="Ex: Pet é nervoso, tem alergia a determinado produto..."
                     style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#F0F0F0;padding:0.65rem 0.85rem;font-size:0.875rem;outline:none;resize:vertical;transition:border-color 0.15s;"
                     onfocus="this.style.borderColor='rgba(245,166,35,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.08)'"></textarea>
+        </div>
+
+        <!-- Salvar dados do cliente -->
+        <div style="grid-column:1/-1;padding-top:0.65rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <label style="display:flex;align-items:flex-start;gap:0.5rem;cursor:pointer;margin-bottom:0.3rem;">
+            <input type="checkbox" id="ag-salvar" style="width:14px;height:14px;accent-color:#F5A623;cursor:pointer;flex-shrink:0;margin-top:2px;" />
+            <span style="font-size:0.78rem;color:#9CA3AF;line-height:1.35;">Salvar meus dados para próximos pedidos neste dispositivo</span>
+          </label>
+          <p style="font-size:0.7rem;color:#4B5563;margin:0 0 0.2rem;">🔒 Seus dados ficam salvos apenas neste dispositivo.</p>
+          <button type="button" id="ag-limpar-dados"
+                  style="display:none;background:none;border:none;color:#F87171;font-size:0.7rem;cursor:pointer;padding:0;text-decoration:underline;font-family:inherit;">
+            Limpar dados salvos
+          </button>
         </div>
 
       </div><!-- /grid -->
@@ -562,6 +662,22 @@ function abrirModalAgendamento(servico) {
 
   var hoje = new Date().toISOString().split('T')[0];
   document.getElementById('ag-data').setAttribute('min', hoje);
+  // Autopreenchimento com dados salvos (só preenche campos vazios)
+  if (window.InDogCustomer) {
+    window.InDogCustomer.autofill({
+      'ag-tutor':    'tutor',
+      'ag-telefone': 'whatsapp',
+      'ag-pet':      'pet_nome',
+      'ag-tipo':     'pet_tipo',
+      'ag-endereco': 'endereco',
+      'ag-bairro':   'bairro',
+    });
+    var agClearBtn = document.getElementById('ag-limpar-dados');
+    if (agClearBtn) agClearBtn.style.display = window.InDogCustomer.hasData() ? 'inline' : 'none';
+    var agCb = document.getElementById('ag-salvar');
+    if (agCb) agCb.checked = window.InDogCustomer.hasData();
+  }
+
   setTimeout(function() {
     var tutor = document.getElementById('ag-tutor');
     if (tutor) tutor.focus();
@@ -618,23 +734,41 @@ function enviarAgendamentoWhatsApp(e) {
   var dataVal  = document.getElementById('ag-data').value;
   var horario  = document.getElementById('ag-horario').value;
   var obs      = document.getElementById('ag-obs').value.trim();
+  var tipo     = (document.getElementById('ag-tipo') || {}).value || '';
+  var endereco = ((document.getElementById('ag-endereco') || {}).value || '').trim();
+  var bairro   = ((document.getElementById('ag-bairro') || {}).value || '').trim();
 
   // Formatar data para dd/mm/aaaa
   var partes = dataVal.split('-');
   var dataFmt = partes[2] + '/' + partes[1] + '/' + partes[0];
 
-  var msg = 'Olá, gostaria de solicitar um agendamento na Central Pet.\n\n';
+  var msg = 'Olá, gostaria de solicitar um agendamento na In Dog.\n\n';
   msg += 'Tutor: ' + tutor + '\n';
-  msg += 'Pet: ' + pet + '\n';
+  msg += 'Pet: ' + pet + (tipo ? ' (' + tipo + ')' : '') + '\n';
   msg += 'Telefone: ' + telefone + '\n';
   msg += 'Serviço: ' + servico + '\n';
   msg += 'Porte: ' + porte + '\n';
   msg += 'Data desejada: ' + dataFmt + '\n';
   msg += 'Horário desejado: ' + horario + '\n';
+  if (bairro)   msg += 'Bairro: ' + bairro + '\n';
+  if (endereco) msg += 'Endereço: ' + endereco + '\n';
   msg += 'Observação: ' + (obs || 'Não informado');
 
-  if (window.CentralPetInteractions) {
-    window.CentralPetInteractions.track({
+  // Salvar dados do cliente se checkbox marcado
+  var agSalvar = document.getElementById('ag-salvar');
+  if (agSalvar && agSalvar.checked && window.InDogCustomer) {
+    window.InDogCustomer.save({
+      tutor:    tutor,
+      whatsapp: telefone,
+      pet_nome: pet,
+      pet_tipo: tipo,
+      endereco: endereco,
+      bairro:   bairro,
+    });
+  }
+
+  if (window.InDogInteractions) {
+    window.InDogInteractions.track({
       tipo: 'agendamento_enviado',
       nome_servico: servico
     });
@@ -658,8 +792,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('[data-schedule-service]').forEach(function(btn) {
     btn.addEventListener('click', function() {
       var serviceName = this.dataset.scheduleService || '';
-      if (window.CentralPetInteractions) {
-        window.CentralPetInteractions.track({
+      if (window.InDogInteractions) {
+        window.InDogInteractions.track({
           tipo: 'servico_agendamento_aberto',
           servico_id: this.dataset.serviceId || '',
           nome_servico: serviceName
@@ -668,6 +802,24 @@ document.addEventListener('DOMContentLoaded', function() {
       abrirModalAgendamento(serviceName);
     });
   });
+
+  // Limpar dados salvos (modal de agendamento)
+  var agLimpar = document.getElementById('ag-limpar-dados');
+  if (agLimpar) {
+    agLimpar.addEventListener('click', function () {
+      if (!window.InDogCustomer) return;
+      window.InDogCustomer.clear();
+      ['ag-tutor', 'ag-telefone', 'ag-pet', 'ag-endereco', 'ag-bairro'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      var agTipo = document.getElementById('ag-tipo');
+      if (agTipo) agTipo.selectedIndex = 0;
+      var agCb = document.getElementById('ag-salvar');
+      if (agCb) agCb.checked = false;
+      agLimpar.style.display = 'none';
+    });
+  }
 });
 
 document.addEventListener('keydown', function(e) {

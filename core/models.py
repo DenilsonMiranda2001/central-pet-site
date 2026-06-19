@@ -2,20 +2,20 @@ from django.db import models
 
 
 class StoreConfig(models.Model):
-    store_name = models.CharField("Nome da loja", max_length=100, default="Central Pet")
-    slogan = models.CharField("Slogan", max_length=200, default="Tudo para seu melhor amigo!")
+    store_name = models.CharField("Nome da loja", max_length=100, default="In Dog")
+    slogan = models.CharField("Slogan", max_length=200, default="Cuidado especial para seu pet desde 2016.")
     whatsapp_number = models.CharField(
-        "WhatsApp (apenas números)", max_length=20, default="5561991083675",
-        help_text="Ex: 5561991083675 — sem espaços, traços ou parênteses"
+        "WhatsApp (apenas números)", max_length=20, default="5561996600007",
+        help_text="Ex: 5561996600007 — sem espaços, traços ou parênteses"
     )
-    phone_number = models.CharField("Telefone fixo", max_length=20, default="(61) 3201-0015")
-    instagram_url = models.CharField("Instagram (usuário, sem @)", max_length=100, default="centralpetoficial")
+    phone_number = models.CharField("Telefone fixo", max_length=20, default="(61) 99660-0007")
+    instagram_url = models.CharField("Instagram (usuário, sem @)", max_length=100, default="indogpet")
     facebook_url = models.CharField("Facebook (URL ou usuário)", max_length=200, blank=True)
     tiktok_url = models.CharField("TikTok (usuário, sem @)", max_length=100, blank=True)
     email = models.EmailField("E-mail de contato", blank=True)
     address = models.TextField(
         "Endereço completo",
-        default="QNM 34 Conjunto H Lote 01\nCeilândia Sul — Brasília/DF"
+        default="Lago Sul / Altiplano Leste\nBrasília — DF"
     )
     maps_url = models.URLField(
         "Link Google Maps", blank=True,
@@ -23,20 +23,21 @@ class StoreConfig(models.Model):
     )
     opening_hours = models.TextField(
         "Horário de funcionamento",
-        default="Seg à Sáb: 8h às 19h\nDomingos: 9h às 13h"
+        default="Seg à Sex: 8h às 17h\nSábado: 8h às 16h"
     )
     delivery_text = models.CharField(
         "Destaque da entrega (navbar/hero)",
         max_length=200,
-        default="Entrega rápida e sem taxa para você"
+        default="Pet shop premium no Lago Sul — Brasília/DF"
     )
     about_text = models.TextField(
         "Texto sobre a loja",
         default=(
-            "Na Central Pet, seu animal encontra tudo que precisa com o cuidado que merece. "
-            "Oferecemos serviços completos de Banho & Tosa, Táxi Dog, além de uma linha premium "
-            "de rações e medicamentos. Nossa entrega é rápida, sem taxa e com o exclusivo "
-            "Disk Ração para pedidos práticos diretamente no seu WhatsApp."
+            "Desde 2016 a In Dog oferece cuidados especiais para pets em Brasília. "
+            "Localizada no Lago Sul / Altiplano Leste, contamos com Banho e Tosa Premium, "
+            "Consultório Veterinário, Boutique Pet e uma linha completa de medicamentos e "
+            "produtos para o bem-estar do seu companheiro. Cuidado com amor, profissionalismo "
+            "e a atenção que seu pet merece."
         )
     )
     hero_title = models.CharField(
@@ -45,7 +46,7 @@ class StoreConfig(models.Model):
     )
     hero_subtitle = models.TextField(
         "Subtítulo (Hero)",
-        default="Banho & Tosa, Táxi Dog, Rações, Medicamentos e muito mais! Entrega rápida e sem taxa para você."
+        default="Banho e Tosa Premium, Consultório Veterinário, Boutique Pet, Medicamentos e Produtos Pet. Pet shop no Lago Sul — Brasília/DF desde 2016."
     )
 
     class Meta:
@@ -53,7 +54,7 @@ class StoreConfig(models.Model):
         verbose_name_plural = "Configurações da Loja"
 
     def __str__(self):
-        return "Configurações — Central Pet"
+        return "Configurações — In Dog"
 
     def save(self, *args, **kwargs):
         self.pk = 1

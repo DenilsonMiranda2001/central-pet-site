@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Entrar no Painel — Central Pet</title>
+  <title>Entrar no Painel — In Dog</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root { --gold: #F5A623; --gold-dark: #D4880A; }
+    :root { --gold: #F5A623; --gold-dark: #D4880A; --brown:#2F1D13; --cream:#FFF8EE; --line:#EADBC8; }
     * { box-sizing: border-box; }
     body {
-      background: #0A0A0A;
+      background: var(--cream);
       min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
       font-family: 'Inter', system-ui, sans-serif;
@@ -18,34 +18,34 @@
     body::before {
       content: '';
       position: fixed; inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(245,166,35,0.08) 0%, transparent 70%);
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(245,166,35,0.16) 0%, transparent 70%);
       pointer-events: none;
     }
     .login-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #FFFFFF;
+      border: 1px solid var(--line);
       border-radius: 24px;
-      backdrop-filter: blur(20px);
+      box-shadow: 0 22px 52px rgba(103, 68, 35, 0.1);
       padding: 2.5rem;
       width: 100%; max-width: 420px;
     }
     .login-input {
       width: 100%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #FFFDF9;
+      border: 1px solid var(--line);
       border-radius: 12px;
-      color: #F0F0F0;
+      color: var(--brown);
       padding: 0.85rem 1rem;
       font-size: 0.95rem;
       outline: none;
       transition: border-color 0.2s;
     }
     .login-input:focus { border-color: rgba(245,166,35,0.5); }
-    .login-input::placeholder { color: #4B5563; }
+    .login-input::placeholder { color: #A38C76; }
     .btn-login {
       width: 100%;
       background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-      color: #000; font-weight: 800;
+      color: #fff; font-weight: 800;
       padding: 0.9rem;
       border-radius: 12px;
       border: none; cursor: pointer;
@@ -69,8 +69,8 @@
     <!-- Logo -->
     <div style="text-align:center;margin-bottom:2rem;">
       <div style="font-size:3rem;margin-bottom:0.5rem;">🐾</div>
-      <h1 style="font-size:1.5rem;font-weight:900;color:#F5A623;margin:0;">Central Pet</h1>
-      <p style="color:#6B7280;font-size:0.85rem;margin-top:0.25rem;">Painel de Gerenciamento</p>
+      <h1 style="font-size:1.5rem;font-weight:900;color:#F5A623;margin:0;">In Dog</h1>
+      <p style="color:#7D6A5A;font-size:0.85rem;margin-top:0.25rem;">Painel de Gerenciamento</p>
     </div>
 
     <!-- Error -->
@@ -87,14 +87,14 @@
       {% csrf_token %}
       <input type="hidden" name="next" value="{{ next }}"/>
       <div style="margin-bottom:1rem;">
-        <label style="display:block;font-size:0.8rem;font-weight:600;color:#9CA3AF;margin-bottom:0.4rem;">
+        <label style="display:block;font-size:0.8rem;font-weight:600;color:#6B5A4A;margin-bottom:0.4rem;">
           Usuário
         </label>
         <input type="text" name="username" class="login-input"
                placeholder="Seu usuário" autocomplete="username" autofocus required/>
       </div>
       <div style="margin-bottom:1.5rem;">
-        <label style="display:block;font-size:0.8rem;font-weight:600;color:#9CA3AF;margin-bottom:0.4rem;">
+        <label style="display:block;font-size:0.8rem;font-weight:600;color:#6B5A4A;margin-bottom:0.4rem;">
           Senha
         </label>
         <input type="password" name="password" class="login-input"
@@ -105,8 +105,8 @@
 
     <!-- Footer -->
     <div style="text-align:center;margin-top:1.5rem;">
-      <a href="{% url 'home' %}" style="color:#4B5563;font-size:0.8rem;text-decoration:none;transition:color 0.15s;"
-         onmouseover="this.style.color='#9CA3AF'" onmouseout="this.style.color='#4B5563'">
+      <a href="{% url 'home' %}" style="color:#7D6A5A;font-size:0.8rem;text-decoration:none;transition:color 0.15s;"
+         onmouseover="this.style.color='#935018'" onmouseout="this.style.color='#7D6A5A'">
         ← Voltar ao site
       </a>
     </div>

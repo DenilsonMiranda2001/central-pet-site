@@ -3,21 +3,21 @@
     "model": "core.storeconfig",
     "pk": 1,
     "fields": {
-      "store_name": "Central Pet",
-      "slogan": "Tudo para seu melhor amigo!",
-      "whatsapp_number": "5561991083675",
-      "phone_number": "(61) 3201-0015",
-      "instagram_url": "centralpetoficial",
+      "store_name": "In Dog",
+      "slogan": "Cuidado especial para seu pet.",
+      "whatsapp_number": "5561996600007",
+      "phone_number": "(61) 99660-0007",
+      "instagram_url": "indogpet",
       "facebook_url": "",
       "tiktok_url": "",
-      "email": "contato@centralpet.com.br",
-      "address": "QNM 34 Conjunto H Lote 01\nCeilândia Sul — Brasília/DF",
+      "email": "contato@indogpet.com.br",
+      "address": "Lago Sul / Altiplano Leste\nBrasília — DF",
       "maps_url": "",
-      "opening_hours": "Seg à Sáb: 8h às 19h\nDomingos: 9h às 13h",
-      "delivery_text": "Entrega rápida e sem taxa para você",
-      "about_text": "Na Central Pet, seu animal encontra tudo que precisa com o cuidado que merece. Oferecemos serviços completos de Banho & Tosa, Táxi Dog, além de uma linha premium de rações e medicamentos para manter a saúde e o bem-estar do seu companheiro em dia. Sem complicação: nossa entrega é rápida, sem taxa e com o exclusivo Disk Ração para pedidos práticos e ágeis diretamente no seu WhatsApp.",
+      "opening_hours": "Segunda a sexta: 08h às 17h\nSábado: 08h às 16h",
+      "delivery_text": "Pet shop premium no Lago Sul — Brasília/DF",
+      "about_text": "A In Dog é um pet shop em Brasília que oferece banho e tosa premium, consultório veterinário, boutique pet, medicamentos e produtos para pets, com atendimento cuidadoso e foco no bem-estar dos animais. Estamos localizados no Lago Sul / Altiplano Leste.",
       "hero_title": "Cuidado que seu pet sente, amor que fica.",
-      "hero_subtitle": "Banho & Tosa, Táxi Dog, Rações, Medicamentos e muito mais! Entrega rápida e sem taxa para você."
+      "hero_subtitle": "Banho e Tosa Premium, Consultório Veterinário, Boutique Pet, Medicamentos e Produtos Pet. Pet shop no Lago Sul / Altiplano Leste — Brasília/DF."
     }
   },
   {"model":"products.category","pk":1,"fields":{"name":"Rações","slug":"racoes","icon":"🍖","is_active":true,"order":1}},
@@ -58,11 +58,11 @@
     "model": "products.product", "pk": 8,
     "fields": {"name":"Ração Pedigree Adulto Frango 15kg","slug":"racao-pedigree-adulto-frango-15kg","short_description":"Nutrição completa com sabor que seu cão adora","description":"Pedigree Adulto com frango, cereais e vegetais. Contém 21 nutrientes essenciais para a saúde completa do seu cão.","category":1,"price":"109.90","original_price":"129.90","image":"","is_featured":true,"is_available":true,"is_active":true,"order":3,"created_at":"2024-01-01T00:00:00Z","updated_at":"2024-01-01T00:00:00Z"}
   },
-  {"model":"services.service","pk":1,"fields":{"name":"Banho & Tosa","slug":"banho-e-tosa","description":"Banho completo com secagem, escovação, limpeza de ouvidos, corte de unhas e perfume. Tosa higiênica ou artística conforme a raça. Todos os produtos são premium e hipoalergênicos.","short_description":"Banho completo com secagem, escovação e perfume. Tosa higiênica ou artística.","image":"","price_from":"45.00","icon":"✂️","whatsapp_message":"Olá, gostaria de agendar *Banho & Tosa* para meu pet. Pode me informar disponibilidade?","is_active":true,"is_featured":true,"order":1}},
-  {"model":"services.service","pk":2,"fields":{"name":"Táxi Dog","slug":"taxi-dog","description":"Transporte seguro e confortável do seu pet até nossa pet shop e de volta para casa. Motoristas treinados, veículo climatizado e caixas de transporte certificadas.","short_description":"Busca e entrega do seu pet em casa com segurança e conforto.","image":"","price_from":"30.00","icon":"🚗","whatsapp_message":"Olá, gostaria de solicitar o *Táxi Dog* para meu pet. Qual a disponibilidade?","is_active":true,"is_featured":true,"order":2}},
-  {"model":"services.service","pk":3,"fields":{"name":"Hidratação","slug":"hidratacao","description":"Tratamento intensivo de hidratação para o pelo do seu pet. Usamos produtos premium que restauram o brilho, maciez e saúde do pelo, evitando ressecamento e quebra.","short_description":"Tratamento premium que restaura o brilho e a saúde do pelo.","image":"","price_from":"35.00","icon":"💧","whatsapp_message":"Olá, gostaria de agendar a *Hidratação* para o pelo do meu pet.","is_active":true,"is_featured":true,"order":3}},
-  {"model":"services.service","pk":4,"fields":{"name":"Disk Ração","slug":"disk-racao","description":"Ficou sem ração? A Central Pet entrega no mesmo dia, sem taxa de entrega, direto na sua porta. Temos as melhores marcas em estoque. Peça pelo WhatsApp em minutos!","short_description":"Entrega de ração no mesmo dia, sem taxa, direto na sua porta.","image":"","price_from":null,"icon":"🛵","whatsapp_message":"Olá, gostaria de pedir ração pelo *Disk Ração* da Central Pet. Pode me ajudar?","is_active":true,"is_featured":true,"order":4}},
-  {"model":"core.testimonial","pk":1,"fields":{"customer_name":"Ana Paula S.","pet_name":"Golden","comment":"Minha Golden ama o banho e tosa aqui! Sempre sai cheirosa e linda. Atendimento impecável!","rating":5,"is_active":true,"order":1,"created_at":"2024-01-01T00:00:00Z"}},
-  {"model":"core.testimonial","pk":2,"fields":{"customer_name":"Carlos M.","pet_name":"","comment":"O Disk Ração salvou minha vida! Pedi pelo WhatsApp e em menos de 1 hora chegou em casa. Sem taxa de entrega!","rating":5,"is_active":true,"order":2,"created_at":"2024-01-01T00:00:00Z"}},
-  {"model":"core.testimonial","pk":3,"fields":{"customer_name":"Fernanda L.","pet_name":"Poodle","comment":"Uso o Táxi Dog toda semana. Motorista super atencioso, meu Poodle chega tranquilo. Recomendo muito!","rating":5,"is_active":true,"order":3,"created_at":"2024-01-01T00:00:00Z"}}
+  {"model":"services.service","pk":1,"fields":{"name":"Banho e Tosa Premium","slug":"banho-e-tosa","description":"Banho completo com secagem, escovação, limpeza de ouvidos, corte de unhas e perfume. Tosa higiênica ou artística conforme a raça. Produtos premium e hipoalergênicos para o conforto do seu pet no Lago Sul — Brasília.","short_description":"Banho completo com secagem, escovação e perfume. Tosa higiênica ou artística premium.","image":"","price_from":"45.00","icon":"✂️","whatsapp_message":"Olá, gostaria de agendar *Banho e Tosa Premium* na In Dog. Pode me informar disponibilidade?","is_active":true,"is_featured":true,"order":1}},
+  {"model":"services.service","pk":2,"fields":{"name":"Consultório Veterinário","slug":"consultorio-veterinario","description":"Cuidamos da saúde do seu pet com atendimento atencioso e profissional. Realizamos consultas, vacinação, acompanhamento clínico e orientações preventivas para proporcionar mais qualidade de vida ao seu melhor amigo.","short_description":"Atendimento especializado para a saúde e bem-estar do seu pet.","image":"","price_from":null,"icon":"🩺","whatsapp_message":"Olá, gostaria de agendar uma *consulta veterinária* na In Dog. Qual a disponibilidade?","is_active":true,"is_featured":true,"order":2}},
+  {"model":"services.service","pk":3,"fields":{"name":"Boutique Pet","slug":"boutique-pet","description":"Produtos selecionados para o seu pet com estilo e qualidade. Roupinhas, acessórios, coleiras, caminhas e muito mais em nossa boutique exclusiva no Lago Sul — Brasília.","short_description":"Acessórios e produtos selecionados para pets com estilo e qualidade.","image":"","price_from":null,"icon":"🛍️","whatsapp_message":"Olá, gostaria de conhecer a *Boutique Pet* da In Dog. Podem me ajudar?","is_active":true,"is_featured":true,"order":3}},
+  {"model":"services.service","pk":4,"fields":{"name":"Medicamentos","slug":"medicamentos","description":"Linha completa de medicamentos veterinários, antiparasitários, suplementos e produtos de saúde para cães e gatos. Produtos originais das melhores marcas disponíveis na In Dog — Lago Sul, Brasília.","short_description":"Antiparasitários, suplementos e medicamentos veterinários originais.","image":"","price_from":null,"icon":"💊","whatsapp_message":"Olá, gostaria de informações sobre *medicamentos* disponíveis na In Dog.","is_active":true,"is_featured":true,"order":4}},
+  {"model":"core.testimonial","pk":1,"fields":{"customer_name":"Ana Paula S.","pet_name":"Golden","comment":"Minha Golden ama o banho e tosa aqui na In Dog! Sempre sai cheirosa e linda. Atendimento impecável no Lago Sul!","rating":5,"is_active":true,"order":1,"created_at":"2024-01-01T00:00:00Z"}},
+  {"model":"core.testimonial","pk":2,"fields":{"customer_name":"Carlos M.","pet_name":"","comment":"O consultório veterinário da In Dog é excelente! Atendimento cuidadoso e profissional. Meu pet está sempre bem cuidado.","rating":5,"is_active":true,"order":2,"created_at":"2024-01-01T00:00:00Z"}},
+  {"model":"core.testimonial","pk":3,"fields":{"customer_name":"Fernanda L.","pet_name":"Poodle","comment":"A Boutique Pet da In Dog tem produtos incríveis! Encontrei tudo que precisava para meu Poodle. Super recomendo!","rating":5,"is_active":true,"order":3,"created_at":"2024-01-01T00:00:00Z"}}
 ]

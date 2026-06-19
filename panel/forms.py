@@ -200,7 +200,7 @@ class ConfiguracaoForm(forms.ModelForm):
             'about_text': 'Texto "Sobre a loja"',
         }
         help_texts = {
-            'whatsapp_number': 'Somente números. Ex: 5561991083675',
+            'whatsapp_number': 'Somente números. Ex: 5561996600007',
             'maps_url': 'Cole o link completo do Google Maps.',
         }
         widgets = {
@@ -208,7 +208,7 @@ class ConfiguracaoForm(forms.ModelForm):
             'slogan': forms.TextInput(attrs={'class': 'panel-input'}),
             'whatsapp_number': forms.TextInput(attrs={'class': 'panel-input', 'placeholder': '5561999999999'}),
             'phone_number': forms.TextInput(attrs={'class': 'panel-input', 'placeholder': '(61) 3000-0000'}),
-            'instagram_url': forms.TextInput(attrs={'class': 'panel-input', 'placeholder': 'centralpetoficial'}),
+            'instagram_url': forms.TextInput(attrs={'class': 'panel-input', 'placeholder': 'indogpet'}),
             'facebook_url': forms.TextInput(attrs={'class': 'panel-input'}),
             'tiktok_url': forms.TextInput(attrs={'class': 'panel-input'}),
             'email': forms.EmailInput(attrs={'class': 'panel-input'}),

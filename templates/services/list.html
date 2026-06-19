@@ -16,37 +16,61 @@
       <p class="section-label">O que fazemos</p>
       <h1 class="section-title">Serviços <span style="color:#F5A623;">Premium</span></h1>
       <div class="section-divider mx-auto"></div>
-      <p class="mt-4" style="color:#9CA3AF;max-width:480px;margin-left:auto;margin-right:auto;">
+      <p class="mt-4" style="color:#6B5A4A;max-width:480px;margin-left:auto;margin-right:auto;">
         Profissionais especializados e produtos de primeira linha para garantir o bem-estar do seu pet.
       </p>
     </div>
 
     <!-- Cards de Serviços -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-      {% for service in services %}
-      <div class="glass-card rounded-3xl p-8 fade-up fade-up-delay-{{ forloop.counter }}" style="border-color:rgba(245,166,35,0.1);">
-        <div class="flex items-start gap-5">
-          <div class="text-5xl shrink-0">{{ service.icon|default:"🐾" }}</div>
-          <div class="flex-1">
-            <h2 class="text-2xl font-bold mb-2" style="color:#F0F0F0;">{{ service.name }}</h2>
-            {% if service.price_from %}
-            <div class="service-price-tag mb-3">A partir de R$ {{ service.price_from }}</div>
-            {% endif %}
-            <p class="text-sm leading-relaxed mb-5" style="color:#9CA3AF;">{{ service.description }}</p>
-            <button type="button"
-                    data-schedule-service="{{ service.name }}"
-                    data-service-id="{{ service.id }}"
-                    class="btn-whatsapp text-sm py-2.5 px-5">
-              💬 Agendar agora
-            </button>
-          </div>
-        </div>
-      </div>
-      {% empty %}
-      <div class="col-span-2 text-center py-16">
-        <p style="color:#6B7280;">Nenhum serviço cadastrado ainda.</p>
-      </div>
-      {% endfor %}
+    <div class="service-page-grid mb-20">
+      <article class="service-page-card">
+        <span class="service-page-icon">✂️</span>
+        <h2>Banho e Tosa Premium</h2>
+        <p>Higiene, beleza e bem-estar com produtos de qualidade e atendimento cuidadoso.</p>
+        <a href="{% url 'banho_e_tosa' %}" class="btn-gold">Saiba mais</a>
+      </article>
+      <article class="service-page-card">
+        <span class="service-page-icon">🩺</span>
+        <h2>Consultório Veterinário</h2>
+        <p>Consultas, vacinação, check-up preventivo e orientações para a saúde do seu pet.</p>
+        <a href="{% url 'veterinario' %}" class="btn-gold">Saiba mais</a>
+      </article>
+      <article class="service-page-card">
+        <span class="service-page-icon">🛍️</span>
+        <h2>Boutique Pet</h2>
+        <p>Produtos selecionados com qualidade, estilo, conforto e cuidado em cada detalhe.</p>
+        <a href="{% url 'boutique_pet' %}" class="btn-gold">Saiba mais</a>
+      </article>
+      <article class="service-page-card">
+        <span class="service-page-icon">💊</span>
+        <h2>Medicamentos</h2>
+        <p>Medicamentos, suplementos e itens de cuidado para apoiar a rotina de saúde do pet.</p>
+        <a href="{% url 'products:list' %}?q=medicamentos" class="btn-gold">Consultar</a>
+      </article>
+      <article class="service-page-card">
+        <span class="service-page-icon">🐾</span>
+        <h2>Produtos Pet</h2>
+        <p>Rações, petiscos, higiene, acessórios e produtos essenciais para cães e gatos.</p>
+        <a href="{% url 'products:list' %}" class="btn-gold">Ver produtos</a>
+      </article>
+      <article class="service-page-card">
+        <span class="service-page-icon">🚚</span>
+        <h2>Entrega Rápida</h2>
+        <p>Mais comodidade para consultar produtos e combinar atendimento pelo WhatsApp.</p>
+        <a href="https://wa.me/{{ whatsapp_number }}?text={{ "Olá, gostaria de saber sobre entrega rápida da In Dog."|urlencode }}" target="_blank" rel="noopener" class="btn-whatsapp">Falar no WhatsApp</a>
+      </article>
+      <article class="service-page-card">
+        <span class="service-page-icon">💉</span>
+        <h2>Vacinação</h2>
+        <p>Proteção e prevenção com acompanhamento veterinário cuidadoso para seu pet.</p>
+        <a href="{% url 'veterinario' %}" class="btn-gold">Saiba mais</a>
+      </article>
+      <article class="service-page-card">
+        <span class="service-page-icon">✅</span>
+        <h2>Check-up Preventivo</h2>
+        <p>Avaliações periódicas para acompanhar a saúde e oferecer mais qualidade de vida.</p>
+        <a href="{% url 'veterinario' %}" class="btn-gold">Saiba mais</a>
+      </article>
     </div>
 
     <!-- Formulário Banho & Tosa -->
@@ -54,7 +78,7 @@
       <div class="glass-card rounded-3xl p-10" style="border-color:rgba(245,166,35,0.2);">
         <div class="text-center mb-8">
           <span style="font-size:3rem;">✂️</span>
-          <h2 class="text-2xl font-bold mt-3 mb-1" style="color:#F0F0F0;">Solicitar Agendamento</h2>
+          <h2 class="text-2xl font-bold mt-3 mb-1" style="color:#2F1D13;">Solicitar Agendamento</h2>
           <p class="text-sm" style="color:#6B7280;">Preencha e iremos montar a mensagem automática para o WhatsApp</p>
         </div>
         <button type="button" class="btn-whatsapp w-full justify-center py-3.5 text-base mt-2" data-schedule-service="Banho + Tosa">

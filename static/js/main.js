@@ -1,4 +1,4 @@
-// ── Central Pet — Main JS ──
+// ── In Dog — Main JS ──
 
 (function() {
   function getCookie(name) {
@@ -22,7 +22,7 @@
     );
   }
 
-  window.CentralPetInteractions = {
+  window.InDogInteractions = {
     track(payload) {
       const body = JSON.stringify(cleanPayload(payload));
       try {
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('[data-interaction-type]').forEach(link => {
     link.addEventListener('click', function() {
-      window.CentralPetInteractions.track({
+      window.InDogInteractions.track({
         tipo: this.dataset.interactionType,
         produto_id: this.dataset.productId || '',
         servico_id: this.dataset.serviceId || '',

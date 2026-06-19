@@ -10,6 +10,6 @@ def service_list(request):
     return render(request, "services/list.html", {
         "services": services,
         "config": config,
-        "page_title": "Serviços — Banho & Tosa, Táxi Dog | Central Pet",
-        "meta_description": "Banho & Tosa profissional, Táxi Dog, Hidratação e muito mais. Agende pelo WhatsApp com a Central Pet.",
+        "page_title": "Serviços Pet no Lago Sul | In Dog",
+        "meta_description": "Conheça os serviços pet da In Dog no Lago Sul: banho e tosa premium, consultório veterinário, boutique pet, medicamentos e produtos para pets.",
     })

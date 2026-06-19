@@ -78,6 +78,6 @@ class Product(models.Model):
     @property
     def whatsapp_message(self):
         return (
-            f"Olá, vi o produto *{self.name}* no site da Central Pet "
+            f"Olá, vi o produto *{self.name}* no site da In Dog "
             f"e gostaria de saber se está disponível."
         )

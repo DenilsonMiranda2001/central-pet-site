@@ -76,7 +76,7 @@
           {% endif %}
 
           <a href="{{ product.get_absolute_url }}">
-            <h3 class="font-bold text-sm leading-snug mb-1 hover:text-yellow-400 transition-colors" style="color:#F0F0F0;">
+            <h3 class="font-bold text-sm leading-snug mb-1 transition-colors" style="color:#2F1D13;">
               {{ product.name }}
             </h3>
           </a>
@@ -92,13 +92,23 @@
           </div>
 
           {% if product.is_available %}
+          <button
+            type="button"
+            class="btn-add-cart mb-1.5"
+            data-add-to-cart
+            data-product-id="{{ product.id }}"
+            data-product-name="{{ product.name }}"
+            data-product-price="{{ product.price }}"
+            data-product-image="{% if product.image %}{{ product.image.url }}{% endif %}">
+            🛒 Adicionar ao pedido
+          </button>
           <a href="https://wa.me/{{ whatsapp_number }}?text={{ product.whatsapp_message|urlencode }}"
              target="_blank" rel="noopener"
              data-interaction-type="produto_whatsapp"
              data-product-id="{{ product.id }}"
              data-product-name="{{ product.name }}"
-             class="btn-whatsapp w-full justify-center text-xs py-2">
-            💬 Comprar pelo WhatsApp
+             class="btn-wa-link">
+            💬 Perguntar no WhatsApp
           </a>
           {% else %}
           <span class="tag-indisponivel w-full justify-center">⚠️ Indisponível</span>
@@ -109,11 +119,41 @@
     </div>
 
     {% else %}
-    <div class="text-center py-20 fade-up">
-      <span style="font-size:4rem;display:block;margin-bottom:1rem;">🔍</span>
-      <h3 class="text-xl font-bold mb-2" style="color:#F0F0F0;">Nenhum produto encontrado</h3>
-      <p class="mb-6" style="color:#6B7280;">Tente outra categoria ou busca.</p>
-      <a href="{% url 'products:list' %}" class="btn-outline-gold">Ver todos os produtos</a>
+    <div class="product-fallback fade-up">
+      <div class="text-center mb-8">
+        <span style="font-size:3rem;display:block;margin-bottom:0.75rem;">🐾</span>
+        <h3 class="text-xl font-bold mb-2" style="color:#2F1D13;">Produtos em atualização</h3>
+        <p class="mb-6" style="color:#6B5A4A;">Consulte disponibilidade pelo WhatsApp enquanto o catálogo é atualizado.</p>
+      </div>
+      <div class="product-fallback-grid">
+        <article class="product-card">
+          <div class="product-img-placeholder product-static-icon">🥣</div>
+          <div class="p-4">
+            <span class="product-category-chip">Produtos Pet</span>
+            <h3 style="color:#2F1D13;">Rações e petiscos</h3>
+            <p>Opções para a rotina de alimentação e cuidado do seu pet.</p>
+            <a href="https://wa.me/{{ whatsapp_number }}?text={{ "Olá, gostaria de consultar rações e petiscos disponíveis na In Dog."|urlencode }}" target="_blank" rel="noopener" class="btn-whatsapp w-full text-xs py-2">Pedir no WhatsApp</a>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="product-img-placeholder product-static-icon">💊</div>
+          <div class="p-4">
+            <span class="product-category-chip">Medicamentos</span>
+            <h3 style="color:#2F1D13;">Saúde e cuidado</h3>
+            <p>Medicamentos, suplementos e itens para bem-estar animal.</p>
+            <a href="https://wa.me/{{ whatsapp_number }}?text={{ "Olá, gostaria de consultar medicamentos disponíveis na In Dog."|urlencode }}" target="_blank" rel="noopener" class="btn-whatsapp w-full text-xs py-2">Pedir no WhatsApp</a>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="product-img-placeholder product-static-icon">🛍️</div>
+          <div class="p-4">
+            <span class="product-category-chip">Boutique Pet</span>
+            <h3 style="color:#2F1D13;">Acessórios e higiene</h3>
+            <p>Produtos selecionados para conforto, estilo e cuidado diário.</p>
+            <a href="https://wa.me/{{ whatsapp_number }}?text={{ "Olá, gostaria de consultar acessórios e itens de higiene da In Dog."|urlencode }}" target="_blank" rel="noopener" class="btn-whatsapp w-full text-xs py-2">Pedir no WhatsApp</a>
+          </div>
+        </article>
+      </div>
     </div>
     {% endif %}
 
