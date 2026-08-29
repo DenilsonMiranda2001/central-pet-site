@@ -1,93 +1,74 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/indog-shell.css' %}">
+{% endblock %}
+
 {% block content %}
+<section class="indog-page">
+  <div class="indog-page-shell">
+    <div class="indog-breadcrumb"><a href="{% url 'home' %}">In Dog</a><span> / Serviços</span></div>
+    <div class="indog-page-kicker">Experiência In Dog</div>
+    <h1>Serviços pensados para<br><em>o bem-estar.</em></h1>
+    <p class="indog-page-intro">Cuidado, beleza e saúde reunidos em uma experiência acolhedora, com atenção aos detalhes e às necessidades de cada pet.</p>
+    <div class="indog-divider"></div>
 
-<section class="pt-28 pb-20">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-    <!-- Header -->
-    <div class="text-center mb-16 fade-up">
-      <div class="breadcrumb-item mb-4 justify-center flex gap-1">
-        <a href="{% url 'home' %}">Início</a>
-        <span class="breadcrumb-sep">/</span>
-        <span>Serviços</span>
-      </div>
-      <p class="section-label">O que fazemos</p>
-      <h1 class="section-title">Serviços <span style="color:#F5A623;">Premium</span></h1>
-      <div class="section-divider mx-auto"></div>
-      <p class="mt-4" style="color:#6B5A4A;max-width:480px;margin-left:auto;margin-right:auto;">
-        Profissionais especializados e produtos de primeira linha para garantir o bem-estar do seu pet.
-      </p>
-    </div>
-
-    <!-- Cards de Serviços -->
-    <div class="service-page-grid mb-20">
-      <article class="service-page-card">
-        <span class="service-page-icon">✂️</span>
-        <h2>Banho e Tosa Premium</h2>
-        <p>Higiene, beleza e bem-estar com produtos de qualidade e atendimento cuidadoso.</p>
-        <a href="{% url 'banho_e_tosa' %}" class="btn-gold">Saiba mais</a>
+    <div class="indog-service-grid">
+      <article class="indog-service-card indog-service-feature">
+        <span class="indog-service-index">01 · BELEZA &amp; BEM-ESTAR</span>
+        <h2>Banho &amp; Tosa Premium</h2>
+        <p>Higiene, beleza e conforto com produtos de qualidade e atendimento cuidadoso, respeitando o perfil de cada pet.</p>
+        <a href="{% url 'banho_e_tosa' %}">Conhecer o serviço <span>↗</span></a>
       </article>
-      <article class="service-page-card">
-        <span class="service-page-icon">🩺</span>
-        <h2>Consultório Veterinário</h2>
-        <p>Consultas, vacinação, check-up preventivo e orientações para a saúde do seu pet.</p>
-        <a href="{% url 'veterinario' %}" class="btn-gold">Saiba mais</a>
+      <article class="indog-service-card">
+        <span class="indog-service-index">02 · SAÚDE</span>
+        <h2>Atendimento Veterinário</h2>
+        <p>Consultas, acompanhamento e orientação para uma rotina de saúde mais tranquila.</p>
+        <a href="{% url 'veterinario' %}">Conhecer <span>↗</span></a>
       </article>
-      <article class="service-page-card">
-        <span class="service-page-icon">🛍️</span>
+      <article class="indog-service-card">
+        <span class="indog-service-index">03 · BOUTIQUE</span>
         <h2>Boutique Pet</h2>
-        <p>Produtos selecionados com qualidade, estilo, conforto e cuidado em cada detalhe.</p>
-        <a href="{% url 'boutique_pet' %}" class="btn-gold">Saiba mais</a>
+        <p>Uma curadoria de produtos para conforto, estilo e praticidade no dia a dia.</p>
+        <a href="{% url 'boutique_pet' %}">Explorar <span>↗</span></a>
       </article>
-      <article class="service-page-card">
-        <span class="service-page-icon">💊</span>
-        <h2>Medicamentos</h2>
-        <p>Medicamentos, suplementos e itens de cuidado para apoiar a rotina de saúde do pet.</p>
-        <a href="{% url 'products:list' %}?q=medicamentos" class="btn-gold">Consultar</a>
-      </article>
-      <article class="service-page-card">
-        <span class="service-page-icon">🐾</span>
-        <h2>Produtos Pet</h2>
-        <p>Rações, petiscos, higiene, acessórios e produtos essenciais para cães e gatos.</p>
-        <a href="{% url 'products:list' %}" class="btn-gold">Ver produtos</a>
-      </article>
-      <article class="service-page-card">
-        <span class="service-page-icon">🚚</span>
-        <h2>Entrega Rápida</h2>
-        <p>Mais comodidade para consultar produtos e combinar atendimento pelo WhatsApp.</p>
-        <a href="https://wa.me/{{ whatsapp_number }}?text={{ "Olá, gostaria de saber sobre entrega rápida da In Dog."|urlencode }}" target="_blank" rel="noopener" class="btn-whatsapp">Falar no WhatsApp</a>
-      </article>
-      <article class="service-page-card">
-        <span class="service-page-icon">💉</span>
+      <article class="indog-service-card">
+        <span class="indog-service-index">04 · PREVENÇÃO</span>
         <h2>Vacinação</h2>
-        <p>Proteção e prevenção com acompanhamento veterinário cuidadoso para seu pet.</p>
-        <a href="{% url 'veterinario' %}" class="btn-gold">Saiba mais</a>
+        <p>Proteção preventiva com acompanhamento veterinário e atenção ao histórico do seu pet.</p>
+        <a href="{% url 'veterinario' %}">Saiba mais <span>↗</span></a>
       </article>
-      <article class="service-page-card">
-        <span class="service-page-icon">✅</span>
+      <article class="indog-service-card">
+        <span class="indog-service-index">05 · CUIDADO</span>
         <h2>Check-up Preventivo</h2>
-        <p>Avaliações periódicas para acompanhar a saúde e oferecer mais qualidade de vida.</p>
-        <a href="{% url 'veterinario' %}" class="btn-gold">Saiba mais</a>
+        <p>Avaliações periódicas para acompanhar a saúde e apoiar mais qualidade de vida.</p>
+        <a href="{% url 'veterinario' %}">Agendar <span>↗</span></a>
+      </article>
+      <article class="indog-service-card">
+        <span class="indog-service-index">06 · PRODUTOS</span>
+        <h2>Medicamentos</h2>
+        <p>Consulte medicamentos, suplementos e itens de cuidado disponíveis na In Dog.</p>
+        <a href="{% url 'products:list' %}?q=medicamentos">Consultar <span>↗</span></a>
+      </article>
+      <article class="indog-service-card">
+        <span class="indog-service-index">07 · PET SHOP</span>
+        <h2>Produtos Pet</h2>
+        <p>Rações, petiscos, higiene e acessórios selecionados para cães e gatos.</p>
+        <a href="{% url 'products:list' %}">Ver catálogo <span>↗</span></a>
+      </article>
+      <article class="indog-service-card">
+        <span class="indog-service-index">08 · CONVENIÊNCIA</span>
+        <h2>Entrega</h2>
+        <p>Consulte disponibilidade e combine a entrega dos produtos diretamente pelo WhatsApp.</p>
+        <a href="https://wa.me/{{ whatsapp_number }}?text={{ "Olá, gostaria de saber sobre entrega da In Dog."|urlencode }}" target="_blank" rel="noopener">Falar no WhatsApp <span>↗</span></a>
       </article>
     </div>
 
-    <!-- Formulário Banho & Tosa -->
-    <div class="max-w-2xl mx-auto fade-up">
-      <div class="glass-card rounded-3xl p-10" style="border-color:rgba(245,166,35,0.2);">
-        <div class="text-center mb-8">
-          <span style="font-size:3rem;">✂️</span>
-          <h2 class="text-2xl font-bold mt-3 mb-1" style="color:#2F1D13;">Solicitar Agendamento</h2>
-          <p class="text-sm" style="color:#6B7280;">Preencha e iremos montar a mensagem automática para o WhatsApp</p>
-        </div>
-        <button type="button" class="btn-whatsapp w-full justify-center py-3.5 text-base mt-2" data-schedule-service="Banho + Tosa">
-          💬 Abrir formulário de agendamento
-        </button>
-      </div>
+    <div class="indog-service-cta">
+      <div><h2>Vamos cuidar do seu pet?</h2><p>Agende seu próximo cuidado e fale com a equipe In Dog.</p></div>
+      <a href="https://wa.me/{{ whatsapp_number }}?text={{ "Olá, gostaria de agendar um serviço para meu pet na In Dog."|urlencode }}" target="_blank" rel="noopener" data-interaction-type="whatsapp_geral">Agendar pelo WhatsApp ↗</a>
     </div>
-
   </div>
 </section>
-
 {% endblock %}

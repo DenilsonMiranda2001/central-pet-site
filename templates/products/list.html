@@ -1,163 +1,61 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/indog-shell.css' %}">
+{% endblock %}
+
 {% block content %}
-
-<section class="pt-28 pb-20">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-    <!-- Header -->
-    <div class="mb-10 fade-up">
-      <div class="breadcrumb-item mb-4">
-        <a href="{% url 'home' %}">Início</a>
-        <span class="breadcrumb-sep">/</span>
-        <span>Produtos{% if categoria_ativa %} / {{ categoria_ativa.name }}{% endif %}</span>
+<section class="indog-page">
+  <div class="indog-page-shell">
+    <div class="indog-breadcrumb"><a href="{% url 'home' %}">In Dog</a><span> / Produtos{% if categoria_ativa %} / {{ categoria_ativa.name }}{% endif %}</span></div>
+    <div class="indog-catalog-head">
+      <div>
+        <div class="indog-page-kicker">Boutique In Dog</div>
+        <h1>{% if categoria_ativa %}{{ categoria_ativa.name }}{% else %}Produtos para<br><em>o dia a dia.</em>{% endif %}</h1>
+        <p class="indog-page-intro">Uma seleção de produtos para alimentação, higiene, conforto e cuidado. Consulte disponibilidade e peça pelo WhatsApp.</p>
       </div>
-      <p class="section-label">Catálogo</p>
-      <h1 class="section-title">
-        {% if categoria_ativa %}{{ categoria_ativa.icon }} {{ categoria_ativa.name }}
-        {% else %}Todos os <span style="color:#F5A623;">Produtos</span>{% endif %}
-      </h1>
-      <div class="section-divider"></div>
+      <div class="indog-catalog-tools">
+        <form method="get" action="{% url 'products:list' %}">
+          <input class="indog-catalog-search" type="search" name="q" value="{{ search }}" placeholder="Buscar produto..." aria-label="Buscar produto">
+        </form>
+      </div>
+    </div>
+    <div class="indog-category-row">
+      <a href="{% url 'products:list' %}" class="indog-category-pill {% if not categoria_ativa and not search %}active{% endif %}">Todos</a>
+      {% for cat in categories %}<a href="{{ cat.get_absolute_url }}" class="indog-category-pill {% if categoria_ativa and categoria_ativa.slug == cat.slug %}active{% endif %}">{{ cat.name }}</a>{% endfor %}
     </div>
 
-    <!-- Filtros + Busca -->
-    <div class="flex flex-col lg:flex-row gap-4 mb-10 fade-up">
-      <!-- Categorias -->
-      <div class="flex flex-wrap gap-2 flex-1">
-        <a href="{% url 'products:list' %}"
-           class="category-pill {% if not categoria_ativa and not search %}active{% endif %}">
-          🐾 Todos
-        </a>
-        {% for cat in categories %}
-        <a href="{{ cat.get_absolute_url }}"
-           class="category-pill {% if categoria_ativa.slug == cat.slug %}active{% endif %}">
-          {{ cat.icon }} {{ cat.name }}
-        </a>
-        {% endfor %}
-      </div>
-      <!-- Busca -->
-      <form method="get" action="{% url 'products:list' %}" class="flex gap-2 shrink-0">
-        <input type="text" name="q" value="{{ search }}"
-               placeholder="Buscar produto..."
-               class="form-field w-56 text-sm py-2" />
-        <button type="submit" class="btn-gold py-2 px-4 text-sm rounded-xl">🔍</button>
-      </form>
-    </div>
-
-    <!-- Grid de Produtos -->
     {% if products %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="indog-product-grid">
       {% for product in products %}
-      <div class="product-card fade-up">
-        {% if product.has_discount %}
-        <span class="badge-discount">-{{ product.discount_percent }}%</span>
-        {% endif %}
-        {% if product.is_featured %}
-        <span class="badge-destaque">⭐ Destaque</span>
-        {% endif %}
-
-        <a href="{{ product.get_absolute_url }}">
-          <div class="product-img-wrapper">
-            {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img" loading="lazy" />
-            {% else %}
-            <div class="product-img-placeholder">{{ product.category.icon|default:"🐾" }}</div>
-            {% endif %}
-          </div>
+      <article class="indog-product-card">
+        <a href="{{ product.get_absolute_url }}" class="indog-product-media">
+          {% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">{% else %}<span style="display:grid;place-items:center;height:100%;font-size:3rem;color:#b96b2c;">✦</span>{% endif %}
+          {% if product.has_discount %}<span style="position:absolute;top:14px;left:14px;background:#2b1b14;color:#fff;padding:6px 9px;border-radius:999px;font-size:.55rem;font-weight:900;">-{{ product.discount_percent }}%</span>{% endif %}
         </a>
-
-        <div class="p-4">
-          {% if product.category %}
-          <span class="text-xs font-semibold px-2 py-0.5 rounded-full mb-2 inline-block"
-                style="background:rgba(245,166,35,0.1);color:#F5A623;">
-            {{ product.category.icon }} {{ product.category.name }}
-          </span>
-          {% endif %}
-
-          <a href="{{ product.get_absolute_url }}">
-            <h3 class="font-bold text-sm leading-snug mb-1 transition-colors" style="color:#2F1D13;">
-              {{ product.name }}
-            </h3>
-          </a>
-          {% if product.short_description %}
-          <p class="text-xs leading-relaxed mb-3" style="color:#6B7280;">{{ product.short_description|truncatechars:65 }}</p>
-          {% endif %}
-
-          <div class="flex items-end gap-2 mb-3">
-            <span class="product-price">R$ {{ product.price }}</span>
-            {% if product.original_price %}
-            <span class="product-price-original">R$ {{ product.original_price }}</span>
-            {% endif %}
-          </div>
-
+        <div class="indog-product-body">
+          {% if product.category %}<div class="indog-product-category">{{ product.category.name }}</div>{% endif %}
+          <a href="{{ product.get_absolute_url }}" style="text-decoration:none"><h2 class="indog-product-name">{{ product.name }}</h2></a>
+          <p class="indog-product-desc">{% if product.short_description %}{{ product.short_description|truncatechars:70 }}{% else %}Produto selecionado pela In Dog para o cuidado do seu pet.{% endif %}</p>
+          <div class="indog-product-bottom"><strong class="indog-product-price">R$ {{ product.price }}</strong>{% if product.original_price %}<del style="font-size:.65rem;color:#806d60;">R$ {{ product.original_price }}</del>{% endif %}</div>
           {% if product.is_available %}
-          <button
-            type="button"
-            class="btn-add-cart mb-1.5"
-            data-add-to-cart
-            data-product-id="{{ product.id }}"
-            data-product-name="{{ product.name }}"
-            data-product-price="{{ product.price }}"
-            data-product-image="{% if product.image %}{{ product.image.url }}{% endif %}">
-            🛒 Adicionar ao pedido
-          </button>
-          <a href="https://wa.me/{{ whatsapp_number }}?text={{ product.whatsapp_message|urlencode }}"
-             target="_blank" rel="noopener"
-             data-interaction-type="produto_whatsapp"
-             data-product-id="{{ product.id }}"
-             data-product-name="{{ product.name }}"
-             class="btn-wa-link">
-            💬 Perguntar no WhatsApp
-          </a>
-          {% else %}
-          <span class="tag-indisponivel w-full justify-center">⚠️ Indisponível</span>
-          {% endif %}
+          <div class="indog-product-actions">
+            <button type="button" class="indog-add" data-add-to-cart data-product-id="{{ product.id }}" data-product-name="{{ product.name }}" data-product-price="{{ product.price }}" data-product-image="{% if product.image %}{{ product.image.url }}{% endif %}">Adicionar</button>
+            <a class="indog-wa" href="https://wa.me/{{ whatsapp_number }}?text={{ product.whatsapp_message|urlencode }}" target="_blank" rel="noopener" data-interaction-type="produto_whatsapp" data-product-id="{{ product.id }}" data-product-name="{{ product.name }}">WhatsApp</a>
+          </div>
+          {% else %}<div style="font-size:.68rem;color:#806d60;margin-top:14px;">Indisponível no momento</div>{% endif %}
         </div>
-      </div>
+      </article>
       {% endfor %}
     </div>
-
     {% else %}
-    <div class="product-fallback fade-up">
-      <div class="text-center mb-8">
-        <span style="font-size:3rem;display:block;margin-bottom:0.75rem;">🐾</span>
-        <h3 class="text-xl font-bold mb-2" style="color:#2F1D13;">Produtos em atualização</h3>
-        <p class="mb-6" style="color:#6B5A4A;">Consulte disponibilidade pelo WhatsApp enquanto o catálogo é atualizado.</p>
-      </div>
-      <div class="product-fallback-grid">
-        <article class="product-card">
-          <div class="product-img-placeholder product-static-icon">🥣</div>
-          <div class="p-4">
-            <span class="product-category-chip">Produtos Pet</span>
-            <h3 style="color:#2F1D13;">Rações e petiscos</h3>
-            <p>Opções para a rotina de alimentação e cuidado do seu pet.</p>
-            <a href="https://wa.me/{{ whatsapp_number }}?text={{ "Olá, gostaria de consultar rações e petiscos disponíveis na In Dog."|urlencode }}" target="_blank" rel="noopener" class="btn-whatsapp w-full text-xs py-2">Pedir no WhatsApp</a>
-          </div>
-        </article>
-        <article class="product-card">
-          <div class="product-img-placeholder product-static-icon">💊</div>
-          <div class="p-4">
-            <span class="product-category-chip">Medicamentos</span>
-            <h3 style="color:#2F1D13;">Saúde e cuidado</h3>
-            <p>Medicamentos, suplementos e itens para bem-estar animal.</p>
-            <a href="https://wa.me/{{ whatsapp_number }}?text={{ "Olá, gostaria de consultar medicamentos disponíveis na In Dog."|urlencode }}" target="_blank" rel="noopener" class="btn-whatsapp w-full text-xs py-2">Pedir no WhatsApp</a>
-          </div>
-        </article>
-        <article class="product-card">
-          <div class="product-img-placeholder product-static-icon">🛍️</div>
-          <div class="p-4">
-            <span class="product-category-chip">Boutique Pet</span>
-            <h3 style="color:#2F1D13;">Acessórios e higiene</h3>
-            <p>Produtos selecionados para conforto, estilo e cuidado diário.</p>
-            <a href="https://wa.me/{{ whatsapp_number }}?text={{ "Olá, gostaria de consultar acessórios e itens de higiene da In Dog."|urlencode }}" target="_blank" rel="noopener" class="btn-whatsapp w-full text-xs py-2">Pedir no WhatsApp</a>
-          </div>
-        </article>
-      </div>
+    <div style="background:#fffdf9;border:1px solid #e8ddd1;border-radius:24px;padding:60px 24px;text-align:center;">
+      <div class="indog-page-kicker">Catálogo</div><h2 style="font-family:Georgia,serif;font-size:2rem;color:#2b1b14;margin:10px 0;">Consulte a seleção In Dog</h2>
+      <p style="color:#806d60;max-width:460px;margin:0 auto 24px;">O catálogo está sendo atualizado. Fale conosco para consultar produtos e disponibilidade.</p>
+      <a href="https://wa.me/{{ whatsapp_number }}?text={{ "Olá, gostaria de consultar os produtos disponíveis na In Dog."|urlencode }}" target="_blank" rel="noopener" style="display:inline-flex;padding:12px 20px;border-radius:999px;background:#23804d;color:#fff;text-decoration:none;font-weight:900;font-size:.75rem;">Consultar pelo WhatsApp ↗</a>
     </div>
     {% endif %}
-
   </div>
 </section>
-
 {% endblock %}

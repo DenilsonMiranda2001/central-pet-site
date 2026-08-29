@@ -17,7 +17,9 @@ def store_config(request):
     nav_categories = Category.objects.filter(is_active=True).order_by("order", "name")
     nav_services = Service.objects.filter(is_active=True).order_by("order", "name")
 
-    whatsapp_number = "5561996600007"
+    whatsapp_number = normalize_whatsapp_number(getattr(config, "whatsapp_number", ""))
+    if not whatsapp_number:
+        whatsapp_number = "5561996600007"
 
     return {
         "store": config,
