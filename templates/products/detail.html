@@ -1,163 +1,28 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_head %}<link rel="stylesheet" href="{% static 'css/indog-shell.css' %}">{% endblock %}
+{% block title %}{{ product.name }} — In Dog | Brasília{% endblock %}
+{% block meta_description %}{{ product.name }} na In Dog. Consulte preço, disponibilidade e peça pelo WhatsApp.{% endblock %}
+
 {% block content %}
-
-<section class="pt-28 pb-20">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
-
-    <!-- Breadcrumb -->
-    <div class="breadcrumb-item mb-8 fade-up">
-      <a href="{% url 'home' %}">Início</a>
-      <span class="breadcrumb-sep">/</span>
-      <a href="{% url 'products:list' %}">Produtos</a>
-      {% if product.category %}
-      <span class="breadcrumb-sep">/</span>
-      <a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a>
-      {% endif %}
-      <span class="breadcrumb-sep">/</span>
-      <span>{{ product.name|truncatechars:40 }}</span>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-
-      <!-- Imagem -->
-      <div class="fade-up">
-        <div class="glass-card rounded-3xl overflow-hidden" style="height:400px;display:flex;align-items:center;justify-content:center;border-color:rgba(245,166,35,0.15);">
-          {% if product.image %}
-          <img src="{{ product.image.url }}" alt="{{ product.name }}"
-               class="w-full h-full object-cover" loading="lazy" />
-          {% else %}
-          <div class="text-center">
-            <span style="font-size:8rem;">{{ product.category.icon|default:"🐾" }}</span>
-            <p class="mt-2" style="color:#4B5563;font-size:0.8rem;">Sem imagem</p>
-          </div>
-          {% endif %}
-        </div>
-      </div>
-
-      <!-- Info -->
-      <div class="fade-up fade-up-delay-1">
-        {% if product.category %}
-        <span class="text-xs font-semibold px-3 py-1 rounded-full mb-4 inline-block"
-              style="background:rgba(245,166,35,0.1);color:#F5A623;border:1px solid rgba(245,166,35,0.2);">
-          {{ product.category.icon }} {{ product.category.name }}
-        </span>
-        {% endif %}
-
-        <h1 class="text-3xl font-900 leading-tight mb-3" style="font-weight:800;color:#2F1D13;">
-          {{ product.name }}
-        </h1>
-
-        {% if product.short_description %}
-        <p class="text-base mb-5 leading-relaxed" style="color:#6B5A4A;">{{ product.short_description }}</p>
-        {% endif %}
-
-        <!-- Preço -->
-        <div class="flex items-end gap-3 mb-6">
-          <span class="text-4xl font-black" style="color:#F5A623;">R$ {{ product.price }}</span>
-          {% if product.original_price %}
-          <div>
-            <span class="product-price-original block">R$ {{ product.original_price }}</span>
-            <span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background:rgba(239,68,68,0.15);color:#EF4444;">
-              -{{ product.discount_percent }}% OFF
-            </span>
-          </div>
-          {% endif %}
-        </div>
-
-        <!-- Status Estoque -->
-        {% if product.is_available %}
-        <div class="flex items-center gap-2 mb-6">
-          <span class="w-2 h-2 rounded-full" style="background:#10B981;"></span>
-          <span class="text-sm font-semibold" style="color:#10B981;">Em estoque</span>
-        </div>
-        {% else %}
-        <div class="flex items-center gap-2 mb-6">
-          <span class="w-2 h-2 rounded-full" style="background:#EF4444;"></span>
-          <span class="tag-indisponivel">Produto indisponível</span>
-        </div>
-        {% endif %}
-
-        <!-- Botões de ação -->
-        {% if product.is_available %}
-        <div class="flex flex-col gap-2 mb-4">
-          <button
-            type="button"
-            class="btn-add-cart"
-            style="padding:0.88rem 1rem;font-size:0.95rem;"
-            data-add-to-cart
-            data-product-id="{{ product.id }}"
-            data-product-name="{{ product.name }}"
-            data-product-price="{{ product.price }}"
-            data-product-image="{% if product.image %}{{ product.image.url }}{% endif %}">
-            🛒 Adicionar ao pedido
-          </button>
-          <a href="https://wa.me/{{ whatsapp_number }}?text={{ product.whatsapp_message|urlencode }}"
-             target="_blank" rel="noopener"
-             data-interaction-type="produto_whatsapp"
-             data-product-id="{{ product.id }}"
-             data-product-name="{{ product.name }}"
-             class="btn-whatsapp w-full justify-center py-3.5 text-sm">
-            <svg class="w-5 h-5 fill-white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Pedir direto pelo WhatsApp
-          </a>
-        </div>
-        {% endif %}
-
-        <a href="{% url 'products:list' %}" class="btn-outline-gold w-full justify-center py-3 text-sm">
-          ← Voltar para produtos
-        </a>
-
-        <!-- Descrição -->
-        {% if product.description %}
-        <div class="mt-8 glass-card rounded-2xl p-6" style="border-color:#EADBC8;">
-          <h3 class="font-bold mb-3" style="color:#2F1D13;">Descrição do Produto</h3>
-          <p class="text-sm leading-relaxed" style="color:#6B5A4A;">{{ product.description }}</p>
-        </div>
-        {% endif %}
+<section class="indog-page">
+  <div class="indog-page-shell">
+    <div class="indog-breadcrumb"><a href="{% url 'home' %}">In Dog</a><span> / </span><a href="{% url 'products:list' %}">Produtos</a>{% if product.category %}<span> / {{ product.category.name }}</span>{% endif %}<span> / {{ product.name|truncatechars:38 }}</span></div>
+    <div class="indog-product-detail">
+      <div class="indog-detail-media">{% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}" loading="eager">{% else %}<span>✦</span>{% endif %}</div>
+      <div class="indog-detail-copy">
+        {% if product.category %}<div class="indog-product-category">{{ product.category.name }}</div>{% endif %}
+        <h1>{{ product.name }}</h1>
+        {% if product.short_description %}<p class="indog-detail-lead">{{ product.short_description }}</p>{% endif %}
+        <div class="indog-detail-price"><strong>R$ {{ product.price }}</strong>{% if product.original_price %}<del>R$ {{ product.original_price }}</del><small>-{{ product.discount_percent }}%</small>{% endif %}</div>
+        {% if product.is_available %}<div class="indog-stock"><span></span> Disponível para pedido</div>{% else %}<div class="indog-stock is-off"><span></span> Indisponível no momento</div>{% endif %}
+        {% if product.is_available %}<div class="indog-detail-actions"><button type="button" class="indog-add indog-add-large" data-add-to-cart data-product-id="{{ product.id }}" data-product-name="{{ product.name }}" data-product-price="{{ product.price }}" data-product-image="{% if product.image %}{{ product.image.url }}{% endif %}">Adicionar ao pedido <b>+</b></button><a class="indog-wa indog-wa-large" href="https://wa.me/{{ whatsapp_number }}?text={{ product.whatsapp_message|urlencode }}" target="_blank" rel="noopener" data-interaction-type="produto_whatsapp" data-product-id="{{ product.id }}" data-product-name="{{ product.name }}">Pedir pelo WhatsApp ↗</a></div>{% endif %}
+        {% if product.description %}<div class="indog-detail-description"><span>Sobre este produto</span><p>{{ product.description }}</p></div>{% endif %}
+        <a class="indog-back-link" href="{% url 'products:list' %}">← Voltar para a boutique</a>
       </div>
     </div>
-
-    <!-- Produtos Relacionados -->
-    {% if related_products %}
-    <div class="mt-20">
-      <h2 class="section-title mb-8 fade-up">Você também pode gostar</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {% for rp in related_products %}
-        <div class="product-card fade-up">
-          <a href="{{ rp.get_absolute_url }}">
-            <div class="product-img-wrapper">
-              {% if rp.image %}
-              <img src="{{ rp.image.url }}" alt="{{ rp.name }}" class="product-img" loading="lazy" />
-              {% else %}
-              <div class="product-img-placeholder">{{ rp.category.icon|default:"🐾" }}</div>
-              {% endif %}
-            </div>
-          </a>
-          <div class="p-4">
-            <a href="{{ rp.get_absolute_url }}">
-              <h3 class="font-bold text-sm mb-1 transition-colors" style="color:#2F1D13;">{{ rp.name }}</h3>
-            </a>
-            <span class="product-price mb-3 block">R$ {{ rp.price }}</span>
-            {% if rp.is_available %}
-            <button type="button" class="btn-add-cart"
-              data-add-to-cart
-              data-product-id="{{ rp.id }}"
-              data-product-name="{{ rp.name }}"
-              data-product-price="{{ rp.price }}"
-              data-product-image="{% if rp.image %}{{ rp.image.url }}{% endif %}">
-              🛒 Adicionar
-            </button>
-            {% endif %}
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
-
+    {% if related_products %}<div class="indog-related"><div class="indog-related-head"><div><span class="indog-page-kicker">Mais escolhas</span><h2>Você também pode gostar.</h2></div><a href="{% url 'products:list' %}">Ver boutique ↗</a></div><div class="indog-related-grid">{% for rp in related_products %}<article class="indog-related-card"><a href="{{ rp.get_absolute_url }}">{% if rp.image %}<img src="{{ rp.image.url }}" alt="{{ rp.name }}" loading="lazy">{% else %}<span>✦</span>{% endif %}</a><div><small>{{ rp.category.name|default:'In Dog' }}</small><h3>{{ rp.name }}</h3><strong>R$ {{ rp.price }}</strong></div></article>{% endfor %}</div></div>{% endif %}
   </div>
 </section>
-
 {% endblock %}
