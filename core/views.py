@@ -5,6 +5,7 @@ import json
 from django.conf import settings
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
+from django.views.decorators.http import require_POST
 from .models import StoreConfig, Testimonial, Banner
 from .models import InteractionLog
 from products.models import Product, Category
@@ -188,12 +189,3 @@ def track_interaction(request):
         log.nome_servico_snapshot = service.name
     elif payload.get("nome_servico"):
         log.nome_servico_snapshot = str(payload.get("nome_servico", ""))[:150]
-
-    log.save()
-    return JsonResponse({"ok": True})
-
-
-def sentry_debug(request):
-    if not settings.DEBUG:
-        raise Http404()
-    raise RuntimeError("Teste de integração Sentry - In Dog")
