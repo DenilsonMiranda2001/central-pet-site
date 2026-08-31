@@ -2,7 +2,7 @@ from django.db import models
 
 
 class StoreConfig(models.Model):
-    store_name = models.CharField("Nome da loja", max_length=100, default="In Dog")
+    store_name = models.CharField("Nome da loja", max_length=100, default="In Dog - We trust Pet Boutique")
     slogan = models.CharField("Slogan", max_length=200, default="Cuidado especial para seu pet desde 2016.")
     whatsapp_number = models.CharField(
         "WhatsApp (apenas números)", max_length=20, default="5561996600007",
@@ -39,7 +39,7 @@ class StoreConfig(models.Model):
         verbose_name_plural = "Configurações da Loja"
 
     def __str__(self):
-        return "Configurações — In Dog"
+        return "Configurações — In Dog - We trust Pet Boutique"
 
     def save(self, *args, **kwargs):
         self.pk = 1
