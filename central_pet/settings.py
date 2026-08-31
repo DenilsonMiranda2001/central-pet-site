@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
-    # apps locais
     'core',
     'products',
     'services',
@@ -99,6 +98,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
@@ -115,6 +115,46 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Media persistente opcional via Cloudflare R2.
+# Sem R2_ENABLED=true, o projeto continua usando o filesystem local (útil para desenvolvimento).
+R2_ENABLED = config('R2_ENABLED', default=False, cast=bool)
+if R2_ENABLED:
+    R2_ACCOUNT_ID = config('R2_ACCOUNT_ID')
+    R2_ACCESS_KEY_ID = config('R2_ACCESS_KEY_ID')
+    R2_SECRET_ACCESS_KEY = config('R2_SECRET_ACCESS_KEY')
+    R2_BUCKET_NAME = config('R2_BUCKET_NAME')
+    R2_ENDPOINT_URL = config('R2_ENDPOINT_URL', default=f'https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com')
+    R2_PUBLIC_BASE_URL = config('R2_PUBLIC_BASE_URL', default='').rstrip('/')
+
+    STORAGES = {
+        'default': {
+            'BACKEND': 'storages.backends.s3.S3Storage',
+            'OPTIONS': {
+                'bucket_name': R2_BUCKET_NAME,
+                'endpoint_url': R2_ENDPOINT_URL,
+                'access_key': R2_ACCESS_KEY_ID,
+                'secret_key': R2_SECRET_ACCESS_KEY,
+                'region_name': 'auto',
+                'default_acl': None,
+                'file_overwrite': False,
+                'querystring_auth': False,
+                **({'custom_domain': R2_PUBLIC_BASE_URL} if R2_PUBLIC_BASE_URL else {}),
+            },
+        },
+        'staticfiles': {
+            'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+        },
+    }
+else:
+    STORAGES = {
+        'default': {
+            'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        },
+        'staticfiles': {
+            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        },
+    }
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SENTRY_DSN = config('SENTRY_DSN', default='')
@@ -128,8 +168,8 @@ if SENTRY_DSN:
     )
 
 # Admin personalizado
-ADMIN_SITE_HEADER = "In Dog — Painel Administrativo"
-ADMIN_SITE_TITLE = "In Dog Admin"
+ADMIN_SITE_HEADER = "In Dog - We trust Pet Boutique — Painel Administrativo"
+ADMIN_SITE_TITLE = "In Dog - We trust Pet Boutique Admin"
 ADMIN_INDEX_TITLE = "Gerenciamento da Loja"
 
 # Segurança em produção
