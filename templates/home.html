@@ -14,12 +14,12 @@
   <section id="inicio" class="home-hero"><div class="home-shell"><div class="hero-card">
     <div class="hero-copy">
       <div class="hero-kicker"><span></span> Cuidado premium para quem faz parte da família</div>
-      <h1>Seu pet merece uma experiência <em>In Dog.</em></h1>
-      <p class="hero-lead">Banho e tosa, cuidados veterinários e uma boutique selecionada em um espaço pensado para oferecer conforto, confiança e atenção em cada detalhe.</p>
-      <div class="hero-actions"><button type="button" class="btn-gold" data-schedule-service="Banho + Tosa">Agendar um cuidado <span>↗</span></button><a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener" data-interaction-type="whatsapp_geral" class="btn-outline-gold">Falar com a In Dog</a></div>
+      <h1>{% if banner %}{{ banner.title }}{% else %}Seu pet merece uma experiência <em>In Dog.</em>{% endif %}</h1>
+      <p class="hero-lead">{% if banner and banner.subtitle %}{{ banner.subtitle }}{% else %}Banho e tosa, cuidados veterinários e uma boutique selecionada em um espaço pensado para oferecer conforto, confiança e atenção em cada detalhe.{% endif %}</p>
+      <div class="hero-actions">{% if banner and banner.button_text and banner.button_link %}<a href="{{ banner.button_link }}" class="btn-gold">{{ banner.button_text }} <span>↗</span></a>{% else %}<button type="button" class="btn-gold" data-schedule-service="Banho + Tosa">Agendar um cuidado <span>↗</span></button>{% endif %}<a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener" data-interaction-type="whatsapp_geral" class="btn-outline-gold">Falar com a In Dog</a></div>
       <div class="hero-proof"><div><strong>Desde 2016</strong><span>cuidando com carinho</span></div><i></i><div><strong>Brasília · DF</strong><span>Altiplano Leste</span></div></div>
     </div>
-    <div class="hero-media"><div class="hero-media-placeholder"><span>IN DOG</span><small>Pet care &amp; boutique</small></div><div class="hero-media-label"><span>IN DOG</span><small>Pet care &amp; boutique</small></div></div>
+    <div class="hero-media">{% if banner and banner.image %}<img src="{{ banner.image.url }}" alt="{{ banner.title|default:'Banner In Dog' }}" loading="eager" fetchpriority="high" />{% else %}<div class="hero-media-placeholder"><span>IN DOG</span><small>Adicione um banner pelo Admin</small></div>{% endif %}<div class="hero-media-label"><span>IN DOG</span><small>Pet care &amp; boutique</small></div></div>
   </div></div></section>
 
   <section class="home-intro"><div class="home-shell intro-grid"><div class="intro-label">Nossa essência</div><div><h2>Mais do que cuidar.<br><em>Cuidamos de verdade.</em></h2><p>A In Dog nasceu para unir cuidado, bem-estar e praticidade em uma experiência feita para pets e para quem ama pets.</p></div></div></section>
