@@ -1,0 +1,34 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div class="indog-dashboard">
+  <div class="indog-welcome">
+    <div><span class="indog-eyebrow">CENTRAL DE GESTÃO</span><h1>Olá, {{ user.get_short_name|default:user.username }}.</h1><p>Gerencie a presença digital da In Dog em um só lugar.</p></div>
+    <a class="indog-primary" href="/" target="_blank" rel="noopener">Abrir site <span>↗</span></a>
+  </div>
+
+  <div class="indog-quick-grid">
+    <a href="{% url 'admin:products_product_add' %}" class="indog-quick"><span class="indog-quick-icon">＋</span><div><strong>Novo produto</strong><small>Adicionar item à boutique</small></div><b>→</b></a>
+    <a href="{% url 'admin:products_category_add' %}" class="indog-quick"><span class="indog-quick-icon">#</span><div><strong>Nova categoria</strong><small>Organizar a boutique</small></div><b>→</b></a>
+    <a href="{% url 'admin:core_banner_add' %}" class="indog-quick"><span class="indog-quick-icon">▧</span><div><strong>Novo banner</strong><small>Atualizar destaque do site</small></div><b>→</b></a>
+    <a href="{% url 'admin:core_testimonial_add' %}" class="indog-quick"><span class="indog-quick-icon">“</span><div><strong>Novo depoimento</strong><small>Adicionar avaliação</small></div><b>→</b></a>
+  </div>
+
+  <div class="indog-section-title"><div><span class="indog-eyebrow">GESTÃO</span><h2>Conteúdo da In Dog</h2></div><p>Atalhos rápidos para as áreas mais importantes.</p></div>
+
+  <div class="indog-app-grid">
+    {% for app in app_list %}
+      {% for model in app.models %}
+      <a href="{{ model.admin_url }}" class="indog-model-card">
+        <div class="indog-model-top"><span class="indog-model-dot"></span><small>{{ app.name }}</small></div>
+        <strong>{{ model.name }}</strong>
+        <span class="indog-model-action">Gerenciar <b>↗</b></span>
+      </a>
+      {% endfor %}
+    {% endfor %}
+  </div>
+
+  <div class="indog-admin-note"><div class="indog-note-mark">ID</div><div><strong>In Dog · Pet Care &amp; Boutique</strong><p>Altiplano Leste · Brasília, DF</p></div><a href="/" target="_blank" rel="noopener">Ver experiência do cliente ↗</a></div>
+</div>
+{% endblock %}
