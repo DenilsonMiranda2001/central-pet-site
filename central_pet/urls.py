@@ -24,5 +24,7 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Os uploads feitos pelo Admin precisam ser acessíveis também em produção.
+# O Railway deve usar um volume persistente em /app/media para que os arquivos
+# não sejam perdidos durante novos deploys/restarts.
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
