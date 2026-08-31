@@ -7,6 +7,7 @@ class Category(models.Model):
     name = models.CharField("Nome", max_length=100)
     slug = models.SlugField("Identificador (URL)", unique=True)
     icon = models.CharField("Ícone (emoji)", max_length=20, blank=True)
+    image = models.ImageField("Imagem da categoria", upload_to="categories/", blank=True, null=True)
     is_active = models.BooleanField("Ativo", default=True)
     order = models.PositiveIntegerField("Ordem", default=0)
 
