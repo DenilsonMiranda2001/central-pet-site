@@ -7,17 +7,17 @@ from .models import StoreConfig, Banner, Testimonial, InteractionLog
 class StoreConfigAdmin(admin.ModelAdmin):
     save_on_top = True
     fieldsets = (
-        ("🏪 Identidade da Loja", {
+        ("Identidade da Loja", {
             "fields": ("store_name", "slogan"),
         }),
-        ("📞 Contato e Redes Sociais", {
+        ("Contato e Redes Sociais", {
             "fields": ("whatsapp_number", "phone_number", "email",
                        "instagram_url", "facebook_url", "tiktok_url"),
         }),
-        ("📍 Localização e Horário", {
+        ("Localização e Horário", {
             "fields": ("address", "maps_url", "opening_hours"),
         }),
-        ("🚚 Textos do Site", {
+        ("Conteúdo do Site", {
             "fields": ("hero_title", "hero_subtitle", "delivery_text", "about_text"),
         }),
     )
@@ -39,7 +39,7 @@ class BannerAdmin(admin.ModelAdmin):
     def thumb(self, obj):
         if obj.image:
             return format_html(
-                '<img src="{}" width="60" height="40" style="object-fit:cover;border-radius:4px;" />',
+                '<img src="{}" width="60" height="40" style="object-fit:cover;border-radius:8px;" />',
                 obj.image.url
             )
         return "—"
