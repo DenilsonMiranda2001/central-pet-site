@@ -5,7 +5,6 @@ import json
 from django.conf import settings
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
-from django.views.decorators.http import require_POST
 from .models import StoreConfig, Testimonial, Banner
 from .models import InteractionLog
 from products.models import Product, Category
@@ -59,8 +58,20 @@ def contato(request):
     })
 
 
+def _service_detail(request, service_slug, fallback):
+    service = Service.objects.filter(slug=service_slug, is_active=True).first()
+    context = dict(fallback)
+    context["service"] = service
+    if service:
+        context["title"] = service.name
+        context["description"] = service.description or service.short_description or context["description"]
+        context["eyebrow"] = service.name
+        context["whatsapp_text"] = service.whatsapp_message or context["whatsapp_text"]
+    return render(request, "core/service_detail.html", context)
+
+
 def banho_e_tosa(request):
-    return render(request, "core/service_detail.html", {
+    return _service_detail(request, "banho-e-tosa", {
         "page_title": "Banho e Tosa Premium em Brasília | In Dog",
         "meta_description": "Banho e tosa premium em Brasília com cuidado, carinho, produtos de qualidade e atenção ao bem-estar do pet.",
         "slug": "banho-e-tosa",
@@ -68,23 +79,14 @@ def banho_e_tosa(request):
         "icon": "✂️",
         "title": "Banho e Tosa Premium em Brasília",
         "description": "Serviço completo de banho e tosa com cuidado, carinho, produtos de qualidade e atenção ao bem-estar do pet.",
-        "highlights": [
-            "Banho completo",
-            "Tosa higiênica",
-            "Tosa personalizada",
-            "Escovação",
-            "Limpeza de ouvidos",
-            "Corte de unhas",
-            "Produtos premium",
-            "Atendimento cuidadoso",
-        ],
+        "highlights": ["Banho completo", "Tosa higiênica", "Tosa personalizada", "Escovação", "Limpeza de ouvidos", "Corte de unhas", "Produtos premium", "Atendimento cuidadoso"],
         "cta": "Agendar Banho e Tosa no WhatsApp",
         "whatsapp_text": "Olá, gostaria de agendar Banho e Tosa Premium na In Dog.",
     })
 
 
 def veterinario(request):
-    return render(request, "core/service_detail.html", {
+    return _service_detail(request, "veterinario", {
         "page_title": "Consultório Veterinário no Lago Sul | In Dog",
         "meta_description": "Consultório veterinário no Lago Sul com foco em prevenção, saúde e bem-estar dos pets.",
         "slug": "veterinario",
@@ -92,22 +94,14 @@ def veterinario(request):
         "icon": "🩺",
         "title": "Consultório Veterinário no Lago Sul",
         "description": "Atendimento veterinário com foco em prevenção, saúde e bem-estar dos pets.",
-        "highlights": [
-            "Consultas veterinárias",
-            "Vacinação",
-            "Check-up preventivo",
-            "Vermifugação",
-            "Controle de pulgas e carrapatos",
-            "Orientação nutricional",
-            "Acompanhamento clínico",
-        ],
+        "highlights": ["Consultas veterinárias", "Vacinação", "Check-up preventivo", "Vermifugação", "Controle de pulgas e carrapatos", "Orientação nutricional", "Acompanhamento clínico"],
         "cta": "Agendar Consulta pelo WhatsApp",
         "whatsapp_text": "Olá, gostaria de agendar uma consulta veterinária na In Dog.",
     })
 
 
 def boutique_pet(request):
-    return render(request, "core/service_detail.html", {
+    return _service_detail(request, "boutique-pet", {
         "page_title": "Boutique Pet em Brasília | In Dog",
         "meta_description": "Boutique pet em Brasília com produtos selecionados para pets, acessórios, roupinhas, camas e itens de higiene.",
         "slug": "boutique-pet",
@@ -115,15 +109,7 @@ def boutique_pet(request):
         "icon": "🛍️",
         "title": "Boutique Pet em Brasília",
         "description": "Produtos selecionados para pets com qualidade, estilo e cuidado.",
-        "highlights": [
-            "Acessórios",
-            "Roupinhas",
-            "Camas",
-            "Guias e coleiras",
-            "Brinquedos",
-            "Itens de higiene",
-            "Produtos selecionados",
-        ],
+        "highlights": ["Acessórios", "Roupinhas", "Camas", "Guias e coleiras", "Brinquedos", "Itens de higiene", "Produtos selecionados"],
         "cta": "Ver produtos ou falar no WhatsApp",
         "whatsapp_text": "Olá, gostaria de conhecer os produtos da Boutique Pet da In Dog.",
     })
@@ -144,12 +130,7 @@ def disk_racao(request):
 
 def robots_txt(request):
     from django.http import HttpResponse
-    lines = [
-        "User-agent: *",
-        "Disallow: /admin/",
-        "Allow: /",
-        f"Sitemap: {request.build_absolute_uri('/sitemap.xml')}",
-    ]
+    lines = ["User-agent: *", "Disallow: /admin/", "Allow: /", f"Sitemap: {request.build_absolute_uri('/sitemap.xml')}"]
     return HttpResponse("\n".join(lines), content_type="text/plain")
 
 
