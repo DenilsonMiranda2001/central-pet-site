@@ -98,7 +98,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
@@ -116,7 +115,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Media persistente opcional via Cloudflare R2.
-# Sem R2_ENABLED=true, o projeto continua usando o filesystem local (útil para desenvolvimento).
+# Sem R2_ENABLED=true, o projeto continua usando o filesystem local.
 R2_ENABLED = config('R2_ENABLED', default=False, cast=bool)
 if R2_ENABLED:
     R2_ACCOUNT_ID = config('R2_ACCOUNT_ID')
