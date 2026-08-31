@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | In Dog Admin{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/indog-admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+<div class="indog-admin-brand">
+  <span class="indog-admin-mark" aria-hidden="true">ID</span>
+  <div>
+    <strong>In Dog</strong>
+    <small>PAINEL ADMINISTRATIVO</small>
+  </div>
+</div>
+{% endblock %}
+
+{% block nav-global %}
+<div class="indog-admin-nav">
+  <a href="/" class="indog-admin-site-link">Ver site <span aria-hidden="true">↗</span></a>
+</div>
+{% endblock %}
