@@ -63,11 +63,16 @@ def _service_detail(request, service_slug, fallback):
     service = Service.objects.filter(slug=service_slug, is_active=True).first()
     context = dict(fallback)
     context["service"] = service
+    context["related_products"] = Product.objects.none()
     if service:
         context["title"] = service.name
         context["description"] = service.description or service.short_description or context["description"]
         context["eyebrow"] = service.name
         context["whatsapp_text"] = service.whatsapp_message or context["whatsapp_text"]
+        context["related_products"] = service.related_products.filter(
+            is_active=True,
+            is_available=True,
+        ).select_related("category").order_by("order", "name")[:12]
     return render(request, "core/service_detail.html", context)
 
 
@@ -111,8 +116,23 @@ def boutique_pet(request):
         "title": "Boutique Pet em Brasília",
         "description": "Produtos selecionados para pets com qualidade, estilo e cuidado.",
         "highlights": ["Acessórios", "Roupinhas", "Camas", "Guias e coleiras", "Brinquedos", "Itens de higiene", "Produtos selecionados"],
-        "cta": "Ver produtos ou falar no WhatsApp",
+        "cta": "Falar sobre a Boutique no WhatsApp",
         "whatsapp_text": "Olá, gostaria de conhecer os produtos da Boutique Pet da In Dog.",
+    })
+
+
+def medicamentos(request):
+    return _service_detail(request, "medicamentos", {
+        "page_title": "Medicamentos Veterinários em Brasília | In Dog",
+        "meta_description": "Medicamentos veterinários, antiparasitários, suplementos e produtos de saúde para cães e gatos na In Dog em Brasília.",
+        "slug": "medicamentos",
+        "eyebrow": "Medicamentos",
+        "icon": "💊",
+        "title": "Medicamentos e cuidados para a saúde do seu pet",
+        "description": "Uma seleção de medicamentos veterinários, antiparasitários, suplementos e produtos de cuidado disponíveis na In Dog.",
+        "highlights": ["Antiparasitários", "Vermífugos", "Suplementos", "Cuidados dermatológicos", "Higiene e saúde", "Produtos veterinários"],
+        "cta": "Consultar medicamento no WhatsApp",
+        "whatsapp_text": "Olá, gostaria de consultar os medicamentos disponíveis na In Dog.",
     })
 
 
