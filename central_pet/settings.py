@@ -125,10 +125,9 @@ if R2_ENABLED:
     R2_ACCESS_KEY_ID = config('R2_ACCESS_KEY_ID')
     R2_SECRET_ACCESS_KEY = config('R2_SECRET_ACCESS_KEY')
     R2_BUCKET_NAME = config('R2_BUCKET_NAME')
-    R2_ENDPOINT_URL = config(
-        'R2_ENDPOINT_URL',
-        default=f'https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com'
-    ).rstrip('/')
+
+    configured_r2_endpoint = config('R2_ENDPOINT_URL', default='').strip().rstrip('/')
+    R2_ENDPOINT_URL = configured_r2_endpoint or f'https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com'
     R2_PUBLIC_BASE_URL = config('R2_PUBLIC_BASE_URL').strip().rstrip('/')
 
     # django-storages espera somente o host em custom_domain, sem https://.
