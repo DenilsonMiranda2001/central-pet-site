@@ -10,6 +10,7 @@ class ServiceAdmin(admin.ModelAdmin):
     list_display_links = ("name",)
     search_fields = ("name", "short_description", "description")
     prepopulated_fields = {"slug": ("name",)}
+    filter_horizontal = ("related_products",)
     list_per_page = 20
     save_on_top = True
     fieldsets = (
@@ -18,6 +19,13 @@ class ServiceAdmin(admin.ModelAdmin):
         }),
         ("💰 Preço e Imagem", {
             "fields": ("price_from", "image"),
+        }),
+        ("🛍️ Produtos exibidos nesta página", {
+            "fields": ("related_products",),
+            "description": (
+                "Selecione os produtos que devem aparecer na página deste serviço. "
+                "Use principalmente em Boutique Pet e Medicamentos."
+            ),
         }),
         ("💬 Mensagem WhatsApp", {
             "fields": ("whatsapp_message",),
