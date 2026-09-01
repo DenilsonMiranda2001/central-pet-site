@@ -3,7 +3,7 @@
 
 {% block extra_head %}<link rel="stylesheet" href="{% static 'css/indog-shell.css' %}"><link rel="stylesheet" href="{% static 'css/indog-pages.css' %}"><link rel="stylesheet" href="{% static 'css/indog-catalog-fix.css' %}">{% endblock %}
 {% block title %}{{ title }} — In Dog | Brasília{% endblock %}
-{% block meta_description %}{{ title }} na In Dog, em Brasília. Conheça o serviço e fale com nossa equipe pelo WhatsApp.{% endblock %}
+{% block meta_description %}{{ meta_description|default:title }}{% endblock %}
 
 {% block content %}
 <section class="indog-page">
@@ -24,7 +24,18 @@
         {% endif %}
       </div>
     </div>
-    {% if highlights %}<div class="indog-highlight-grid">{% for item in highlights %}<article><span>0{{ forloop.counter }}</span><strong>{{ item }}</strong><p>Cuidado pensado para as necessidades do seu pet.</p></article>{% endfor %}</div>{% endif %}
+
+    {% if highlights %}
+    <div class="indog-highlight-grid">
+      {% for item in highlights %}
+      <article>
+        <span>0{{ forloop.counter }}</span>
+        <strong>{{ item.title|default:item }}</strong>
+        <p>{{ item.text|default:"Atendimento pensado para o conforto, a rotina e as necessidades do seu pet." }}</p>
+      </article>
+      {% endfor %}
+    </div>
+    {% endif %}
 
     {% if related_products %}
     <div class="indog-divider"></div>
@@ -54,6 +65,12 @@
         </div>
       </article>
       {% endfor %}
+    </div>
+    {% elif slug == "medicamentos" %}
+    <div class="indog-divider"></div>
+    <div class="indog-service-detail-cta">
+      <div><span class="indog-page-kicker">Disponibilidade sob consulta</span><h2>Procura um medicamento específico?</h2><p>Envie o nome do produto para a equipe e confirme a disponibilidade antes de ir à loja.</p></div>
+      <a class="indog-wa" href="https://wa.me/{{ whatsapp_number }}?text={{ whatsapp_text|urlencode }}" target="_blank" rel="noopener" data-interaction-type="whatsapp_geral">Consultar no WhatsApp ↗</a>
     </div>
     {% endif %}
 

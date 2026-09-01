@@ -129,6 +129,75 @@
     brand.innerHTML = `<img class="indog-brand-logo" src="${logoUrl}" alt="In Dog - We Trust Pet Boutique">`;
   }
 
+  function setMultilineText(element, value) {
+    if (!element || !value) return;
+    element.textContent = '';
+    String(value).split(/\r?\n/).forEach((line, index) => {
+      if (index) element.appendChild(document.createElement('br'));
+      element.appendChild(document.createTextNode(line));
+    });
+  }
+
+  function addPrivacyLinks() {
+    const privacyHref = '/politica-de-privacidade/';
+
+    const linksHeading = Array.from(document.querySelectorAll('.footer-col-title'))
+      .find(el => el.textContent.trim().toLowerCase() === 'links úteis');
+    const linksList = linksHeading?.nextElementSibling;
+    if (linksList && !linksList.querySelector(`a[href="${privacyHref}"]`)) {
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="${privacyHref}" class="footer-link"><span class="footer-arrow">›</span>Política de Privacidade</a>`;
+      linksList.appendChild(li);
+    }
+
+    const privacyNote = document.querySelector('.cart-privacy-note');
+    if (privacyNote && !privacyNote.querySelector(`a[href="${privacyHref}"]`)) {
+      privacyNote.appendChild(document.createTextNode(' '));
+      const link = document.createElement('a');
+      link.href = privacyHref;
+      link.textContent = 'Ver política de privacidade';
+      link.style.color = '#8d4c1e';
+      link.style.textDecoration = 'underline';
+      privacyNote.appendChild(link);
+    }
+  }
+
+  async function syncPublicStoreInfo() {
+    try {
+      const response = await fetch('/loja/info/', {
+        credentials: 'same-origin',
+        headers: { 'Accept': 'application/json' },
+      });
+      if (!response.ok) return;
+      const data = await response.json();
+
+      if (data.opening_hours) {
+        document.querySelectorAll('.footer-contact-item').forEach(item => {
+          const label = item.querySelector('.footer-contact-label');
+          if (label?.textContent.trim().toLowerCase() === 'atendimento') {
+            setMultilineText(item.querySelector('.footer-contact-text'), data.opening_hours);
+          }
+        });
+      }
+
+      if (data.phone_number) {
+        const navPhone = document.querySelector('.nav-phone strong');
+        if (navPhone) navPhone.textContent = data.phone_number;
+      }
+    } catch (_) {}
+  }
+
+  function setupProductionReadiness() {
+    // A página de Medicamentos já existe; links antigos de busca são normalizados
+    // para a experiência correta de consulta e catálogo relacionado.
+    document.querySelectorAll('a[href*="?q=medicamentos"]').forEach(link => {
+      link.setAttribute('href', '/medicamentos/');
+    });
+
+    addPrivacyLinks();
+    syncPublicStoreInfo();
+  }
+
   function setupMobileMenu() {
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -210,6 +279,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     injectNavigationPolish();
     setupBrandingAssets();
+    setupProductionReadiness();
 
     setupNavbarScroll();
     setupMobileMenu();

@@ -59,20 +59,51 @@ def contato(request):
     })
 
 
+def privacy_policy(request):
+    config = StoreConfig.get_config()
+    return render(request, "core/privacy.html", {
+        "config": config,
+        "page_title": "Política de Privacidade | In Dog",
+        "meta_description": "Saiba como a In Dog trata dados usados no site, no carrinho, no agendamento e nos contatos via WhatsApp.",
+    })
+
+
+def store_public_info(request):
+    """Informações públicas usadas para manter elementos globais sincronizados com o Admin."""
+    config = StoreConfig.get_config()
+    return JsonResponse({
+        "opening_hours": config.opening_hours,
+        "phone_number": config.phone_number,
+    })
+
+
 def _service_detail(request, service_slug, fallback):
     service = Service.objects.filter(slug=service_slug, is_active=True).first()
     context = dict(fallback)
     context["service"] = service
-    context["related_products"] = Product.objects.none()
+    related_products = Product.objects.none()
+
     if service:
         context["title"] = service.name
         context["description"] = service.description or service.short_description or context["description"]
         context["eyebrow"] = service.name
         context["whatsapp_text"] = service.whatsapp_message or context["whatsapp_text"]
-        context["related_products"] = service.related_products.filter(
+        related_products = service.related_products.filter(
             is_active=True,
             is_available=True,
         ).select_related("category").order_by("order", "name")[:12]
+
+    # Medicamentos é uma categoria comercial importante. Se o Admin ainda não
+    # relacionou itens manualmente ao serviço, mostramos os produtos ativos da
+    # categoria em vez de deixar a página parecer vazia/incompleta.
+    if service_slug == "medicamentos" and not related_products.exists():
+        related_products = Product.objects.filter(
+            is_active=True,
+            is_available=True,
+            category__slug="medicamentos",
+        ).select_related("category").order_by("order", "name")[:12]
+
+    context["related_products"] = related_products
     return render(request, "core/service_detail.html", context)
 
 
@@ -85,22 +116,39 @@ def banho_e_tosa(request):
         "icon": "✂️",
         "title": "Banho e Tosa Premium em Brasília",
         "description": "Serviço completo de banho e tosa com cuidado, carinho, produtos de qualidade e atenção ao bem-estar do pet.",
-        "highlights": ["Banho completo", "Tosa higiênica", "Tosa personalizada", "Escovação", "Limpeza de ouvidos", "Corte de unhas", "Produtos premium", "Atendimento cuidadoso"],
+        "highlights": [
+            {"title": "Banho completo", "text": "Higiene completa com produtos adequados ao tipo de pelagem e às necessidades do pet."},
+            {"title": "Tosa higiênica", "text": "Acabamento cuidadoso nas áreas que exigem mais higiene e conforto no dia a dia."},
+            {"title": "Tosa personalizada", "text": "Corte alinhado ao estilo desejado, respeitando raça, pelagem e bem-estar."},
+            {"title": "Escovação", "text": "Finalização para desembaraçar, remover pelos soltos e valorizar a pelagem."},
+            {"title": "Limpeza de ouvidos", "text": "Higiene externa feita com delicadeza como parte da rotina de cuidados."},
+            {"title": "Corte de unhas", "text": "Manutenção das unhas para mais conforto e segurança na movimentação do pet."},
+            {"title": "Produtos premium", "text": "Seleção de produtos de qualidade para uma experiência mais confortável."},
+            {"title": "Atendimento cuidadoso", "text": "Cada pet é atendido respeitando seu comportamento, tempo e necessidades individuais."},
+        ],
         "cta": "Agendar Banho e Tosa no WhatsApp",
         "whatsapp_text": "Olá, gostaria de agendar Banho e Tosa Premium na In Dog.",
     })
 
 
 def veterinario(request):
-    return _service_detail(request, "veterinario", {
+    return _service_detail(request, "consultorio-veterinario", {
         "page_title": "Consultório Veterinário no Lago Sul | In Dog",
         "meta_description": "Consultório veterinário no Lago Sul com foco em prevenção, saúde e bem-estar dos pets.",
-        "slug": "veterinario",
+        "slug": "consultorio-veterinario",
         "eyebrow": "Veterinário",
         "icon": "🩺",
         "title": "Consultório Veterinário no Lago Sul",
         "description": "Atendimento veterinário com foco em prevenção, saúde e bem-estar dos pets.",
-        "highlights": ["Consultas veterinárias", "Vacinação", "Check-up preventivo", "Vermifugação", "Controle de pulgas e carrapatos", "Orientação nutricional", "Acompanhamento clínico"],
+        "highlights": [
+            {"title": "Consultas veterinárias", "text": "Avaliação clínica com atenção ao histórico, sinais apresentados e rotina do pet."},
+            {"title": "Vacinação", "text": "Orientação sobre protocolos preventivos conforme idade, histórico e avaliação profissional."},
+            {"title": "Check-up preventivo", "text": "Acompanhamento periódico para observar a saúde do pet e identificar necessidades precocemente."},
+            {"title": "Vermifugação", "text": "Orientação responsável sobre prevenção e controle de parasitas conforme cada caso."},
+            {"title": "Pulgas e carrapatos", "text": "Avaliação e orientação para estratégias de prevenção adequadas ao pet e ao ambiente."},
+            {"title": "Orientação nutricional", "text": "Recomendações de rotina alimentar de acordo com fase de vida e necessidades individuais."},
+            {"title": "Acompanhamento clínico", "text": "Continuidade do cuidado para acompanhar evolução, prevenção e qualidade de vida."},
+        ],
         "cta": "Agendar Consulta pelo WhatsApp",
         "whatsapp_text": "Olá, gostaria de agendar uma consulta veterinária na In Dog.",
     })
@@ -115,7 +163,15 @@ def boutique_pet(request):
         "icon": "🛍️",
         "title": "Boutique Pet em Brasília",
         "description": "Produtos selecionados para pets com qualidade, estilo e cuidado.",
-        "highlights": ["Acessórios", "Roupinhas", "Camas", "Guias e coleiras", "Brinquedos", "Itens de higiene", "Produtos selecionados"],
+        "highlights": [
+            {"title": "Acessórios", "text": "Itens selecionados para deixar a rotina do pet mais prática, confortável e bonita."},
+            {"title": "Roupinhas", "text": "Opções para diferentes estilos, tamanhos e ocasiões, sempre priorizando conforto."},
+            {"title": "Camas", "text": "Modelos pensados para descanso, aconchego e bem-estar dentro de casa."},
+            {"title": "Guias e coleiras", "text": "Produtos para passeios com diferentes propostas de tamanho, resistência e acabamento."},
+            {"title": "Brinquedos", "text": "Alternativas para diversão, estímulo e enriquecimento da rotina do pet."},
+            {"title": "Itens de higiene", "text": "Produtos úteis para os cuidados cotidianos de cães e gatos."},
+            {"title": "Seleção In Dog", "text": "Curadoria de produtos escolhidos para unir qualidade, utilidade e estilo."},
+        ],
         "cta": "Falar sobre a Boutique no WhatsApp",
         "whatsapp_text": "Olá, gostaria de conhecer os produtos da Boutique Pet da In Dog.",
     })
@@ -129,8 +185,15 @@ def medicamentos(request):
         "eyebrow": "Medicamentos",
         "icon": "💊",
         "title": "Medicamentos e cuidados para a saúde do seu pet",
-        "description": "Uma seleção de medicamentos veterinários, antiparasitários, suplementos e produtos de cuidado disponíveis na In Dog.",
-        "highlights": ["Antiparasitários", "Vermífugos", "Suplementos", "Cuidados dermatológicos", "Higiene e saúde", "Produtos veterinários"],
+        "description": "Consulte a disponibilidade de medicamentos veterinários, antiparasitários, suplementos e produtos de cuidado na In Dog. Para itens que exigem orientação profissional, nossa equipe direciona você ao atendimento adequado.",
+        "highlights": [
+            {"title": "Antiparasitários", "text": "Consulte opções disponíveis para prevenção e controle de parasitas em cães e gatos."},
+            {"title": "Vermífugos", "text": "Disponibilidade sob consulta, com orientação adequada à necessidade do pet."},
+            {"title": "Suplementos", "text": "Produtos de suporte nutricional e bem-estar selecionados para diferentes necessidades."},
+            {"title": "Cuidados dermatológicos", "text": "Itens para higiene e cuidado da pele e pelagem, conforme indicação e necessidade."},
+            {"title": "Higiene e saúde", "text": "Produtos de rotina para complementar os cuidados do seu pet no dia a dia."},
+            {"title": "Consulta rápida", "text": "Envie o nome do produto pelo WhatsApp e confirme disponibilidade antes de sair de casa."},
+        ],
         "cta": "Consultar medicamento no WhatsApp",
         "whatsapp_text": "Olá, gostaria de consultar os medicamentos disponíveis na In Dog.",
     })

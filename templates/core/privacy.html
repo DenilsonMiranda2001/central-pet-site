@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/indog-shell.css' %}">
+<link rel="stylesheet" href="{% static 'css/indog-pages.css' %}">
+<style>
+  .privacy-wrap{max-width:920px;margin:0 auto;padding:120px 24px 40px}
+  .privacy-card{background:#fffdf9;border:1px solid #e8ddd1;border-radius:28px;padding:clamp(24px,5vw,48px);box-shadow:0 18px 55px rgba(43,27,20,.07)}
+  .privacy-card h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(2.3rem,6vw,4.2rem);line-height:1;color:#2b1b14;margin:.5rem 0 1rem}
+  .privacy-card h2{font-family:Georgia,'Times New Roman',serif;font-size:1.5rem;color:#2b1b14;margin:2rem 0 .65rem}
+  .privacy-card p,.privacy-card li{color:#6f5a4d;line-height:1.75}
+  .privacy-card ul{padding-left:1.2rem;list-style:disc}
+  .privacy-note{margin-top:2rem;padding:18px 20px;background:#f7eee5;border-radius:18px;border:1px solid #ead8c7}
+  .privacy-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:2rem}
+  .privacy-actions a{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border-radius:999px;text-decoration:none;font-weight:800}
+  .privacy-actions .primary{background:#2b1b14;color:#fff}.privacy-actions .secondary{border:1px solid #d9c7b8;color:#5d4638;background:#fff}
+</style>
+{% endblock %}
+
+{% block title %}Política de Privacidade | In Dog{% endblock %}
+{% block meta_description %}Saiba como a In Dog trata dados usados no site, no carrinho, no agendamento e nos contatos via WhatsApp.{% endblock %}
+
+{% block content %}
+<section class="privacy-wrap">
+  <article class="privacy-card">
+    <div class="indog-page-kicker">Privacidade e transparência</div>
+    <h1>Política de Privacidade</h1>
+    <p>Esta página explica, de forma simples, como o site da In Dog utiliza informações quando você navega, monta um pedido, solicita um agendamento ou entra em contato com a equipe.</p>
+
+    <h2>1. Informações que você fornece</h2>
+    <p>No carrinho e no agendamento, você pode informar dados como nome, telefone, nome e tipo do pet, bairro, endereço e observações necessárias para preparar a mensagem de atendimento. Esses dados são usados para facilitar o contato e o atendimento solicitado.</p>
+
+    <h2>2. Dados salvos no seu dispositivo</h2>
+    <p>Quando a opção “Salvar meus dados neste dispositivo” é marcada, os dados do carrinho são guardados localmente no navegador do próprio aparelho. Eles podem ser removidos pelo botão de limpar dados disponível no site ou pelas configurações do navegador.</p>
+
+    <h2>3. Registros de interação</h2>
+    <p>O site pode registrar interações como cliques em WhatsApp, produtos e serviços para medir o uso das funcionalidades e melhorar a experiência. Para fins de segurança e análise técnica, o endereço IP pode ser armazenado apenas de forma transformada em hash, junto com informações do navegador.</p>
+
+    <h2>4. WhatsApp e serviços de terceiros</h2>
+    <p>Ao clicar para enviar um pedido, consultar um produto ou solicitar um agendamento, você é direcionado ao WhatsApp. A partir desse momento, o tratamento da conversa e dos dados enviados também segue as regras e políticas do próprio WhatsApp.</p>
+
+    <h2>5. Cookies essenciais</h2>
+    <p>O site pode utilizar cookies estritamente necessários para segurança e funcionamento técnico, como proteção de formulários e requisições. Não é necessário criar uma conta para navegar pelo catálogo público.</p>
+
+    <h2>6. Finalidade e cuidado com os dados</h2>
+    <ul>
+      <li>facilitar pedidos, consultas e agendamentos;</li>
+      <li>permitir contato com a equipe da In Dog;</li>
+      <li>manter a segurança e o funcionamento do site;</li>
+      <li>entender quais funcionalidades são mais utilizadas e melhorar o atendimento digital.</li>
+    </ul>
+
+    <h2>7. Solicitações sobre seus dados</h2>
+    <p>Se você tiver dúvidas sobre privacidade ou quiser solicitar informações relacionadas aos seus dados, entre em contato diretamente com a In Dog pelos canais oficiais exibidos neste site.</p>
+
+    <div class="privacy-note">
+      <strong>Importante:</strong>
+      <p style="margin:.35rem 0 0">Evite enviar informações desnecessárias ou sensíveis pelo carrinho. Para orientações veterinárias e informações sobre medicamentos, use os canais de atendimento da equipe responsável.</p>
+    </div>
+
+    <div class="privacy-actions">
+      <a class="primary" href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener">Falar com a In Dog ↗</a>
+      <a class="secondary" href="{% url 'home' %}">Voltar ao início</a>
+    </div>
+  </article>
+</section>
+{% endblock %}
