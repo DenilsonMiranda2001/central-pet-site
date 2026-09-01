@@ -173,6 +173,10 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     injectNavigationPolish();
+
+    const logoSub = document.querySelector('.navbar .logo-sub');
+    if (logoSub) logoSub.textContent = 'We trust Pet Boutique';
+
     setupNavbarScroll();
     setupMobileMenu();
     setupInteractions();
