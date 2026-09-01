@@ -48,8 +48,8 @@
       .navbar .cart-count{position:absolute!important;right:-2px;top:-3px;min-width:17px;height:17px;padding:0 4px;border-radius:999px;background:#2b1b14!important;color:#fff!important;border:2px solid #fbf6ef;font-size:9px;font-weight:900;align-items:center;justify-content:center}
       .navbar .logo-mark:after{content:""}
       .navbar .nav-search{box-shadow:0 6px 20px rgba(43,27,20,.04)}
-      .navbar .indog-brand-link{display:flex!important;align-items:center!important;justify-content:flex-start!important;width:62px!important;height:58px!important;flex:0 0 62px!important;overflow:visible!important}
-      .navbar .indog-brand-logo{display:block;width:54px;height:54px;object-fit:cover;border-radius:50%;box-shadow:0 4px 14px rgba(43,27,20,.14);border:1px solid rgba(185,107,44,.35)}
+      .navbar .indog-brand-link{display:flex!important;align-items:center!important;justify-content:flex-start!important;width:70px!important;height:64px!important;flex:0 0 70px!important;overflow:visible!important}
+      .navbar .indog-brand-logo{display:block;width:62px;height:62px;object-fit:cover;border-radius:50%;box-shadow:0 4px 14px rgba(43,27,20,.14);border:1px solid rgba(185,107,44,.35)}
       body.indog-menu-open,body.indog-cart-open{overflow:hidden}
 
       /* Mini pedido — visual premium, mantendo a lógica existente */
@@ -85,8 +85,8 @@
         .navbar .nav-search{min-width:0}
         .navbar .logo-sub{letter-spacing:.1em!important}
         .navbar .btn-whatsapp-nav{display:none!important}
-        .navbar .indog-brand-link{width:50px!important;height:50px!important;flex-basis:50px!important}
-        .navbar .indog-brand-logo{width:46px;height:46px}
+        .navbar .indog-brand-link{width:58px!important;height:56px!important;flex-basis:58px!important}
+        .navbar .indog-brand-logo{width:54px;height:54px}
         .cart-panel{width:min(100vw,430px)!important;max-width:100vw!important}
         .cart-panel-header{padding:18px 16px!important}
         .cart-items-list{padding:12px!important}
