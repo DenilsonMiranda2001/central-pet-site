@@ -1,4 +1,6 @@
 from pathlib import Path
+from urllib.parse import urlparse
+
 from decouple import config, Csv
 from django.core.exceptions import ImproperlyConfigured
 import dj_database_url
@@ -114,16 +116,32 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Media persistente opcional via Cloudflare R2.
-# Sem R2_ENABLED=true, o projeto continua usando o filesystem local.
+# Media persistente via Cloudflare R2.
+# Em desenvolvimento, R2 pode ficar desativado e o Django usa MEDIA_ROOT local.
+# Em produção, habilite R2_ENABLED=true para que uploads feitos pelo admin sobrevivam aos deploys.
 R2_ENABLED = config('R2_ENABLED', default=False, cast=bool)
 if R2_ENABLED:
     R2_ACCOUNT_ID = config('R2_ACCOUNT_ID')
     R2_ACCESS_KEY_ID = config('R2_ACCESS_KEY_ID')
     R2_SECRET_ACCESS_KEY = config('R2_SECRET_ACCESS_KEY')
     R2_BUCKET_NAME = config('R2_BUCKET_NAME')
-    R2_ENDPOINT_URL = config('R2_ENDPOINT_URL', default=f'https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com')
-    R2_PUBLIC_BASE_URL = config('R2_PUBLIC_BASE_URL', default='').rstrip('/')
+    R2_ENDPOINT_URL = config(
+        'R2_ENDPOINT_URL',
+        default=f'https://{R2_ACCOUNT_ID}.r2.cloudflarestorage.com'
+    ).rstrip('/')
+    R2_PUBLIC_BASE_URL = config('R2_PUBLIC_BASE_URL').strip().rstrip('/')
+
+    # django-storages espera somente o host em custom_domain, sem https://.
+    parsed_r2_public_url = urlparse(
+        R2_PUBLIC_BASE_URL
+        if '://' in R2_PUBLIC_BASE_URL
+        else f'https://{R2_PUBLIC_BASE_URL}'
+    )
+    R2_PUBLIC_DOMAIN = parsed_r2_public_url.netloc or parsed_r2_public_url.path
+    if not R2_PUBLIC_DOMAIN:
+        raise ImproperlyConfigured('R2_PUBLIC_BASE_URL precisa apontar para o domínio público do bucket R2.')
+
+    MEDIA_URL = f'https://{R2_PUBLIC_DOMAIN}/'
 
     STORAGES = {
         'default': {
@@ -134,14 +152,19 @@ if R2_ENABLED:
                 'access_key': R2_ACCESS_KEY_ID,
                 'secret_key': R2_SECRET_ACCESS_KEY,
                 'region_name': 'auto',
+                'signature_version': 's3v4',
                 'default_acl': None,
                 'file_overwrite': False,
                 'querystring_auth': False,
-                **({'custom_domain': R2_PUBLIC_BASE_URL} if R2_PUBLIC_BASE_URL else {}),
+                'custom_domain': R2_PUBLIC_DOMAIN,
+                'url_protocol': 'https:',
+                'object_parameters': {
+                    'CacheControl': 'public, max-age=86400',
+                },
             },
         },
         'staticfiles': {
-            'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+            'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
         },
     }
 else:
