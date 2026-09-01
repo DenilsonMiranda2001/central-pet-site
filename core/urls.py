@@ -8,6 +8,7 @@ urlpatterns = [
     path("banho-e-tosa/", views.banho_e_tosa, name="banho_e_tosa"),
     path("veterinario/", views.veterinario, name="veterinario"),
     path("boutique-pet/", views.boutique_pet, name="boutique_pet"),
+    path("medicamentos/", views.medicamentos, name="medicamentos"),
     path("disk-racao/", views.disk_racao, name="disk_racao"),
     path("interacoes/registrar/", views.track_interaction, name="track_interaction"),
     path("__debug__/sentry/", views.sentry_debug, name="sentry_debug"),
