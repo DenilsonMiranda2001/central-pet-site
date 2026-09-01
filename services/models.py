@@ -13,6 +13,16 @@ class Service(models.Model):
     )
     image = models.ImageField("Imagem", upload_to="services/", blank=True, null=True)
     icon = models.CharField("Ícone (emoji)", max_length=20, blank=True)
+    related_products = models.ManyToManyField(
+        "products.Product",
+        verbose_name="Produtos relacionados",
+        blank=True,
+        related_name="related_services",
+        help_text=(
+            "Selecione os produtos que devem aparecer nesta página de serviço. "
+            "Ideal para Boutique Pet e Medicamentos."
+        ),
+    )
     whatsapp_message = models.TextField(
         "Mensagem WhatsApp personalizada", blank=True,
         help_text="Mensagem enviada automaticamente ao clicar em 'Agendar'. Deixe vazio para usar o padrão."
